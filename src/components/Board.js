@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { DndProvider } from "react-dnd";
 import "../styles/board.scss";
 import List from "./List";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import CardDragLayer from "./CardDragLayer.js";
 import _ from "lodash";
 
 const allLists = [
@@ -133,16 +130,13 @@ const Board = (props) => {
 
   return (
     <div className="board">
-      <DndProvider backend={HTML5Backend}>
-        {lists.map((list) => (
-          <List
-            list={list}
-            key={`list-${list.id}`}
-            handleCardSorting={handleCardSorting}
-          />
-        ))}
-        <CardDragLayer />
-      </DndProvider>
+      {lists.map((list) => (
+        <List
+          list={list}
+          key={`list-${list.id}`}
+          handleCardSorting={handleCardSorting}
+        />
+      ))}
     </div>
   );
 };
