@@ -35,48 +35,6 @@
                     font-size: 1em;
                     position: relative;
                 }
-
-                & .action_dropdown {
-                    z-index: 1000;
-                    position: absolute;
-                    width: 256px;
-                    background: #fff;
-                    padding: 8px;
-                    border-radius: 8px;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-                    top: 20px;
-                    left: 0;
-
-                    & header {
-                        position: relative;
-                        height: 30px;
-                        padding: 0;
-
-                        & .title {
-                            width: 100%;
-                            margin: 0;
-                            text-align: center;
-                        }
-
-                        & .close_btn {
-                            position: absolute;
-                            background: none;
-                            border: none;
-                            font-size: 1.4em;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            top: 50%;
-                            right: 0;
-                            transform: translate(0, -50%);
-                            cursor: pointer;
-
-                            & ion-icon {
-                                transform: rotate(45deg);
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -86,45 +44,192 @@
             margin: 10px 0 0 0;
             padding: 0;
             list-style: none;
+
+            & .card {
+                position: relative;
+                width: 240px;
+                border-radius: 8px;
+                background: #fff;
+                padding: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                cursor: grab;
+                list-style: none;
+                margin-bottom: 10px;
+
+                & .content {
+                    margin: 0;
+                    font-size: 0.9em;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    word-break: break-word;
+                    white-space: pre-wrap;
+                }
+
+                & .edit {
+                    position: absolute;
+                    top: 7px;
+                    right: 5px;
+                    display: block;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 5px;
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+
+                    &:hover {
+                        background: rgba(226, 226, 226, 0.5);
+                    }
+                }
+
+                &:hover {
+                    & .content {
+                        width: 90%;
+                    }
+
+                    & .edit {
+                        display: flex;
+                    }
+                }
+            }
         }
 
-        & footer .add_card {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-start;
-            align-items: center;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            font-size: 0.9em;
-            border-radius: 8px;
-            width: 100%;
+        & footer {
+            .add_card_btn {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-start;
+                align-items: center;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 8px;
+                font-size: 0.9em;
+                border-radius: 8px;
+                width: 100%;
 
-            & p {
-                margin: 0;
+                & p {
+                    margin: 0;
+                }
+
+                &:hover {
+                    background: #d2d2d2;
+                }
             }
 
-            &:hover {
-                background: #d2d2d2;
+            .add_card {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                cursor: pointer;
+                font-size: 0.9em;
+                border-radius: 8px;
+
+                & textarea {
+                    width: 240px;
+                    font-size: 1em;
+                    border: none;
+                    border-radius: 8px;
+                    resize: none;
+                    padding: 8px;
+                    height: 69px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                    outline: none;
+                    overflow: hidden;
+                }
+
+                & .buttons {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+
+                    & .save {
+                        font-size: 1em;
+                        background: lightblue;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 8px;
+                        cursor: pointer;
+                    }
+
+                    & .cancel {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: none;
+                        background: none;
+                        font-size: 1.5em;
+                        cursor: pointer;
+                        margin-right: auto;
+
+                        & ion-icon {
+                            font-size: 1.2em;
+                            transform: rotate(45deg);
+                        }
+                    }
+
+                    & .options {
+                        position: relative;
+
+                        & button {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+
+                            & ion-icon {
+                                font-size: 1.2em;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-.card {
-    position: relative;
-    width: 240px;
-    border-radius: 8px;
+.dropdown {
+    z-index: 1000;
+    position: absolute;
+    width: 256px;
     background: #fff;
     padding: 8px;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    cursor: grab;
-    list-style: none;
-    margin-bottom: 10px;
+    top: 20px;
+    left: 0;
 
-    & .content {
-        margin: 0;
-        font-size: 0.9em;
+    & header {
+        position: relative;
+        height: 30px;
+        padding: 0;
+
+        & .title {
+            width: 100%;
+            margin: 0;
+            text-align: center;
+        }
+
+        & .close_btn {
+            position: absolute;
+            background: none;
+            border: none;
+            font-size: 1.4em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 50%;
+            right: 0;
+            transform: translate(0, -50%);
+            cursor: pointer;
+
+            & ion-icon {
+                transform: rotate(45deg);
+            }
+        }
     }
 }

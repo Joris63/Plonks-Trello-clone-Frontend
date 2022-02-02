@@ -4,6 +4,7 @@ import List from "./List";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
+import { v4 as uuidv4 } from "uuid";
 
 const allLists = [
   {
@@ -147,6 +148,19 @@ const Board = (props) => {
     setLists(newLists);
   }
 
+  function handleAddCard(newCard, parentListId) {
+    const newLists = _.cloneDeep(lists);
+    const parentList = findById(parentListId, newLists);
+
+    parentList.cards.push({
+      id: uuidv4(),
+      ...newCard,
+      order: parentList.cards.length,
+    });
+
+    setLists(newLists);
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="board" type="list" direction="horizontal">
@@ -157,7 +171,12 @@ const Board = (props) => {
             {...provided.droppableProps}
           >
             {lists.map((list, index) => (
-              <List key={`list-${list.id}`} list={list} index={index} />
+              <List
+                key={`list-${list.id}`}
+                list={list}
+                handleAddCard={handleAddCard}
+                index={index}
+              />
             ))}
             {provided.placeholder}
           </div>

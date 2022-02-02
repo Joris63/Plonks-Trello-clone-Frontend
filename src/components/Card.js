@@ -12,6 +12,9 @@ const Card = ({ card, index }) => {
           {...provided.dragHandleProps}
         >
           <p className="content">{card.content}</p>
+          <button className="edit">
+            <ion-icon name="pencil-sharp"></ion-icon>
+          </button>
         </li>
       )}
     </Draggable>
