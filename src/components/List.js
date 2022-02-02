@@ -40,9 +40,8 @@ const List = ({ list, index }) => {
           className="list"
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
-          <header>
+          <header {...provided.dragHandleProps}>
             <p className="name">{list.name}</p>
             <div className="action">
               <button className="action_btn" onClick={() => setOpen(!open)}>

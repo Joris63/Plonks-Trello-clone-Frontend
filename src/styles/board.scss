@@ -1,6 +1,5 @@
 .board {
     display: flex;
-    gap: 10px;
     padding: 10px;
 
     & .list {
@@ -9,6 +8,7 @@
         width: 256px;
         padding: 8px;
         height: fit-content;
+        margin-right: 10px;
 
         & header {
             display: flex;
@@ -83,8 +83,7 @@
         & .card_container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin: 10px 0;
+            margin: 10px 0 0 0;
             padding: 0;
             list-style: none;
         }
@@ -122,6 +121,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     cursor: grab;
     list-style: none;
+    margin-bottom: 10px;
 
     & .content {
         margin: 0;
