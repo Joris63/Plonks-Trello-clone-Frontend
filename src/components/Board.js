@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../styles/board.scss";
 import List from "./List";
 import _ from "lodash";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
 const allLists = [
   {
@@ -129,15 +131,22 @@ const Board = (props) => {
   }
 
   return (
-    <div className="board">
-      {lists.map((list) => (
-        <List
-          list={list}
-          key={`list-${list.id}`}
-          handleCardSorting={handleCardSorting}
-        />
-      ))}
-    </div>
+    <DragDropContext>
+      <Droppable droppableId="board" type="list" direction="horizontal">
+        {(provided) => (
+          <div
+            className="board"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {lists.map((list, index) => (
+              <List key={`list-${list.id}`} list={list} index={index} />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

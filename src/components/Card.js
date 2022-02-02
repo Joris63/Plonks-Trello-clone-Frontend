@@ -1,10 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 
-const Card = ({ card, handleSort }) => {
+const Card = ({ card, index }) => {
   return (
-    <div className="card">
-      <p className="content">{card.content}</p>
-    </div>
+    <Draggable draggableId={card.id} index={index}>
+      {(provided, snapshot) => (
+        <li
+          className="card"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <p className="content">{card.content}</p>
+        </li>
+      )}
+    </Draggable>
   );
 };
 
