@@ -8,6 +8,7 @@
         border-radius: 8px;
         width: 256px;
         padding: 8px;
+        height: fit-content;
 
         & header {
             display: flex;
@@ -85,20 +86,6 @@
             gap: 10px;
             margin: 10px 0;
             padding: 0;
-
-            & .card {
-                position: relative;
-                border-radius: 8px;
-                background: #fff;
-                padding: 8px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-                cursor: grab;
-
-                & .name {
-                    margin: 0;
-                    font-size: 0.9em;
-                }
-            }
         }
 
         & footer .add_card {
@@ -122,5 +109,20 @@
                 background: #d2d2d2;
             }
         }
+    }
+}
+
+.card {
+    position: relative;
+    width: 240px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    cursor: grab;
+
+    & .content {
+        margin: 0;
+        font-size: 0.9em;
     }
 }
