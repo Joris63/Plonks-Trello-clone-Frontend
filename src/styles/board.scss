@@ -94,10 +94,8 @@
                     }
                 }
             }
-        }
 
-        & footer {
-            .add_card_btn {
+            & .add_card_btn {
                 display: flex;
                 gap: 10px;
                 justify-content: flex-start;
@@ -119,13 +117,14 @@
                 }
             }
 
-            .add_card {
+            & .add_card {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
                 cursor: pointer;
                 font-size: 0.9em;
                 border-radius: 8px;
+                margin-bottom: 10px;
 
                 & textarea {
                     width: 240px;

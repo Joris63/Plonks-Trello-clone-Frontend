@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/board.scss";
 import List from "./List";
 import _ from "lodash";
@@ -72,7 +72,9 @@ function findById(id, array) {
   if (!found) {
     array.forEach((list) => {
       if (!found) {
-        found = list.cards.find((card) => card.id === id);
+        found =
+          list.cards.find((card) => card.id === id) ||
+          list.cards.find((card) => card.id === id);
       }
     });
   }
@@ -81,6 +83,22 @@ function findById(id, array) {
 
 const Board = (props) => {
   const [lists, setLists] = useState(allLists);
+
+  useEffect(() => {
+    const updatedLists = _.cloneDeep(lists);
+
+    updatedLists.forEach((list) => {
+      list.cards.push({
+        id: `add-card-${list.id}`,
+        list_id: list.id,
+        list_name: list.name,
+        order: list.cards.length,
+      });
+    });
+
+    setLists(updatedLists);
+  }, []);
+
   function onDragEnd(result) {
     const { draggableId, destination, type } = result;
 
@@ -161,6 +179,26 @@ const Board = (props) => {
     setLists(newLists);
   }
 
+  function handleAddCancel(listId) {
+    const updatedLists = _.cloneDeep(lists);
+    const list = findById(listId, updatedLists);
+    const addCard = findById(`add-card-${list.id}`, updatedLists);
+    const newCards = [];
+
+    _.sortBy(list.cards, ["order"]).forEach((card) => {
+      if (!card.id.includes("add-card")) {
+        newCards.push({ ...card, order: newCards.length });
+      }
+    });
+
+    addCard.order = newCards.length;
+    newCards.push(addCard);
+
+    list.cards = newCards;
+
+    setLists(updatedLists);
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="board" type="list" direction="horizontal">
@@ -175,6 +213,7 @@ const Board = (props) => {
                 key={`list-${list.id}`}
                 list={list}
                 handleAddCard={handleAddCard}
+                handleAddCancel={handleAddCancel}
                 index={index}
               />
             ))}
