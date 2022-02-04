@@ -7,10 +7,10 @@ const DropDown = ({ open, handleClose, id, children }) => {
 
       if (
         !(
-          e.clientX > rect.left &&
-          e.clientX < rect.right &&
-          e.clientY > rect.top &&
-          e.clientY < rect.bottom
+          e.clientX > rect?.left &&
+          e.clientX < rect?.right &&
+          e.clientY > rect?.top &&
+          e.clientY < rect?.bottom
         )
       ) {
         handleClose();

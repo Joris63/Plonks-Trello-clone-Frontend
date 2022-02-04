@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import DropDown from "./DropDown";
 
-const AddCard = ({ list, index, handleAddCard, handleAddCancel }) => {
+const AddCard = ({
+  list,
+  index,
+  newCard,
+  setNewCard,
+  handleAddCard,
+  handleAddCancel,
+}) => {
   const [open, setOpen] = useState(false);
-  const [newCard, setNewCard] = useState(null);
+  const [height, setHeight] = useState(85);
 
   function ResizeTextArea(e) {
-    const textarea = document.getElementById("add_card_txt_area");
+    const textarea = document.getElementById(`add-card-txt-${list.id}`);
 
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight + 10}px`;
+
+    setHeight(textarea.scrollHeight);
   }
 
-  return newCard ? (
+  return newCard?.list_id === list.id ? (
     <Draggable draggableId={`add-card-${list.id}`} index={index}>
       {(provided, snapshot) => (
         <li
@@ -23,14 +32,26 @@ const AddCard = ({ list, index, handleAddCard, handleAddCancel }) => {
           {...provided.dragHandleProps}
         >
           <textarea
-            id="add_card_txt_area"
+            id={`add-card-txt-${list.id}`}
+            style={
+              snapshot.isDragging
+                ? {
+                    height: height + 34,
+                    marginBottom: 0,
+                  }
+                : { height: height - 16, marginBottom: 40 }
+            }
+            value={newCard?.content}
             placeholder="Enter a tile for this card..."
             onInput={ResizeTextArea}
             onChange={(e) =>
               setNewCard({ ...newCard, content: e.target.value })
             }
           />
-          <div className="buttons">
+          <div
+            className="buttons"
+            style={{ opacity: snapshot.isDragging ? 0 : 1, transitionDelay: 0 }}
+          >
             <button
               className="save"
               onClick={() => {
@@ -40,15 +61,16 @@ const AddCard = ({ list, index, handleAddCard, handleAddCancel }) => {
             >
               Add card
             </button>
-            <button
-              className="cancel"
-              onClick={() => {
-                setNewCard(null);
-                handleAddCancel(list.id);
-              }}
-            >
-              <ion-icon name="add-outline" />
-            </button>
+            <div className="cancel">
+              <button
+                onClick={() => {
+                  setNewCard(null);
+                  handleAddCancel(list.id);
+                }}
+              >
+                <ion-icon name="add-outline" />
+              </button>
+            </div>
             <div className="options">
               <button onClick={() => setOpen(!open)}>
                 <ion-icon name="ellipsis-horizontal" />
@@ -72,10 +94,11 @@ const AddCard = ({ list, index, handleAddCard, handleAddCancel }) => {
       )}
     </Draggable>
   ) : (
-    <li>
+    <li className="add_card_btn">
       <button
-        className="add_card_btn"
-        onClick={() => setNewCard({ list_id: list.id, list_name: list.name })}
+        onClick={() =>
+          setNewCard({ ...newCard, list_id: list.id, list_name: list.name })
+        }
       >
         <ion-icon name="add-sharp" />
         <p>Add a card</p>

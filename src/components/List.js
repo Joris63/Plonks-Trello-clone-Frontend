@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import AddCard from "./AddCard";
 import Card from "./Card";
 import DropDown from "./DropDown";
 
-const List = ({ list, handleAddCard, handleAddCancel, index }) => {
+const List = ({
+  list,
+  newCard,
+  setNewCard,
+  handleAddCard,
+  handleAddCancel,
+  index,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,6 +47,7 @@ const List = ({ list, handleAddCard, handleAddCancel, index }) => {
           <Droppable droppableId={list.id} type={"card"}>
             {(provided, snapshot) => (
               <ul
+                style={{ paddingBottom: newCard?.list_id === list.id ? 0 : 40 }}
                 className="card_container"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
@@ -51,6 +59,8 @@ const List = ({ list, handleAddCard, handleAddCancel, index }) => {
                     <AddCard
                       key={card.id}
                       list={list}
+                      newCard={newCard}
+                      setNewCard={setNewCard}
                       handleAddCard={handleAddCard}
                       handleAddCancel={handleAddCancel}
                       index={index}

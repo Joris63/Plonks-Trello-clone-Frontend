@@ -83,6 +83,7 @@ function findById(id, array) {
 
 const Board = (props) => {
   const [lists, setLists] = useState(allLists);
+  const [newCard, setNewCard] = useState(null);
 
   useEffect(() => {
     const updatedLists = _.cloneDeep(lists);
@@ -101,6 +102,10 @@ const Board = (props) => {
 
   function onDragEnd(result) {
     const { draggableId, destination, type } = result;
+
+    if (!destination) {
+      return;
+    }
 
     switch (type) {
       case "card":
@@ -124,57 +129,81 @@ const Board = (props) => {
       (list) => list.id === draggedCard.list_id
     );
 
-    // Remove card from old list
-    departureParent.cards.splice(draggedCard.order, 1);
+    if (
+      draggedCardId.includes("add-card") &&
+      destinationParentId !== departureParent.id
+    ) {
+      setNewCard({
+        ...newCard,
+        list_id: destinationParent.id,
+        list_name: destinationParent.name,
+      });
 
-    UpdateItemOrders(departureParent.cards);
+      // Remove card from old list
+      const card = destinationParent.cards.pop();
 
-    // Add card to new list in proper location
-    draggedCard.list_id = destinationParent.id;
-    draggedCard.list_name = destinationParent.name;
+      // Add card to new list in proper location
+      destinationParent.cards.splice(destinationIndex, 0, card);
 
-    destinationParent.cards.splice(destinationIndex, 0, draggedCard);
+      UpdateItemOrders(destinationParent.cards);
+    } else {
+      // Remove card from old list
+      departureParent.cards.splice(draggedCard.order, 1);
 
-    UpdateItemOrders(destinationParent.cards);
+      UpdateItemOrders(departureParent.cards);
+
+      // Add card to new list in proper location
+      draggedCard.list_id = destinationParent.id;
+      draggedCard.list_name = destinationParent.name;
+
+      destinationParent.cards.splice(destinationIndex, 0, draggedCard);
+
+      UpdateItemOrders(destinationParent.cards);
+    }
 
     setLists(newLists);
   }
 
   function sortLists(draggedListId, destinationIndex) {
-    const newLists = [];
+    const newLists = _.cloneDeep(lists);
     const draggedList = findById(draggedListId, lists);
-    const actualOrder =
-      destinationIndex > draggedList.order
-        ? destinationIndex + 1
-        : destinationIndex;
 
-    _.sortBy(lists, ["order"]).forEach((list) => {
-      if (list.id !== draggedListId && list.order < actualOrder) {
-        newLists.push({ ...list, order: newLists.length });
-      }
-    });
+    // Remove card from old list
+    newLists.splice(draggedList.order, 1);
 
-    draggedList.order = newLists.length;
-    newLists.push(draggedList);
+    UpdateItemOrders(newLists);
 
-    _.sortBy(lists, ["order"]).forEach((list) => {
-      if (list.id !== draggedListId && list.order >= actualOrder) {
-        newLists.push({ ...list, order: newLists.length });
-      }
-    });
+    // Add card to new list in proper location
+    draggedList.list_id = draggedList.id;
+    draggedList.list_name = draggedList.name;
+
+    newLists.splice(destinationIndex, 0, draggedList);
+
+    UpdateItemOrders(newLists);
 
     setLists(newLists);
   }
 
-  function handleAddCard(newCard, parentListId) {
+  function handleAddCard() {
     const newLists = _.cloneDeep(lists);
-    const parentList = findById(parentListId, newLists);
+    const parentList = findById(newCard.list_id, newLists);
+    const addCard = findById(`add-card-${newCard.list_id}`, newLists);
 
-    parentList.cards.push({
+    // Replace add card section with the new card
+    parentList.cards.splice(addCard.order, 1, {
       id: uuidv4(),
       ...newCard,
+    });
+
+    // Add the add card section again
+    parentList.cards.push({
+      id: `add-card-${parentList.id}`,
+      list_id: parentList.id,
+      list_name: parentList.name,
       order: parentList.cards.length,
     });
+
+    UpdateItemOrders(parentList.cards);
 
     setLists(newLists);
   }
@@ -215,6 +244,8 @@ const Board = (props) => {
                 handleAddCard={handleAddCard}
                 handleAddCancel={handleAddCancel}
                 index={index}
+                newCard={newCard}
+                setNewCard={setNewCard}
               />
             ))}
             {provided.placeholder}
