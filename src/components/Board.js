@@ -5,6 +5,7 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+import AddList from "./AddList";
 
 const allLists = [
   {
@@ -84,18 +85,28 @@ function findById(id, array) {
 const Board = (props) => {
   const [lists, setLists] = useState(allLists);
   const [newCard, setNewCard] = useState(null);
+  const [newList, setNewList] = useState(null);
 
   useEffect(() => {
     const updatedLists = _.cloneDeep(lists);
 
     updatedLists.forEach((list) => {
-      list.cards.push({
-        id: `add-card-${list.id}`,
-        list_id: list.id,
-        list_name: list.name,
-        order: list.cards.length,
-      });
+      if (!findById(`add-card-${list.id}`, updatedLists)) {
+        list.cards.push({
+          id: `add-card-${list.id}`,
+          list_id: list.id,
+          list_name: list.name,
+          order: list.cards.length,
+        });
+      }
     });
+
+    if (!findById("add-list", updatedLists)) {
+      updatedLists.push({
+        id: `add-list`,
+        order: updatedLists.length,
+      });
+    }
 
     setLists(updatedLists);
   }, []);
@@ -228,6 +239,26 @@ const Board = (props) => {
     setLists(updatedLists);
   }
 
+  function handleAddList() {}
+
+  function handleListEdit(updatedlist) {
+    const newLists = _.cloneDeep(lists);
+    let list = findById(updatedlist.id, newLists);
+
+    newLists.splice(list.order, 1, { ...updatedlist, cards: list.cards });
+
+    setLists(newLists);
+  }
+
+  function handleCardEdit(updatedCard) {
+    const newLists = _.cloneDeep(lists);
+    let card = findById(updatedCard.id, newLists);
+
+    card = { ...updatedCard };
+
+    setLists(newLists);
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="board" type="list" direction="horizontal">
@@ -237,17 +268,28 @@ const Board = (props) => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {lists.map((list, index) => (
-              <List
-                key={`list-${list.id}`}
-                list={list}
-                handleAddCard={handleAddCard}
-                handleAddCancel={handleAddCancel}
-                index={index}
-                newCard={newCard}
-                setNewCard={setNewCard}
-              />
-            ))}
+            {lists.map((list, index) =>
+              !list.id.includes("add-list") ? (
+                <List
+                  key={`list-${list.id}`}
+                  list={list}
+                  handleAddCard={handleAddCard}
+                  handleAddCancel={handleAddCancel}
+                  index={index}
+                  newCard={newCard}
+                  setNewCard={setNewCard}
+                  handleListEdit={handleListEdit}
+                  handleCardEdit={handleCardEdit}
+                />
+              ) : (
+                <AddList
+                  key="add-list"
+                  newList={newList}
+                  setNewList={setNewList}
+                  index={index}
+                />
+              )
+            )}
             {provided.placeholder}
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import AddCard from "./AddCard";
@@ -11,9 +11,59 @@ const List = ({
   setNewCard,
   handleAddCard,
   handleAddCancel,
+  handleListEdit,
+  handleCardEdit,
   index,
 }) => {
   const [open, setOpen] = useState(false);
+  const [editedList, setEditedList] = useState(list);
+
+  function handleKeyPress(e) {
+    if (e.key === "Escape") {
+      setEditedList({ ...list, editing: false });
+    }
+
+    if (e.key === "Enter") {
+      handleListEdit(editedList);
+      setEditedList({ ...editedList, editing: false });
+    }
+  }
+
+  const handleOutsideClick = (e) => {
+    const rect = document
+      .getElementById(`name-input-${list.id}`)
+      ?.getBoundingClientRect();
+
+    if (
+      !(
+        e.clientX > rect?.left &&
+        e.clientX < rect?.right &&
+        e.clientY > rect?.top &&
+        e.clientY < rect?.bottom
+      )
+    ) {
+      handleListEdit(editedList);
+      setEditedList({ ...editedList, editing: false });
+    }
+  };
+
+  useEffect(() => {
+    function removeEventHandlers() {
+      window.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyPress);
+    }
+
+    if (editedList.editing) {
+      document.getElementById(`name-input-${list.id}`).focus();
+
+      window.addEventListener("click", handleOutsideClick);
+      document.addEventListener("keydown", handleKeyPress);
+    } else {
+      removeEventHandlers();
+    }
+
+    return () => removeEventHandlers();
+  }, [editedList]);
 
   return (
     <Draggable draggableId={list.id} index={index}>
@@ -22,9 +72,26 @@ const List = ({
           className="list"
           ref={provided.innerRef}
           {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
-          <header {...provided.dragHandleProps}>
-            <p className="name">{list.name}</p>
+          <header>
+            {editedList.editing ? (
+              <input
+                id={`name-input-${list.id}`}
+                className="name"
+                value={editedList.name}
+                onChange={(e) =>
+                  setEditedList({ ...editedList, name: e.target.value })
+                }
+              />
+            ) : (
+              <p
+                onClick={() => setEditedList({ ...editedList, editing: true })}
+                className="name"
+              >
+                {list.name}
+              </p>
+            )}
             <div className="action">
               <button className="action_btn" onClick={() => setOpen(!open)}>
                 <ion-icon name="ellipsis-horizontal" />

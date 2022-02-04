@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const DropDown = ({ open, handleClose, id, children }) => {
   useEffect(() => {
-    const handleDropdown = (e) => {
+    const handleOutsideClick = (e) => {
       const rect = document.getElementById(id)?.getBoundingClientRect();
 
       if (
@@ -18,12 +18,12 @@ const DropDown = ({ open, handleClose, id, children }) => {
     };
 
     if (open) {
-      window.addEventListener("click", handleDropdown);
+      window.addEventListener("click", handleOutsideClick);
     } else {
-      window.removeEventListener("click", handleDropdown);
+      window.removeEventListener("click", handleOutsideClick);
     }
 
-    return () => window.removeEventListener("click", handleDropdown);
+    return () => window.removeEventListener("click", handleOutsideClick);
   }, [open, id, handleClose]);
 
   return open ? (

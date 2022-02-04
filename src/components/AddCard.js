@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import DropDown from "./DropDown";
 
@@ -12,6 +12,28 @@ const AddCard = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(85);
+
+  function handleKeyPress(e) {
+    if (e.key === "Escape") {
+      setNewCard(null);
+    }
+  }
+
+  function removeEventHandlers() {
+    document.removeEventListener("keydown", handleKeyPress);
+  }
+
+  useEffect(() => {
+    if (newCard?.list_id === list.id) {
+      document.getElementById(`add-card-txt-${list.id}`).focus();
+
+      document.addEventListener("keydown", handleKeyPress);
+    } else {
+      removeEventHandlers();
+    }
+
+    return () => removeEventHandlers();
+  }, [newCard]);
 
   function ResizeTextArea(e) {
     const textarea = document.getElementById(`add-card-txt-${list.id}`);
@@ -42,7 +64,7 @@ const AddCard = ({
                 : { height: height - 16, marginBottom: 40 }
             }
             value={newCard?.content}
-            placeholder="Enter a tile for this card..."
+            placeholder="Enter a title for this card..."
             onInput={ResizeTextArea}
             onChange={(e) =>
               setNewCard({ ...newCard, content: e.target.value })
