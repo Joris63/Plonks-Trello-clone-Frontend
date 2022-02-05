@@ -94,7 +94,7 @@ const AddCard = ({
             style={{ opacity: snapshot.isDragging ? 0 : 1, transitionDelay: 0 }}
           >
             <button
-              className="save"
+              className="text_button save"
               onClick={() => {
                 if (newCard.content && newCard.content !== "") {
                   handleAddCard();
@@ -137,6 +137,7 @@ const AddCard = ({
   ) : (
     <li className="add_card_btn">
       <button
+        className="icon_text_button"
         onClick={() =>
           setNewCard({ ...newCard, list_id: list.id, list_name: list.name })
         }

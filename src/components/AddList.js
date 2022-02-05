@@ -68,7 +68,7 @@ const AddList = ({ newList, setNewList, handleAddList, index }) => {
   ) : (
     <button
       style={{ transform: `translate(${index * 282}px, 0)` }}
-      className="add_list_btn"
+      className="icon_text_button add_list_btn"
       onClick={() => setNewList({})}
     >
       <ion-icon name="add-sharp" />
