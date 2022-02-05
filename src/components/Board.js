@@ -217,6 +217,7 @@ const Board = (props) => {
     UpdateItemOrders(parentList.cards);
 
     setLists(newLists);
+    setNewCard(null);
   }
 
   function handleAddCancel(listId) {
@@ -237,9 +238,37 @@ const Board = (props) => {
     list.cards = newCards;
 
     setLists(updatedLists);
+    setNewCard(null);
   }
 
-  function handleAddList() {}
+  function handleAddList() {
+    const newLists = _.cloneDeep(lists);
+    const addList = findById("add-list", newLists);
+
+    const id = uuidv4();
+
+    // Replace add list section with the new list
+    newLists.splice(addList.order, 1, {
+      id,
+      ...newList,
+      cards: [
+        {
+          id: `add-card-${id}`,
+          list_id: id,
+          list_name: newList.name,
+          order: 0,
+        },
+      ],
+    });
+
+    // Add the add list section again
+    newLists.push(addList);
+
+    UpdateItemOrders(newLists);
+
+    setLists(newLists);
+    setNewList(null);
+  }
 
   function handleListEdit(updatedlist) {
     const newLists = _.cloneDeep(lists);
@@ -269,7 +298,7 @@ const Board = (props) => {
             {...provided.droppableProps}
           >
             {lists.map((list, index) =>
-              !list.id.includes("add-list") ? (
+              !list.id.includes("add") ? (
                 <List
                   key={`list-${list.id}`}
                   list={list}
@@ -286,6 +315,7 @@ const Board = (props) => {
                   key="add-list"
                   newList={newList}
                   setNewList={setNewList}
+                  handleAddList={handleAddList}
                   index={index}
                 />
               )

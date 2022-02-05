@@ -2,82 +2,78 @@
     display: flex;
     padding: 10px;
 
-    & .add_list_wrapper {
-        background: transparent;
-        height: fit-content;
+    & .add_list {
+        background: #e9e9e9;
         border-radius: 8px;
+        padding: 8px;
         width: 256px;
+        margin-right: 10px;
 
-        & .add_list {
-            background: #e9e9e9;
-            border-radius: 8px;
+        & input {
             padding: 8px;
+            border-radius: 8px;
+            border: none;
+            width: calc(100% - 24px);
+            margin-bottom: 10px;
+            font-size: 0.9em;
 
-            & input {
-                padding: 8px;
-                border-radius: 8px;
-                border: none;
-                width: calc(100% - 24px);
-                margin-bottom: 10px;
-                font-size: 0.9em;
-
-                &:focus {
-                    outline: 2px solid lightblue;
-                }
-            }
-
-            & .buttons {
-                display: flex;
-                gap: 10px;
-
-                & .save {
-                    font-size: 0.9em;
-                    background: lightblue;
-                    border: none;
-                    border-radius: 8px;
-                    padding: 8px;
-                    cursor: pointer;
-                }
-
-                & .cancel {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: none;
-                    background: none;
-                    font-size: 1.3em;
-                    cursor: pointer;
-
-                    & ion-icon {
-                        font-size: 1.2em;
-                        transform: rotate(45deg);
-                    }
-                }
+            &:focus {
+                outline: 2px solid lightblue;
             }
         }
 
-        & .add_list_btn {
-            height: fit-content;
+        & .buttons {
             display: flex;
             gap: 10px;
-            justify-content: flex-start;
-            align-items: center;
-            background: #ffffff3d;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.225s ease;
-            width: 100%;
 
-            & p {
-                margin: 0;
+            & .save {
+                font-size: 0.9em;
+                background: lightblue;
+                border: none;
+                border-radius: 8px;
+                padding: 8px;
+                cursor: pointer;
             }
 
-            &:hover {
-                background: #ffffff52;
+            & .cancel {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: none;
+                background: none;
+                font-size: 1.3em;
+                cursor: pointer;
+
+                & ion-icon {
+                    font-size: 1.2em;
+                    transform: rotate(45deg);
+                }
             }
+        }
+    }
+
+    & .add_list_btn {
+        position: absolute;
+        height: fit-content;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-start;
+        align-items: center;
+        background: #ffffff3d;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        padding: 8px;
+        border-radius: 8px;
+        transition: all 0.225s ease;
+        width: 272px;
+
+        & p {
+            margin: 0;
+        }
+
+        &:hover {
+            background: #ffffff52;
         }
     }
 

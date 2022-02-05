@@ -120,7 +120,7 @@ const List = ({
                 {...provided.droppableProps}
               >
                 {list.cards.map((card, index) =>
-                  !card.id.includes("add-card") ? (
+                  !card.id.includes("add") ? (
                     <Card key={`card-${card.id}`} card={card} index={index} />
                   ) : (
                     <AddCard

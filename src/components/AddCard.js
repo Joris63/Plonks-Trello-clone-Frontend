@@ -17,15 +17,34 @@ const AddCard = ({
     if (e.key === "Escape") {
       setNewCard(null);
     }
+
+    if (e.key === "Enter") {
+      const targetIsTextarea = e.target.nodeName.toLowerCase() === "textarea";
+      const cardContentIsEmpty =
+        (typeof newCard.content === "string" && newCard.content === "") ||
+        !newCard.content;
+
+      if (targetIsTextarea && cardContentIsEmpty) {
+        e.preventDefault();
+      } else {
+        handleAddCard();
+      }
+    }
   }
 
   function removeEventHandlers() {
     document.removeEventListener("keydown", handleKeyPress);
+    document
+      .getElementById(`add-card-txt-${list.id}`)
+      ?.removeEventListener("keypress", handleKeyPress);
   }
 
   useEffect(() => {
     if (newCard?.list_id === list.id) {
-      document.getElementById(`add-card-txt-${list.id}`).focus();
+      const textarea = document.getElementById(`add-card-txt-${list.id}`);
+
+      textarea.focus();
+      textarea.addEventListener("keypress", handleKeyPress);
 
       document.addEventListener("keydown", handleKeyPress);
     } else {
@@ -77,8 +96,9 @@ const AddCard = ({
             <button
               className="save"
               onClick={() => {
-                handleAddCard(newCard, list.id);
-                setNewCard(null);
+                if (newCard.content && newCard.content !== "") {
+                  handleAddCard();
+                }
               }}
             >
               Add card
@@ -86,7 +106,6 @@ const AddCard = ({
             <div className="cancel">
               <button
                 onClick={() => {
-                  setNewCard(null);
                   handleAddCancel(list.id);
                 }}
               >
