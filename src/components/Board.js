@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../styles/board.scss";
+import "../styles/common.scss";
 import List from "./List";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import AddList from "./AddList";
+import CardEditor from "./CardEditor";
 
 const allLists = [
   {
@@ -86,6 +88,7 @@ const Board = (props) => {
   const [lists, setLists] = useState(allLists);
   const [newCard, setNewCard] = useState(null);
   const [newList, setNewList] = useState(null);
+  const [editedCard, setEditedCard] = useState(null);
 
   useEffect(() => {
     const updatedLists = _.cloneDeep(lists);
@@ -272,7 +275,7 @@ const Board = (props) => {
 
   function handleListEdit(updatedlist) {
     const newLists = _.cloneDeep(lists);
-    let list = findById(updatedlist.id, newLists);
+    const list = findById(updatedlist.id, newLists);
 
     newLists.splice(list.order, 1, { ...updatedlist, cards: list.cards });
 
@@ -281,9 +284,10 @@ const Board = (props) => {
 
   function handleCardEdit(updatedCard) {
     const newLists = _.cloneDeep(lists);
-    let card = findById(updatedCard.id, newLists);
+    const card = findById(updatedCard.id, newLists);
+    const parentList = findById(card.list_id, newLists);
 
-    card = { ...updatedCard };
+    parentList.cards.splice(card.order, 1, { ...updatedCard });
 
     setLists(newLists);
   }
@@ -302,11 +306,12 @@ const Board = (props) => {
                 <List
                   key={`list-${list.id}`}
                   list={list}
-                  handleAddCard={handleAddCard}
-                  handleAddCancel={handleAddCancel}
                   index={index}
                   newCard={newCard}
                   setNewCard={setNewCard}
+                  setEditedCard={setEditedCard}
+                  handleAddCard={handleAddCard}
+                  handleAddCancel={handleAddCancel}
                   handleListEdit={handleListEdit}
                   handleCardEdit={handleCardEdit}
                 />
@@ -324,6 +329,11 @@ const Board = (props) => {
           </div>
         )}
       </Droppable>
+      <CardEditor
+        editedCard={editedCard}
+        setEditedCard={setEditedCard}
+        handleCardEdit={handleCardEdit}
+      />
     </DragDropContext>
   );
 };

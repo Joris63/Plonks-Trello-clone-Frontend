@@ -7,7 +7,11 @@ const AddList = ({ newList, setNewList, handleAddList, index }) => {
       setNewList(null);
     }
 
-    if (e.key === "Enter") {
+    if (
+      e.key === "Enter" &&
+      typeof newList?.name === "string" &&
+      newList?.name !== ""
+    ) {
       handleAddList();
     }
   }

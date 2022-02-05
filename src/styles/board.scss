@@ -336,3 +336,69 @@
         }
     }
 }
+
+.card_editor_overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+
+    & .cancel {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background: none;
+        font-size: 1.5em;
+        color: white;
+        cursor: pointer;
+
+        & ion-icon {
+            font-size: 1.5em;
+            transform: rotate(45deg);
+        }
+    }
+
+    & .editor {
+        position: absolute;
+        display: flex;
+        gap: 10px;
+
+        & .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 10px;
+            font-size: 0.9em;
+
+            & textarea:focus {
+                outline: 2px solid lightblue;
+            }
+
+            & button {
+                background: lightblue;
+                width: fit-content;
+            }
+        }
+
+        & .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            & button {
+                background-color: rgba(0, 0, 0, 0.6);
+                color: white;
+                transform: translate(0, 0);
+                transition: transform 0.225s ease;
+
+                &:hover {
+                    transform: translate(10px, 0);
+                }
+            }
+        }
+    }
+}

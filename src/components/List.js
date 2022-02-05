@@ -9,10 +9,10 @@ const List = ({
   list,
   newCard,
   setNewCard,
+  setEditedCard,
   handleAddCard,
   handleAddCancel,
   handleListEdit,
-  handleCardEdit,
   index,
 }) => {
   const [open, setOpen] = useState(false);
@@ -121,7 +121,12 @@ const List = ({
               >
                 {list.cards.map((card, index) =>
                   !card.id.includes("add") ? (
-                    <Card key={`card-${card.id}`} card={card} index={index} />
+                    <Card
+                      key={`card-${card.id}`}
+                      card={card}
+                      index={index}
+                      setEditedCard={setEditedCard}
+                    />
                   ) : (
                     <AddCard
                       key={card.id}
