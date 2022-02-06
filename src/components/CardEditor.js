@@ -17,6 +17,41 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
     }
   }
 
+  function handleKeyPress(e) {
+    if (e.key === "Escape") {
+      handleCancel();
+    }
+
+    if (e.key === "Enter") {
+      const targetIsTextarea = e.target.nodeName.toLowerCase() === "textarea";
+      const cardContentIsEmpty =
+        (typeof editedCard.content === "string" && editedCard.content === "") ||
+        !editedCard.content;
+
+      if (targetIsTextarea && cardContentIsEmpty) {
+        e.preventDefault();
+      } else {
+        handleCardEdit(editedCard);
+        handleCancel();
+      }
+    }
+  }
+
+  function removeEventHandlers() {
+    document.removeEventListener("keydown", handleKeyPress);
+    document
+      .getElementById("card-editor")
+      ?.removeEventListener("click", handleClose);
+    document
+      .getElementById(`card-textarea`)
+      ?.removeEventListener("keypress", handleKeyPress);
+  }
+
+  function handleCancel() {
+    setPosition(null);
+    setEditedCard(null);
+  }
+
   useEffect(() => {
     const location = document
       .getElementById(`card-${editedCard?.id}`)
@@ -29,24 +64,23 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
 
   useEffect(() => {
     if (position) {
+      document.addEventListener("keydown", handleKeyPress);
       document
         .getElementById("card-editor")
         ?.addEventListener("click", handleClose);
+      document
+        .getElementById(`card-textarea`)
+        ?.addEventListener("keypress", handleKeyPress);
 
       const textarea = document?.getElementById("card-textarea");
 
       textarea?.focus();
       textarea?.setSelectionRange(0, textarea.value.length);
     } else {
-      document
-        .getElementById("card-editor")
-        ?.removeEventListener("click", handleClose);
+      removeEventHandlers();
     }
 
-    return () =>
-      document
-        .getElementById("card-editor")
-        ?.removeEventListener("click", handleClose);
+    return () => removeEventHandlers();
   }, [position]);
 
   if (!position) {
@@ -55,13 +89,7 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
 
   return (
     <div id="card-editor" className="card_editor_overlay">
-      <button
-        className="cancel"
-        onClick={() => {
-          setPosition(null);
-          setEditedCard(null);
-        }}
-      >
+      <button className="cancel" onClick={() => handleCancel()}>
         <ion-icon name="add-outline" />
       </button>
       <div className="editor" style={{ top: position?.y, left: position?.x }}>
@@ -79,8 +107,7 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
             className="text_button"
             onClick={() => {
               handleCardEdit(editedCard);
-              setPosition(null);
-              setEditedCard(null);
+              handleCancel();
             }}
           >
             Save

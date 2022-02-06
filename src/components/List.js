@@ -4,6 +4,7 @@ import { Droppable } from "react-beautiful-dnd";
 import AddCard from "./AddCard";
 import Card from "./Card";
 import DropDown from "./DropDown";
+import ListActions from "./ListActions";
 
 const List = ({
   list,
@@ -99,15 +100,10 @@ const List = ({
               <DropDown
                 open={open}
                 id={`actions_drpdwn-${list.id}`}
-                handleClose={() => setOpen(false)}
+                toggleOpen={() => setOpen(!open)}
+                title="List actions"
               >
-                <header>
-                  <p className="title">List actions</p>
-                  <button className="close_btn" onClick={() => setOpen(!open)}>
-                    <ion-icon name="add-outline"></ion-icon>
-                  </button>
-                </header>
-                <hr />
+                <ListActions />
               </DropDown>
             </div>
           </header>

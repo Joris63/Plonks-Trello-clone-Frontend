@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import AddCardActions from "./AddCardActions";
 import DropDown from "./DropDown";
 
 const AddCard = ({
@@ -113,21 +114,16 @@ const AddCard = ({
               </button>
             </div>
             <div className="options">
-              <button onClick={() => setOpen(!open)}>
+              <button className="option_btn" onClick={() => setOpen(!open)}>
                 <ion-icon name="ellipsis-horizontal" />
               </button>
               <DropDown
+                title="Options"
                 open={open}
                 id={`options_drpdwn-${list.id}`}
-                handleClose={() => setOpen(false)}
+                toggleOpen={() => setOpen(!open)}
               >
-                <header>
-                  <p className="title">Options</p>
-                  <button className="close_btn" onClick={() => setOpen(!open)}>
-                    <ion-icon name="add-outline"></ion-icon>
-                  </button>
-                </header>
-                <hr />
+                <AddCardActions />
               </DropDown>
             </div>
           </div>

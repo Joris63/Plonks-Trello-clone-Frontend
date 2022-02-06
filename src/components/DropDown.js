@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const DropDown = ({ open, handleClose, id, children }) => {
+const DropDown = ({ title, open, toggleOpen, id, children }) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       const rect = document.getElementById(id)?.getBoundingClientRect();
@@ -13,7 +13,7 @@ const DropDown = ({ open, handleClose, id, children }) => {
           e.clientY < rect?.bottom
         )
       ) {
-        handleClose();
+        toggleOpen();
       }
     };
 
@@ -24,10 +24,17 @@ const DropDown = ({ open, handleClose, id, children }) => {
     }
 
     return () => window.removeEventListener("click", handleOutsideClick);
-  }, [open, id, handleClose]);
+  }, [open, id, toggleOpen]);
 
   return open ? (
     <div className="dropdown" id={id}>
+      <header>
+        <p className="title">{title}</p>
+        <button className="close_btn" onClick={toggleOpen}>
+          <ion-icon name="add-outline"></ion-icon>
+        </button>
+      </header>
+      <hr />
       {children}
     </div>
   ) : null;

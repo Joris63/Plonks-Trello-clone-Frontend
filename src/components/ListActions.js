@@ -1,0 +1,18 @@
+import React from "react";
+
+const ListActions = (props) => {
+  return (
+    <div className="actions_list">
+      <button>Add a card...</button>
+      <hr />
+      <button>Sort by...</button>
+      <hr />
+      <button>Move all cards in this list...</button>
+      <button>Archive all cards in this list...</button>
+      <hr />
+      <button>Archive this list</button>
+    </div>
+  );
+};
+
+export default ListActions;
