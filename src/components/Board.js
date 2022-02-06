@@ -330,6 +330,7 @@ const Board = (props) => {
         )}
       </Droppable>
       <CardEditor
+        setNewCard={setNewCard}
         editedCard={editedCard}
         setEditedCard={setEditedCard}
         handleCardEdit={handleCardEdit}

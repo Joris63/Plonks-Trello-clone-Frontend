@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
+const CardEditor = ({
+  editedCard,
+  setEditedCard,
+  setNewCard,
+  handleCardEdit,
+}) => {
   const [position, setPosition] = useState(null);
 
   function ResizeTextArea(e) {
@@ -27,6 +32,10 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
       const cardContentIsEmpty =
         (typeof editedCard.content === "string" && editedCard.content === "") ||
         !editedCard.content;
+
+      if (e.target.nodeName.toLowerCase() === "button") {
+        return;
+      }
 
       if (targetIsTextarea && cardContentIsEmpty) {
         e.preventDefault();
@@ -64,6 +73,8 @@ const CardEditor = ({ editedCard, setEditedCard, handleCardEdit }) => {
 
   useEffect(() => {
     if (position) {
+      setNewCard(null);
+
       document.addEventListener("keydown", handleKeyPress);
       document
         .getElementById("card-editor")
