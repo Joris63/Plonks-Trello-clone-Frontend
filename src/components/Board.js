@@ -223,7 +223,7 @@ const Board = (props) => {
       list_id: parentList.id,
       list_name: parentList.name,
       order: parentList.cards.length,
-      createdAt: date.now(),
+      createdAt: date.getTime(),
     });
 
     UpdateItemOrders(parentList.cards);
@@ -253,6 +253,17 @@ const Board = (props) => {
     setNewCard(null);
   }
 
+  function handleCardEdit(updatedCard) {
+    console.log(editedCard);
+    const newLists = _.cloneDeep(lists);
+    const card = findById(updatedCard.id, newLists);
+    const parentList = findById(card.list_id, newLists);
+
+    parentList.cards.splice(card.order, 1, { ...updatedCard });
+
+    setLists(newLists);
+  }
+
   function handleCardArchive(cardId) {}
 
   function handleAddList() {
@@ -272,7 +283,7 @@ const Board = (props) => {
           list_id: id,
           list_name: newList.name,
           order: 0,
-          createdAt: date.now(),
+          createdAt: date.getTime(),
         },
       ],
     });
@@ -296,16 +307,6 @@ const Board = (props) => {
   }
 
   function handleListArchive(listId) {}
-
-  function handleCardEdit(updatedCard) {
-    const newLists = _.cloneDeep(lists);
-    const card = findById(updatedCard.id, newLists);
-    const parentList = findById(card.list_id, newLists);
-
-    parentList.cards.splice(card.order, 1, { ...updatedCard });
-
-    setLists(newLists);
-  }
 
   function sortCardsBy(listId, type) {}
 

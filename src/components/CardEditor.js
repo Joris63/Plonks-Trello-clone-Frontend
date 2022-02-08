@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const CardEditor = ({
   editedCard,
@@ -22,32 +22,36 @@ const CardEditor = ({
     }
   }
 
-  function handleKeyPress(e) {
-    if (e.key === "Escape") {
-      handleCancel();
-    }
-
-    if (e.key === "Enter") {
-      const targetIsTextarea = e.target.nodeName.toLowerCase() === "textarea";
-      const cardContentIsEmpty =
-        (typeof editedCard.content === "string" && editedCard.content === "") ||
-        !editedCard.content;
-
-      if (e.target.nodeName.toLowerCase() === "button") {
-        return;
-      }
-
-      if (targetIsTextarea && cardContentIsEmpty) {
-        e.preventDefault();
-      } else {
-        handleCardEdit(editedCard);
+  const handleKeyPress = useCallback(
+    (e) => {
+      if (e.key === "Escape") {
         handleCancel();
       }
-    }
-  }
+
+      if (e.key === "Enter") {
+        const targetIsTextarea = e.target.nodeName.toLowerCase() === "textarea";
+        const cardContentIsEmpty =
+          (typeof editedCard.content === "string" &&
+            editedCard.content === "") ||
+          !editedCard.content;
+
+        if (e.target.nodeName.toLowerCase() === "button") {
+          return;
+        }
+
+        if (targetIsTextarea && cardContentIsEmpty) {
+          e.preventDefault();
+        } else {
+          handleCardEdit(editedCard);
+          handleCancel();
+        }
+      }
+    },
+    [editedCard]
+  );
 
   function removeEventHandlers() {
-    document.removeEventListener("keydown", handleKeyPress);
+    document.removeEventListener("keypress", handleKeyPress);
     document
       .getElementById("card-editor")
       ?.removeEventListener("click", handleClose);
@@ -66,8 +70,14 @@ const CardEditor = ({
       .getElementById(`card-${editedCard?.id}`)
       ?.getBoundingClientRect();
 
+    document.removeEventListener("keypress", handleKeyPress);
+
     if (location && !position) {
       setPosition({ x: location.left, y: location.top });
+    }
+
+    if (editedCard) {
+      document.addEventListener("keypress", handleKeyPress);
     }
   }, [editedCard]);
 
@@ -75,7 +85,6 @@ const CardEditor = ({
     if (position) {
       setNewCard(null);
 
-      document.addEventListener("keydown", handleKeyPress);
       document
         .getElementById("card-editor")
         ?.addEventListener("click", handleClose);
