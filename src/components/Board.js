@@ -21,6 +21,7 @@ const allLists = [
         list_id: "0d2b9f81-d438-4421-9c2a-5a71f1cd6419",
         list_name: "Concept",
         order: 0,
+        createdAt: 1644313051214,
       },
       {
         id: "109826e4-1acf-4fdd-a12d-aa1ccae8fc93",
@@ -28,6 +29,7 @@ const allLists = [
         list_id: "0d2b9f81-d438-4421-9c2a-5a71f1cd6419",
         list_name: "Concept",
         order: 1,
+        createdAt: 1644313051214,
       },
       {
         id: "68b0d7ff-8b9b-4d2b-9fa9-107576a05f2e",
@@ -35,8 +37,10 @@ const allLists = [
         list_id: "0d2b9f81-d438-4421-9c2a-5a71f1cd6419",
         list_name: "Concept",
         order: 2,
+        createdAt: 1644313051214,
       },
     ],
+    createdAt: 1644313051214,
   },
   {
     id: "dcf60bb3-7c38-4213-bf38-ea6b45116e4a",
@@ -49,6 +53,7 @@ const allLists = [
         list_id: "dcf60bb3-7c38-4213-bf38-ea6b45116e4a",
         list_name: "Concept2",
         order: 0,
+        createdAt: 1644313051214,
       },
       {
         id: "00127536-c4dd-41f8-bf1f-238c2903e768",
@@ -56,8 +61,10 @@ const allLists = [
         list_id: "dcf60bb3-7c38-4213-bf38-ea6b45116e4a",
         list_name: "Concept2",
         order: 1,
+        createdAt: 1644313051214,
       },
     ],
+    createdAt: 1644313051214,
   },
 ];
 
@@ -282,6 +289,8 @@ const Board = (props) => {
     setLists(newLists);
   }
 
+  function handleListArchive(listId) {}
+
   function handleCardEdit(updatedCard) {
     const newLists = _.cloneDeep(lists);
     const card = findById(updatedCard.id, newLists);
@@ -291,6 +300,12 @@ const Board = (props) => {
 
     setLists(newLists);
   }
+
+  function handleCardArchive(cardId) {}
+
+  function sortCardsBy(listId, type) {}
+
+  function moveAllCards(destinationParentId, destinationParentId) {}
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

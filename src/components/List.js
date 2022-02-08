@@ -103,7 +103,11 @@ const List = ({
                 toggleOpen={() => setOpen(!open)}
                 title="List actions"
               >
-                <ListActions />
+                <ListActions
+                  list={list}
+                  handleClose={() => setOpen(false)}
+                  setNewCard={setNewCard}
+                />
               </DropDown>
             </div>
           </header>

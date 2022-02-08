@@ -1,9 +1,16 @@
 import React from "react";
 
-const ListActions = (props) => {
+const ListActions = ({ list, handleClose, setNewCard }) => {
   return (
     <div className="actions_list">
-      <button>Add a card...</button>
+      <button
+        onClick={() => {
+          handleClose();
+          setNewCard({ list_id: list.id, list_name: list.name });
+        }}
+      >
+        Add a card...
+      </button>
       <hr />
       <button>Sort by...</button>
       <hr />
