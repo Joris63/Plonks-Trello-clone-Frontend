@@ -16,7 +16,12 @@ const CardEditor = ({
   }
 
   function handleClose(e) {
-    if (e.target.id === "card-editor") {
+    const node = e.target.nodeName.toLowerCase();
+    if (
+      node !== "button" &&
+      !e.path.some((node) => node.nodeName?.toLowerCase() === "button") &&
+      node !== "textarea"
+    ) {
       setPosition(null);
       setEditedCard(null);
     }
@@ -51,13 +56,12 @@ const CardEditor = ({
   );
 
   function removeEventHandlers() {
-    document.removeEventListener("keypress", handleKeyPress);
+    document
+      .getElementById("card-textarea")
+      ?.removeEventListener("keydown", handleKeyPress);
     document
       .getElementById("card-editor")
       ?.removeEventListener("click", handleClose);
-    document
-      .getElementById(`card-textarea`)
-      ?.removeEventListener("keypress", handleKeyPress);
   }
 
   function handleCancel() {
@@ -70,27 +74,32 @@ const CardEditor = ({
       .getElementById(`card-${editedCard?.id}`)
       ?.getBoundingClientRect();
 
-    document.removeEventListener("keypress", handleKeyPress);
+    // To update the state inside the handleKeyPress event handler we need to remove it and add it again
+    document
+      .getElementById("card-textarea")
+      ?.removeEventListener("keydown", handleKeyPress);
 
     if (location && !position) {
       setPosition({ x: location.left, y: location.top });
     }
 
     if (editedCard) {
-      document.addEventListener("keypress", handleKeyPress);
+      document
+        .getElementById("card-textarea")
+        ?.addEventListener("keydown", handleKeyPress);
     }
   }, [editedCard]);
 
   useEffect(() => {
     if (position) {
       setNewCard(null);
+      document
+        .getElementById("card-textarea")
+        ?.addEventListener("keydown", handleKeyPress);
 
       document
         .getElementById("card-editor")
         ?.addEventListener("click", handleClose);
-      document
-        .getElementById(`card-textarea`)
-        ?.addEventListener("keypress", handleKeyPress);
 
       const textarea = document?.getElementById("card-textarea");
 

@@ -37,7 +37,7 @@ const AddCard = ({
     document.removeEventListener("keydown", handleKeyPress);
     document
       .getElementById(`add-card-txt-${list.id}`)
-      ?.removeEventListener("keypress", handleKeyPress);
+      ?.removeEventListener("keydown", handleKeyPress);
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const AddCard = ({
       const textarea = document.getElementById(`add-card-txt-${list.id}`);
 
       textarea.focus();
-      textarea.addEventListener("keypress", handleKeyPress);
+      textarea.addEventListener("keydown", handleKeyPress);
 
       document.addEventListener("keydown", handleKeyPress);
     } else {
