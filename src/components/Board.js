@@ -209,6 +209,7 @@ const Board = (props) => {
     const newLists = _.cloneDeep(lists);
     const parentList = findById(newCard.list_id, newLists);
     const addCard = findById(`add-card-${newCard.list_id}`, newLists);
+    const date = new Date();
 
     // Replace add card section with the new card
     parentList.cards.splice(addCard.order, 1, {
@@ -222,6 +223,7 @@ const Board = (props) => {
       list_id: parentList.id,
       list_name: parentList.name,
       order: parentList.cards.length,
+      createdAt: date.now(),
     });
 
     UpdateItemOrders(parentList.cards);
@@ -251,9 +253,12 @@ const Board = (props) => {
     setNewCard(null);
   }
 
+  function handleCardArchive(cardId) {}
+
   function handleAddList() {
     const newLists = _.cloneDeep(lists);
     const addList = findById("add-list", newLists);
+    const date = new Date();
 
     const id = uuidv4();
 
@@ -267,6 +272,7 @@ const Board = (props) => {
           list_id: id,
           list_name: newList.name,
           order: 0,
+          createdAt: date.now(),
         },
       ],
     });
@@ -301,11 +307,9 @@ const Board = (props) => {
     setLists(newLists);
   }
 
-  function handleCardArchive(cardId) {}
-
   function sortCardsBy(listId, type) {}
 
-  function moveAllCards(destinationParentId, destinationParentId) {}
+  function moveAllCards(departureParentId, destinationParentId) {}
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
