@@ -15,6 +15,7 @@ const List = ({
   handleAddCancel,
   handleListEdit,
   index,
+  yes,
 }) => {
   const [open, setOpen] = useState(false);
   const [editedList, setEditedList] = useState(list);
