@@ -25,7 +25,7 @@ const AddCard = ({
         (typeof newCard.content === "string" && newCard.content === "") ||
         !newCard.content;
 
-      if (targetIsTextarea && cardContentIsEmpty) {
+      if ((targetIsTextarea && cardContentIsEmpty) || cardContentIsEmpty) {
         e.preventDefault();
       } else {
         handleAddCard();
@@ -68,20 +68,20 @@ const AddCard = ({
     <Draggable draggableId={`add-card-${list.id}`} index={index}>
       {(provided, snapshot) => (
         <li
-          className={`add_card`}
+          className={`add_card ${snapshot.isDragging ? "" : "withPadding"} ${
+            snapshot.isDragging && snapshot.mode === "SNAP" ? "pulse" : ""
+          }`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          style={{ ...provided.draggableProps.style, height: height + 48 }}
         >
           <textarea
             id={`add-card-txt-${list.id}`}
             style={
               snapshot.isDragging
-                ? {
-                    height: height + 34,
-                    marginBottom: 0,
-                  }
-                : { height: height - 16, marginBottom: 40 }
+                ? { height: height + 32 }
+                : { height: height - 16 }
             }
             value={newCard?.content}
             placeholder="Enter a title for this card..."

@@ -70,7 +70,9 @@ const List = ({
     <Draggable draggableId={list.id} index={index}>
       {(provided, snapshot) => (
         <div
-          className="list"
+          className={`list ${
+            snapshot.isDragging && snapshot.mode === "SNAP" ? "pulse" : ""
+          }`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

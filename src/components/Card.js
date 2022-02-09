@@ -7,7 +7,9 @@ const Card = ({ card, index, setEditedCard }) => {
       {(provided, snapshot) => (
         <li
           id={`card-${card.id}`}
-          className="card"
+          className={`card ${
+            snapshot.isDragging && snapshot.mode === "SNAP" ? "pulse" : ""
+          }`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

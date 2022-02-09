@@ -9,9 +9,11 @@ hr {
     border-radius: 8px;
     padding: 8px;
     cursor: pointer;
+    transition: all 0.225s ease;
 }
 
 .icon_text_button {
+    transition: all 0.225s ease;
     display: flex;
     gap: 10px;
     justify-content: flex-start;
@@ -40,7 +42,7 @@ textarea {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     outline: none;
     overflow: hidden;
-    transition: height 0.225s, margin 0.225s;
+    transition: height 0.225s;
 }
 
 .dropdown {
@@ -67,6 +69,7 @@ textarea {
         }
 
         & .close_btn {
+            transition: all 0.225s ease;
             position: absolute;
             background: none;
             border: none;
@@ -78,14 +81,23 @@ textarea {
             right: 0;
             transform: translate(0, -50%);
             cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
 
             & ion-icon {
                 transform: rotate(45deg);
+            }
+
+            &:hover,
+            &:focus {
+                outline: none;
+                background: #d2d2d2;
             }
         }
     }
 
     & .actions_list button {
+        transition: all 0.225s ease;
         background: none;
         border: none;
         border-radius: 8px;
