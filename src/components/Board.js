@@ -97,7 +97,7 @@ const Board = (props) => {
   const [newCard, setNewCard] = useState(null);
   const [newList, setNewList] = useState(null);
   const [editedCard, setEditedCard] = useState(null);
-  const [highlightedListId, setHighlightedListId] = useState(null);
+  const [highlightedList, setHighlightedList] = useState(null);
 
   useEffect(() => {
     const updatedLists = _.cloneDeep(lists);
@@ -326,11 +326,96 @@ const Board = (props) => {
     setNewList(null);
   }
 
-  function handleListArchive(listId) {}
+  function handleListArchive(listId) {
+    const updatedLists = _.cloneDeep(lists);
+    const list = findById(listId, updatedLists);
 
-  function sortCardsBy(listId, type) {}
+    updatedLists.splice(list.order, 1);
 
-  function moveAllCards(departureParentId, destinationParentId) {}
+    UpdateItemOrders(updatedLists);
+
+    setHighlightedList(null);
+    setLists(updatedLists);
+  }
+
+  function sortCardsBy(listId, type) {
+    const updatedLists = _.cloneDeep(lists);
+    const list = findById(listId, updatedLists);
+    let newCards = list.cards.filter((card) => !card.id.includes("add-card"));
+
+    switch (type) {
+      // sort cards by createdAt time from oldest to newest
+      case "createdFirst":
+        newCards = _.sortBy(newCards, ["createdAt"]);
+        break;
+
+      // sort cards by createdAt time from newest to oldest
+      case "createdLast":
+        newCards = _.sortBy(newCards, ["createdAt"]).reverse();
+        break;
+      case "alphabet":
+        newCards = _.sortBy(newCards, ["content"]);
+        break;
+      default:
+        break;
+    }
+
+    UpdateItemOrders(newCards);
+
+    newCards.push({
+      id: `add-card-${list.id}`,
+      list_id: list.id,
+      list_name: list.name,
+      order: newCards.length,
+      createdAt: Date.now(),
+    });
+
+    list.cards = newCards;
+
+    setLists(updatedLists);
+  }
+
+  function moveAllCards(departureParentId, destinationParentId) {
+    const updatedLists = _.cloneDeep(lists);
+    const departureParent = findById(departureParentId, updatedLists);
+    const destinationParent = findById(destinationParentId, updatedLists);
+
+    const newCards = destinationParent.cards.concat(
+      departureParent.cards.filter((card) => !card.id.includes("add-card"))
+    );
+
+    departureParent.cards = [
+      {
+        id: `add-card-${departureParent.id}`,
+        list_id: departureParent.id,
+        list_name: departureParent.name,
+        order: 0,
+        createdAt: Date.now(),
+      },
+    ];
+    destinationParent.cards = newCards;
+
+    setHighlightedList(null);
+    setLists(updatedLists);
+  }
+
+  function archiveAllCards(listId) {
+    const updatedLists = _.cloneDeep(lists);
+    const list = findById(listId, updatedLists);
+
+    list.cards = [
+      {
+        id: `add-card-${list.id}`,
+        list_id: list.id,
+        list_name: list.name,
+        order: 0,
+        createdAt: Date.now(),
+      },
+    ];
+
+    setHighlightedList(null);
+    setLists(updatedLists);
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -350,8 +435,8 @@ const Board = (props) => {
                   newCard={newCard}
                   setNewCard={setNewCard}
                   setEditedCard={setEditedCard}
-                  highlightedListId={highlightedListId}
-                  setHighlightedListId={setHighlightedListId}
+                  highlightedList={highlightedList}
+                  setHighlightedList={setHighlightedList}
                   handleAddCard={handleAddCard}
                   handleAddCancel={handleAddCardCancel}
                   handleListEdit={handleListEdit}
@@ -379,10 +464,14 @@ const Board = (props) => {
         handleCardEdit={handleCardEdit}
       />
       <ListActionDropdown
-        listId={highlightedListId}
-        setListId={setHighlightedListId}
+        list={highlightedList}
+        setList={setHighlightedList}
         allLists={lists}
         setNewCard={setNewCard}
+        handleSort={sortCardsBy}
+        handleMoveAllCards={moveAllCards}
+        handleArchiveAllCards={archiveAllCards}
+        handleArchive={handleListArchive}
       />
     </DragDropContext>
   );

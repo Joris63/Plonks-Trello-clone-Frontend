@@ -9,8 +9,8 @@ const List = ({
   newCard,
   setNewCard,
   setEditedCard,
-  highlightedListId,
-  setHighlightedListId,
+  highlightedList,
+  setHighlightedList,
   handleAddCard,
   handleAddCancel,
   handleListEdit,
@@ -69,7 +69,7 @@ const List = ({
     <Draggable
       draggableId={list.id}
       index={index}
-      isDragDisabled={highlightedListId === list.id}
+      isDragDisabled={highlightedList === list.id}
     >
       {(provided, snapshot) => (
         <div
@@ -102,7 +102,7 @@ const List = ({
               <button
                 id={`list-action-${list.id}`}
                 className="action_btn"
-                onClick={() => setHighlightedListId(list.id)}
+                onClick={() => setHighlightedList(list)}
               >
                 <ion-icon name="ellipsis-horizontal" />
               </button>

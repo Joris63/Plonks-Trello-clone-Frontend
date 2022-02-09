@@ -3,32 +3,29 @@ import DropDown from "./DropDown";
 import ListActions from "./ListActions";
 
 const ListActionDropdown = ({
-  listId,
-  setListId,
+  list,
+  setList,
   allLists,
   setNewCard,
-  handleSort,
-  handleMoveAllCards,
-  handleArchiveAllCards,
-  handleArchive,
+  ...handlers
 }) => {
   const [dropdownMode, setDropdownMode] = useState("default");
   const [position, setPosition] = useState(null);
 
   useEffect(() => {
     const location = document
-      .getElementById(`list-action-${listId}`)
+      .getElementById(`list-action-${list?.id}`)
       ?.getBoundingClientRect();
 
     if (location) {
       setPosition({ x: location.left, y: location.top });
     }
 
-    if (!listId) {
+    if (!list) {
       setPosition(null);
       setDropdownMode("default");
     }
-  }, [listId]);
+  }, [list]);
 
   function getDropdownTitle() {
     let title = "List Actions";
@@ -55,22 +52,23 @@ const ListActionDropdown = ({
 
   return (
     <DropDown
-      open={listId}
+      open={list}
       position={position}
       mode={dropdownMode}
       handleMode={setDropdownMode}
       handleBack={() => setDropdownMode("default")}
       id="list-action-drpdwn"
-      handleClose={() => setListId(null)}
+      handleClose={() => setList(null)}
       title={getDropdownTitle()}
     >
       <ListActions
-        listId={listId}
+        list={list}
         allLists={allLists}
         mode={dropdownMode}
         handleMode={setDropdownMode}
-        handleClose={() => setListId(null)}
+        handleClose={() => setList(null)}
         setNewCard={setNewCard}
+        {...handlers}
       />
     </DropDown>
   );

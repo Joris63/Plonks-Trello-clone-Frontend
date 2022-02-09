@@ -1,12 +1,16 @@
 import React from "react";
 
 const ListActions = ({
-  listId,
+  list,
   allLists = [],
   mode,
   handleMode,
   handleClose,
   setNewCard,
+  handleSort,
+  handleMoveAllCards,
+  handleArchiveAllCards,
+  handleArchive,
 }) => {
   return (
     <div className="actions_list">
@@ -15,7 +19,7 @@ const ListActions = ({
           <button
             onClick={() => {
               handleClose();
-              setNewCard({ list_id: listId });
+              setNewCard({ list_id: list.id });
             }}
           >
             Add a card...
@@ -30,24 +34,21 @@ const ListActions = ({
             Archive all cards in this list...
           </button>
           <hr />
-          <button>Archive this list</button>
+          <button onClick={() => handleArchive(list.id)}>
+            Archive this list
+          </button>
         </>
       )}
 
       {mode === "sort" && (
         <>
-          <button
-            onClick={() => {
-              handleClose();
-              setNewCard({ list_id: listId });
-            }}
-          >
+          <button onClick={() => handleSort(list.id, "createdLast")}>
             Date created (newest first)
           </button>
-          <button onClick={() => handleMode("sort")}>
+          <button onClick={() => handleSort(list.id, "createdFirst")}>
             Date created (oldest first)
           </button>
-          <button onClick={() => handleMode("move")}>
+          <button onClick={() => handleSort(list.id, "alphabet")}>
             Card name (alphabetically)
           </button>
         </>
@@ -59,10 +60,10 @@ const ListActions = ({
             !childList.id.includes("add-list") && (
               <button
                 key={`move-to-${childList.id}`}
-                disabled={childList.id === listId}
-                onClick={() => {}}
+                disabled={childList.id === list.id}
+                onClick={() => handleMoveAllCards(list.id, childList.id)}
               >
-                {childList.name} {childList.id === listId ? "(current)" : ""}
+                {childList.name} {childList.id === list.id ? "(current)" : ""}
               </button>
             )
         )}
@@ -74,7 +75,10 @@ const ListActions = ({
             archived cards and bring them back to the board, click "Menu" {">"}{" "}
             "Archived items".
           </p>
-          <button className="warning" onClick={() => {}}>
+          <button
+            className="warning"
+            onClick={() => handleArchiveAllCards(list.id)}
+          >
             Archive all
           </button>
         </>
