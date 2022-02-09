@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-const AddList = ({ newList, setNewList, handleAddList, index }) => {
+const AddList = ({
+  newList,
+  setNewList,
+  handleAddList,
+  handleAddCancel,
+  index,
+}) => {
   function handleKeyPress(e) {
     if (e.key === "Escape") {
       setNewList(null);
@@ -55,7 +61,7 @@ const AddList = ({ newList, setNewList, handleAddList, index }) => {
               <button
                 className="cancel"
                 onClick={() => {
-                  setNewList(null);
+                  handleAddCancel();
                 }}
               >
                 <ion-icon name="add-outline" />

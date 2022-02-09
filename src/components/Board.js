@@ -232,7 +232,7 @@ const Board = (props) => {
     setNewCard(null);
   }
 
-  function handleAddCancel(listId) {
+  function handleAddCardCancel(listId) {
     const updatedLists = _.cloneDeep(lists);
     const list = findById(listId, updatedLists);
     const addCard = findById(`add-card-${list.id}`, updatedLists);
@@ -306,6 +306,24 @@ const Board = (props) => {
     setLists(newLists);
   }
 
+  function handleAddListCancel() {
+    const updatedLists = _.cloneDeep(lists);
+    const addCard = findById("add-list", updatedLists);
+    const newLists = [];
+
+    _.sortBy(lists, ["order"]).forEach((list) => {
+      if (list.id !== "add-list") {
+        newLists.push({ ...list, order: newLists.length });
+      }
+    });
+
+    addCard.order = newLists.length;
+    newLists.push(addCard);
+
+    setLists(newLists);
+    setNewList(null);
+  }
+
   function handleListArchive(listId) {}
 
   function sortCardsBy(listId, type) {}
@@ -332,7 +350,7 @@ const Board = (props) => {
                   setNewCard={setNewCard}
                   setEditedCard={setEditedCard}
                   handleAddCard={handleAddCard}
-                  handleAddCancel={handleAddCancel}
+                  handleAddCancel={handleAddCardCancel}
                   handleListEdit={handleListEdit}
                   handleCardEdit={handleCardEdit}
                 />
@@ -342,6 +360,7 @@ const Board = (props) => {
                   newList={newList}
                   setNewList={setNewList}
                   handleAddList={handleAddList}
+                  handleAddCancel={handleAddListCancel}
                   index={index}
                 />
               )
