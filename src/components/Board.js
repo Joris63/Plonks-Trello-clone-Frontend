@@ -8,6 +8,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import AddList from "./AddList";
 import CardEditor from "./CardEditor";
+import ListActionDropdown from "./ListActionDropdown";
 
 const allLists = [
   {
@@ -96,6 +97,7 @@ const Board = (props) => {
   const [newCard, setNewCard] = useState(null);
   const [newList, setNewList] = useState(null);
   const [editedCard, setEditedCard] = useState(null);
+  const [highlightedListId, setHighlightedListId] = useState(null);
 
   useEffect(() => {
     const updatedLists = _.cloneDeep(lists);
@@ -344,11 +346,12 @@ const Board = (props) => {
                 <List
                   key={`list-${list.id}`}
                   list={list}
-                  allLists={lists}
                   index={index}
                   newCard={newCard}
                   setNewCard={setNewCard}
                   setEditedCard={setEditedCard}
+                  highlightedListId={highlightedListId}
+                  setHighlightedListId={setHighlightedListId}
                   handleAddCard={handleAddCard}
                   handleAddCancel={handleAddCardCancel}
                   handleListEdit={handleListEdit}
@@ -374,6 +377,12 @@ const Board = (props) => {
         editedCard={editedCard}
         setEditedCard={setEditedCard}
         handleCardEdit={handleCardEdit}
+      />
+      <ListActionDropdown
+        listId={highlightedListId}
+        setListId={setHighlightedListId}
+        allLists={lists}
+        setNewCard={setNewCard}
       />
     </DragDropContext>
   );

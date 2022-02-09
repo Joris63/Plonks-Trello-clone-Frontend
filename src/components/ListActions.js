@@ -1,7 +1,7 @@
 import React from "react";
 
 const ListActions = ({
-  list,
+  listId,
   allLists = [],
   mode,
   handleMode,
@@ -15,7 +15,7 @@ const ListActions = ({
           <button
             onClick={() => {
               handleClose();
-              setNewCard({ list_id: list.id, list_name: list.name });
+              setNewCard({ list_id: listId });
             }}
           >
             Add a card...
@@ -39,7 +39,7 @@ const ListActions = ({
           <button
             onClick={() => {
               handleClose();
-              setNewCard({ list_id: list.id, list_name: list.name });
+              setNewCard({ list_id: listId });
             }}
           >
             Date created (newest first)
@@ -59,10 +59,10 @@ const ListActions = ({
             !childList.id.includes("add-list") && (
               <button
                 key={`move-to-${childList.id}`}
-                disabled={childList.id === list.id}
+                disabled={childList.id === listId}
                 onClick={() => {}}
               >
-                {childList.name} {childList.id === list.id ? "(current)" : ""}
+                {childList.name} {childList.id === listId ? "(current)" : ""}
               </button>
             )
         )}

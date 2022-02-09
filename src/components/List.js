@@ -3,48 +3,20 @@ import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import AddCard from "./AddCard";
 import Card from "./Card";
-import DropDown from "./DropDown";
-import ListActions from "./ListActions";
 
 const List = ({
   list,
-  allLists,
   newCard,
   setNewCard,
   setEditedCard,
+  highlightedListId,
+  setHighlightedListId,
   handleAddCard,
   handleAddCancel,
   handleListEdit,
   index,
 }) => {
-  const [open, setOpen] = useState(false);
   const [editedList, setEditedList] = useState(list);
-  const [dropdownMode, setDropdownMode] = useState("default");
-
-  const dropdownTitle = getDropdownTitle();
-
-  function getDropdownTitle() {
-    let title = "List Actions";
-
-    switch (dropdownMode) {
-      case "sort":
-        title = "Sort list";
-        break;
-
-      case "move":
-        title = "Move all cards in list";
-        break;
-
-      case "archive":
-        title = "Archive all cards in list";
-        break;
-
-      default:
-        break;
-    }
-
-    return title;
-  }
 
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -94,7 +66,11 @@ const List = ({
   }, [editedList]);
 
   return (
-    <Draggable draggableId={list.id} index={index} isDragDisabled={open}>
+    <Draggable
+      draggableId={list.id}
+      index={index}
+      isDragDisabled={highlightedListId === list.id}
+    >
       {(provided, snapshot) => (
         <div
           className={`list ${
@@ -123,27 +99,13 @@ const List = ({
               </p>
             )}
             <div className="action">
-              <button className="action_btn" onClick={() => setOpen(!open)}>
+              <button
+                id={`list-action-${list.id}`}
+                className="action_btn"
+                onClick={() => setHighlightedListId(list.id)}
+              >
                 <ion-icon name="ellipsis-horizontal" />
               </button>
-              <DropDown
-                open={open}
-                mode={dropdownMode}
-                handleMode={setDropdownMode}
-                handleBack={() => setDropdownMode("default")}
-                id={`actions_drpdwn-${list.id}`}
-                toggleOpen={() => setOpen(!open)}
-                title={dropdownTitle}
-              >
-                <ListActions
-                  list={list}
-                  allLists={allLists}
-                  mode={dropdownMode}
-                  handleMode={setDropdownMode}
-                  handleClose={() => setOpen(false)}
-                  setNewCard={setNewCard}
-                />
-              </DropDown>
             </div>
           </header>
           <Droppable droppableId={list.id} type={"card"}>

@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 const DropDown = ({
   title,
   open,
+  position,
   mode,
   handleMode,
-  toggleOpen,
+  handleClose,
   id,
   children,
 }) => {
@@ -22,7 +23,7 @@ const DropDown = ({
           e.clientY < rect?.bottom
         )
       ) {
-        toggleOpen();
+        handleClose();
       }
     };
 
@@ -45,10 +46,14 @@ const DropDown = ({
     }
 
     return () => window.removeEventListener("mousedown", handleOutsideClick);
-  }, [open, rect, id, toggleOpen]);
+  }, [open, rect, id, handleClose]);
 
-  return open ? (
-    <div className="dropdown" id={id}>
+  return open && position ? (
+    <div
+      className="dropdown"
+      id={id}
+      style={{ top: position?.y + 40, left: position?.x + 10 }}
+    >
       <header>
         {mode !== "default" && (
           <button className="back_btn" onClick={() => handleMode("default")}>
@@ -56,7 +61,7 @@ const DropDown = ({
           </button>
         )}
         <p className="title">{title}</p>
-        <button className="close_btn" onClick={toggleOpen}>
+        <button className="close_btn" onClick={handleClose}>
           <ion-icon name="add-outline"></ion-icon>
         </button>
       </header>
