@@ -14,8 +14,6 @@ const DropDown = ({
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      console.log(e.clientX, e.clientY, rect);
-
       if (
         !(
           e.clientX > rect?.left &&
@@ -41,12 +39,12 @@ const DropDown = ({
     }
 
     if (open) {
-      window.addEventListener("click", handleOutsideClick);
+      window.addEventListener("mousedown", handleOutsideClick);
     } else {
-      window.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("mousedown", handleOutsideClick);
     }
 
-    return () => window.removeEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
   }, [open, rect, id, toggleOpen]);
 
   return open ? (

@@ -157,7 +157,9 @@ textarea {
                 color: #fff;
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:focus {
+                    outline: none;
                     background: #ff3f34;
                 }
             }

@@ -94,7 +94,7 @@ const List = ({
   }, [editedList]);
 
   return (
-    <Draggable draggableId={list.id} index={index}>
+    <Draggable draggableId={list.id} index={index} isDragDisabled={open}>
       {(provided, snapshot) => (
         <div
           className={`list ${
