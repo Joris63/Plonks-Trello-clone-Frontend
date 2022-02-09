@@ -8,6 +8,7 @@ import ListActions from "./ListActions";
 
 const List = ({
   list,
+  allLists,
   newCard,
   setNewCard,
   setEditedCard,
@@ -18,6 +19,32 @@ const List = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [editedList, setEditedList] = useState(list);
+  const [dropdownMode, setDropdownMode] = useState("default");
+
+  const dropdownTitle = getDropdownTitle();
+
+  function getDropdownTitle() {
+    let title = "List Actions";
+
+    switch (dropdownMode) {
+      case "sort":
+        title = "Sort list";
+        break;
+
+      case "move":
+        title = "Move all cards in list";
+        break;
+
+      case "archive":
+        title = "Archive all cards in list";
+        break;
+
+      default:
+        break;
+    }
+
+    return title;
+  }
 
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -101,12 +128,18 @@ const List = ({
               </button>
               <DropDown
                 open={open}
+                mode={dropdownMode}
+                handleMode={setDropdownMode}
+                handleBack={() => setDropdownMode("default")}
                 id={`actions_drpdwn-${list.id}`}
                 toggleOpen={() => setOpen(!open)}
-                title="List actions"
+                title={dropdownTitle}
               >
                 <ListActions
                   list={list}
+                  allLists={allLists}
+                  mode={dropdownMode}
+                  handleMode={setDropdownMode}
                   handleClose={() => setOpen(false)}
                   setNewCard={setNewCard}
                 />

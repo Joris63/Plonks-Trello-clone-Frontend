@@ -326,6 +326,7 @@ const Board = (props) => {
                 <List
                   key={`list-${list.id}`}
                   list={list}
+                  allLists={lists}
                   index={index}
                   newCard={newCard}
                   setNewCard={setNewCard}
