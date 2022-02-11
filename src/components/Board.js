@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import AddList from "./AddList";
 import CardEditor from "./CardEditor";
 import ListActionDropdown from "./ListActionDropdown";
+import Modal from "./CardModal";
 
 const allLists = [
   {
@@ -473,6 +474,7 @@ const Board = (props) => {
         handleArchiveAllCards={archiveAllCards}
         handleArchive={handleListArchive}
       />
+      <Modal />
     </DragDropContext>
   );
 };

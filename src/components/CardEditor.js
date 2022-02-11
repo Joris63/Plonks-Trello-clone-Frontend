@@ -143,15 +143,19 @@ const CardEditor = ({
           </button>
         </div>
         <div className="actions">
-          <button className="icon_text_button save">
+          <button className="icon_text_button">
             <ion-icon name="card-outline"></ion-icon>
             <p>Open card</p>
           </button>
-          <button className="icon_text_button labels">
+          <button className="icon_text_button">
             <ion-icon name="pricetag-outline"></ion-icon>
             <p>Edit labels</p>
           </button>
-          <button className="icon_text_button members">
+          <button className="icon_text_button">
+            <ion-icon name="checkbox-outline"></ion-icon>
+            <p>Add checklist</p>
+          </button>
+          <button className="icon_text_button">
             <ion-icon name="person-outline"></ion-icon>
             <p>Change members</p>
           </button>
