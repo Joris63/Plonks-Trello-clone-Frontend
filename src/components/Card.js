@@ -14,8 +14,20 @@ const Card = ({ card, index, setEditedCard }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <p className="content">{card.content}</p>
-          <button className="edit" onClick={() => setEditedCard(card)}>
+          <p
+            className="content"
+            onClick={() =>
+              setEditedCard({ ...card, editor: false, modal: true })
+            }
+          >
+            {card.content}
+          </p>
+          <button
+            className="edit"
+            onClick={() =>
+              setEditedCard({ ...card, editor: true, modal: true })
+            }
+          >
             <ion-icon name="pencil-sharp"></ion-icon>
           </button>
         </li>

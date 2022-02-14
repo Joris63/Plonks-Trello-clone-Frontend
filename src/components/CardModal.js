@@ -1,18 +1,12 @@
-import { divide } from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
 
-const CardModal = ({
-  open,
-  card = {
-    content: "Random title",
-    list_name: "Vragen?",
-  },
-  handleClose,
-}) => {
-  const [cardEdit, setCardEdit] = useState({ ...card });
+const CardModal = ({ card, handleClose }) => {
+  const [cardEdit, setCardEdit] = useState({ ...card, editable: false });
   const [comment, setComment] = useState("");
+  const [description, setDescription] = useState(card?.description || "");
   const [active, setActive] = useState(false);
-  const [height, setHeight] = useState(125);
+  const [height, setHeight] = useState(105);
 
   const cardHasNoDescription =
     cardEdit?.description === "" || !cardEdit?.description;
@@ -39,6 +33,19 @@ const CardModal = ({
 
     return () => document.removeEventListener("click", handleClick);
   }, []);
+
+  useEffect(() => {
+    setCardEdit({ ...card, editable: false });
+  }, [card]);
+
+  useEffect(() => {
+    if (cardEdit.editable) {
+      document.getElementById("description-textarea").focus();
+    }
+  }, [cardEdit]);
+  if (!card || !card?.modal) {
+    return null;
+  }
 
   return (
     <div className="modal_overlay">
@@ -84,23 +91,31 @@ const CardModal = ({
                 {cardEdit.editable && (
                   <div className="description_form">
                     <textarea
+                      id="description-textarea"
                       placeholder="Add a more detailed description..."
-                      value={cardEdit?.description}
+                      value={description}
                       onInput={(e) => ResizeTextArea(e)}
-                      onChange={(e) =>
-                        setCardEdit({
-                          ...cardEdit,
-                          description: e.target.value,
-                        })
-                      }
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                     <div className="actions">
-                      <button className="text_button save">Save</button>
+                      <button
+                        className="text_button save"
+                        onClick={() =>
+                          setCardEdit({
+                            ...cardEdit,
+                            editable: false,
+                            description,
+                          })
+                        }
+                      >
+                        Save
+                      </button>
                       <button
                         className="cancel"
-                        onClick={() =>
-                          setCardEdit({ ...cardEdit, editable: false })
-                        }
+                        onClick={() => {
+                          setDescription(cardEdit.description);
+                          setCardEdit({ ...cardEdit, editable: false });
+                        }}
                       >
                         <ion-icon name="add-outline" />
                       </button>
@@ -108,7 +123,12 @@ const CardModal = ({
                   </div>
                 )}
                 {!cardEdit.editable && !cardHasNoDescription && (
-                  <p className="description_container">{cardEdit.description}</p>
+                  <p
+                    className="description_container"
+                    onClick={() => setCardEdit({ ...cardEdit, editable: true })}
+                  >
+                    {cardEdit.description}
+                  </p>
                 )}
               </div>
             </div>
@@ -137,7 +157,7 @@ const CardModal = ({
                       placeholder="Write a comment..."
                       style={{ height: height - 16 }}
                       value={comment}
-                      onInput={(e) => ResizeTextArea(e, 40, true)}
+                      onInput={(e) => ResizeTextArea(e, 20, true)}
                       onChange={(e) => setComment(e.target.value)}
                     />
                     <div className="actions">
