@@ -24,9 +24,10 @@ const Card = ({ card, index, setEditedCard }) => {
           </p>
           <button
             className="edit"
-            onClick={() =>
-              setEditedCard({ ...card, editor: true, modal: true })
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              setEditedCard({ ...card, editor: true, modal: false });
+            }}
           >
             <ion-icon name="pencil-sharp"></ion-icon>
           </button>

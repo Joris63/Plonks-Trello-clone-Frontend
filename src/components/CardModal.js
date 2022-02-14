@@ -43,6 +43,7 @@ const CardModal = ({ card, handleClose }) => {
       document.getElementById("description-textarea").focus();
     }
   }, [cardEdit]);
+
   if (!card || !card?.modal) {
     return null;
   }
