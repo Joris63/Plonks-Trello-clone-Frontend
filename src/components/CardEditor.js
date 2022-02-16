@@ -79,7 +79,7 @@ const CardEditor = ({
       .getElementById("card-textarea")
       ?.removeEventListener("keydown", handleKeyPress);
 
-    if (location && !position) {
+    if (location && !position && editedCard?.editor) {
       setPosition({ x: location.left, y: location.top });
     }
 

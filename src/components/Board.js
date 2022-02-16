@@ -474,7 +474,11 @@ const Board = (props) => {
         handleArchiveAllCards={archiveAllCards}
         handleArchive={handleListArchive}
       />
-      <Modal />
+      <Modal
+        card={editedCard}
+        handleCardEdit={handleCardEdit}
+        handleClose={() => setEditedCard(null)}
+      />
     </DragDropContext>
   );
 };
