@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "animate.css";
 
 const Modal = ({ title, subtitle, open, onClose, children }) => {
-  const [animation, setAnimation] = useState("fadeIn");
+  const [status, setStatus] = useState(true);
 
   const handleClick = (e) => {
     if (e.target === document.getElementById("modal-overlay")) {
@@ -11,11 +11,11 @@ const Modal = ({ title, subtitle, open, onClose, children }) => {
   };
 
   const handleClose = () => {
-    setAnimation("fadeOut");
+    setStatus(false);
 
     setTimeout(() => {
       onClose();
-      setAnimation("fadeIn");
+      setStatus(true);
     }, 325);
   };
 
@@ -36,9 +36,15 @@ const Modal = ({ title, subtitle, open, onClose, children }) => {
   return (
     <div
       id="modal-overlay"
-      className={`modal_overlay animate__animated animate__${animation}`}
+      className={`modal_overlay animate__animated ${
+        status ? "animate__fadeIn" : "animate__fadeOut"
+      }`}
     >
-      <div className="modal animate__animated animate__zoomIn">
+      <div
+        className={`modal animate__animated ${
+          status ? "animate__zoomIn" : "animate__zoomOut"
+        }`}
+      >
         <div className="title">
           <ion-icon className="icon" name="card-outline" />
           <div className="main">
