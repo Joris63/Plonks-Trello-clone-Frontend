@@ -63,7 +63,7 @@ const AddCard = ({
 
     setHeight(textarea.scrollHeight);
   }
-
+  
   return newCard?.list_id === list.id ? (
     <Draggable draggableId={`add-card-${list.id}`} index={index}>
       {(provided, snapshot) => (
