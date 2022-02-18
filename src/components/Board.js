@@ -257,7 +257,6 @@ const Board = (props) => {
   }
 
   function handleCardEdit(updatedCard) {
-    console.log(editedCard);
     const newLists = _.cloneDeep(lists);
     const card = findById(updatedCard.id, newLists);
     const parentList = findById(card.list_id, newLists);

@@ -489,7 +489,7 @@
                 }
             }
 
-            & .left_side {
+            & .main_content {
                 width: 75%;
                 display: flex;
                 flex-direction: column;
@@ -499,6 +499,7 @@
                     padding-left: 45px;
 
                     & .add_description {
+                        transition: all 0.225s ease;
                         background: #e9e9e9;
                         border: none;
                         border-radius: 8px;
@@ -524,6 +525,7 @@
 
                     & .description_form {
                         & textarea {
+                            height: 69px;
                             box-shadow: none;
                             width: calc(100% - 22px);
                             font-size: 0.9em;
@@ -565,6 +567,7 @@
                         width: 100%;
                         white-space: pre-wrap;
                         word-break: break-all;
+                        font-size: 0.9em;
                     }
                 }
 
@@ -647,7 +650,7 @@
                 }
             }
 
-            & .right_side {
+            & .actions_list {
                 width: 25%;
 
                 & .module {
