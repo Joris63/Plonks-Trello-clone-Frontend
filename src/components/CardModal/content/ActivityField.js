@@ -5,21 +5,13 @@ const ActivityField = ({ card }) => {
   const [comment, setComment] = useState("");
   const [height, setHeight] = useState(105);
 
-  useEffect(() => {
-    document.addEventListener("click", handleCommentBox);
-
-    return () => {
-      document.removeEventListener("click", handleCommentBox);
-    };
-  }, []);
-
   const handleCommentBox = (e) => {
     const commentForm = document.getElementById("comment-form");
     const textarea = document.getElementById("comment-textarea");
     const status =
       commentForm?.contains(document.activeElement) ||
       textarea === document.activeElement ||
-      commentForm?.contains(e.target);
+      (commentForm?.contains(e.target) && e.type === "click");
 
     setActive(status);
   };
@@ -33,6 +25,29 @@ const ActivityField = ({ card }) => {
     setHeight(textarea.scrollHeight);
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      console.log(e.shiftKey, comment);
+      if (comment !== "" && !e.shiftKey) {
+        document.getElementById("comment-textarea").blur();
+        handleSend();
+      }
+    }
+  };
+
+  const handleSend = () => {
+    setComment("");
+    setActive(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleCommentBox);
+
+    return () => {
+      document.removeEventListener("click", handleCommentBox);
+    };
+  }, []);
+
   return (
     <div className="activity">
       <div className="title">
@@ -40,7 +55,11 @@ const ActivityField = ({ card }) => {
         <div className="main">
           <p className="name">Actvity</p>
         </div>
-        <button className="text_button edit" onFocus={handleCommentBox}>
+        <button
+          className="text_button edit"
+          onFocus={handleCommentBox}
+          onBlur={handleCommentBox}
+        >
           Show details
         </button>
       </div>
@@ -61,20 +80,29 @@ const ActivityField = ({ card }) => {
               placeholder="Write a comment..."
               style={{ height: height - 16 }}
               value={comment}
-              onInput={(e) => ResizeTextArea(e)}
+              onInput={ResizeTextArea}
+              onKeyDown={handleKeyPress}
               onChange={(e) => setComment(e.target.value)}
               onFocus={handleCommentBox}
             />
-            {active && (
+            {(active || comment !== "") && (
               <div className="actions">
-                <button className="text_button save" disabled={comment === ""}>
-                  Save
+                <button
+                  className="text_button save"
+                  disabled={comment === ""}
+                  onClick={handleSend}
+                >
+                  Send
                 </button>
                 <div className="comment_options">
                   <button className="option">
                     <ion-icon name="at-outline" />
                   </button>
-                  <button className="option">
+                  <button
+                    className="option"
+                    onFocus={handleCommentBox}
+                    onBlur={handleCommentBox}
+                  >
                     <ion-icon name="happy-outline" />
                   </button>
                 </div>

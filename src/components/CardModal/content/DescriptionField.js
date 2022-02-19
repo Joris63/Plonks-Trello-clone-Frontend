@@ -23,6 +23,14 @@ const DescriptionField = ({ card, handleSave }) => {
     textarea.style.height = `${textarea.scrollHeight + 10}px`;
   }
 
+  function handleClose(e) {
+    const descriptionForm = document.getElementById("description-form");
+
+    if (!descriptionForm?.contains(e.target) && editing) {
+      handleCancel();
+    }
+  }
+
   const handleKeyPress = (e) => {
     if (e.key === "Escape") {
       handleCancel();
@@ -50,7 +58,14 @@ const DescriptionField = ({ card, handleSave }) => {
   useEffect(() => {
     if (editing) {
       document.getElementById("description-textarea")?.focus();
+      document.addEventListener("click", handleClose);
+    } else {
+      document.removeEventListener("click", handleClose);
     }
+
+    return () => {
+      document.removeEventListener("click", handleClose);
+    };
   }, [editing]);
 
   return (
@@ -73,13 +88,13 @@ const DescriptionField = ({ card, handleSave }) => {
           </button>
         )}
         {editing && (
-          <div className="description_form">
+          <div id="description-form" className="description_form">
             <textarea
               id="description-textarea"
               placeholder="Add a more detailed description..."
               value={editedCard?.description}
-              onInput={(e) => ResizeTextArea(e)}
-              onKeyDown={(e) => handleKeyPress(e)}
+              onInput={ResizeTextArea}
+              onKeyDown={handleKeyPress}
               onChange={(e) =>
                 setEditedCard({ ...editedCard, description: e.target.value })
               }
