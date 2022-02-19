@@ -13,15 +13,9 @@ const Card = ({ card, index, setEditedCard }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={() => setEditedCard({ ...card, editor: false, modal: true })}
         >
-          <p
-            className="content"
-            onClick={() =>
-              setEditedCard({ ...card, editor: false, modal: true })
-            }
-          >
-            {card.content}
-          </p>
+          <p className="content">{card.content}</p>
           <button
             className="edit"
             onClick={(e) => {

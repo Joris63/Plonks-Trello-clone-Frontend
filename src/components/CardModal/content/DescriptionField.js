@@ -8,11 +8,13 @@ const DescriptionField = ({ card, handleSave }) => {
   const cardHasNoDescription =
     editedCard?.description === "" || !editedCard?.description;
 
-  useEffect(() => {
-    if (!_.isEqual(card, editedCard)) {
-      setEditedCard(card);
-    }
-  }, [card]);
+  const handleCancel = () => {
+    setEditing(false);
+    setEditedCard({
+      ...editedCard,
+      description: card?.description,
+    });
+  };
 
   function ResizeTextArea(e) {
     const textarea = e.target;
@@ -20,6 +22,36 @@ const DescriptionField = ({ card, handleSave }) => {
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight + 10}px`;
   }
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Escape") {
+      handleCancel();
+    }
+
+    if (e.key === "Enter") {
+      const cardDescriptionIsEmpty =
+        (typeof editedCard.description === "string" &&
+          editedCard.description === "") ||
+        !editedCard.description;
+
+      if (!cardDescriptionIsEmpty && !e.shiftKey) {
+        handleSave(editedCard);
+        setEditing(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!_.isEqual(card, editedCard)) {
+      setEditedCard(card);
+    }
+  }, [card]);
+
+  useEffect(() => {
+    if (editing) {
+      document.getElementById("description-textarea")?.focus();
+    }
+  }, [editing]);
 
   return (
     <div className="description">
@@ -47,6 +79,7 @@ const DescriptionField = ({ card, handleSave }) => {
               placeholder="Add a more detailed description..."
               value={editedCard?.description}
               onInput={(e) => ResizeTextArea(e)}
+              onKeyDown={(e) => handleKeyPress(e)}
               onChange={(e) =>
                 setEditedCard({ ...editedCard, description: e.target.value })
               }
@@ -64,11 +97,7 @@ const DescriptionField = ({ card, handleSave }) => {
               <button
                 className="cancel"
                 onClick={() => {
-                  setEditing(false);
-                  setEditedCard({
-                    ...editedCard,
-                    description: card?.description,
-                  });
+                  handleCancel();
                 }}
               >
                 <ion-icon name="add-outline" />

@@ -257,11 +257,16 @@ const Board = (props) => {
   }
 
   function handleCardEdit(updatedCard) {
+    if (updatedCard.modal) {
+      setEditedCard(updatedCard);
+    }
+
     const newLists = _.cloneDeep(lists);
     const card = findById(updatedCard.id, newLists);
     const parentList = findById(card.list_id, newLists);
+    const { editor, modal, ...newCard } = updatedCard;
 
-    parentList.cards.splice(card.order, 1, { ...updatedCard });
+    parentList.cards.splice(card.order, 1, { ...newCard });
 
     setLists(newLists);
   }
