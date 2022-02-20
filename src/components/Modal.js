@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "animate.css";
 
 const Modal = ({ title, subtitle, open, onClose, children }) => {
   const [status, setStatus] = useState(true);

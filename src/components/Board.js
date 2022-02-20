@@ -10,6 +10,7 @@ import AddList from "./AddList";
 import CardEditor from "./CardEditor";
 import ListActionDropdown from "./ListActionDropdown";
 import Modal from "./CardModal";
+import "animate.css";
 
 const allLists = [
   {

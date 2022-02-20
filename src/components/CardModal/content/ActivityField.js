@@ -1,6 +1,8 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const ActivityField = ({ card }) => {
+const ActivityField = ({ card, handleSave }) => {
   const [active, setActive] = useState(false);
   const [comment, setComment] = useState("");
   const [height, setHeight] = useState(105);
@@ -27,7 +29,6 @@ const ActivityField = ({ card }) => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      console.log(e.shiftKey, comment);
       if (comment !== "" && !e.shiftKey) {
         document.getElementById("comment-textarea").blur();
         handleSend();
@@ -36,8 +37,32 @@ const ActivityField = ({ card }) => {
   };
 
   const handleSend = () => {
+    const { activity = [] } = card;
+    const date = new Date();
+
+    activity.push({
+      id: uuidv4(),
+      card_id: card.id,
+      sender_id: "870c716b-0acb-43f9-ab9d-2c59b3e1deb7",
+      message: comment,
+      type: "comment",
+      sentAt: date.getTime(),
+    });
+
     setComment("");
     setActive(false);
+    handleSave({ ...card, activity });
+  };
+
+  const handleEdit = () => {};
+
+  const handleDelete = (id) => {
+    const { activity = [] } = card;
+    const commentIndex = activity?.findIndex((item) => item.id === id);
+
+    activity.splice(commentIndex, 1);
+
+    handleSave({ ...card, activity });
   };
 
   useEffect(() => {
@@ -78,7 +103,7 @@ const ActivityField = ({ card }) => {
             <textarea
               id="comment-textarea"
               placeholder="Write a comment..."
-              style={{ height: height - 16 }}
+              style={{ height: !active && comment === "" ? 20 : height - 16 }}
               value={comment}
               onInput={ResizeTextArea}
               onKeyDown={handleKeyPress}
@@ -86,7 +111,7 @@ const ActivityField = ({ card }) => {
               onFocus={handleCommentBox}
             />
             {(active || comment !== "") && (
-              <div className="actions">
+              <div className="actions animate__animated animate__fadeIn animate__slow">
                 <button
                   className="text_button save"
                   disabled={comment === ""}
@@ -110,7 +135,47 @@ const ActivityField = ({ card }) => {
             )}
           </div>
         </div>
-        <ul className="comments_list"></ul>
+        <ul className="activity_list">
+          {_.sortBy(card?.activity, ["sentAt"]).map((activity) =>
+            activity.type === "comment" ? (
+              <li key={`activity-${activity.id}`} className="comment">
+                <img
+                  src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
+                  alt="Profile"
+                />
+                <div className="info">
+                  <header>
+                    <p className="sender">JorisK</p>
+                    <p className="time">- {activity.sentAt}</p>
+                  </header>
+                  <div className="message">
+                    <textarea readOnly value={activity.message} />
+                    <div className="actions">
+                      <button>Edit</button>
+                      <span>-</span>
+                      <button onClick={() => handleDelete(activity.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ) : (
+              <li key={`activity-${activity.id}`} className="event">
+                <img
+                  src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
+                  alt="Profile"
+                />
+                <div className="info">
+                  <p className="history">
+                    <b>JorisK</b> {activity.message}
+                  </p>
+                  <p className="time">{activity.time}</p>
+                </div>
+              </li>
+            )
+          )}
+        </ul>
       </div>
     </div>
   );
