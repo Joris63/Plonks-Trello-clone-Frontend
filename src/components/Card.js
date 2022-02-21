@@ -19,7 +19,7 @@ const Card = ({ card, index, setEditedCard }) => {
           <button
             className="edit"
             onClick={(e) => {
-              e.preventDefault();
+              e.stopPropagation();
               setEditedCard({ ...card, editor: true, modal: false });
             }}
           >

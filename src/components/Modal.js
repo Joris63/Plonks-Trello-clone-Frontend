@@ -41,7 +41,7 @@ const Modal = ({ title, subtitle, open, onClose, children }) => {
     >
       <div
         className={`modal animate__animated ${
-          status ? "animate__zoomIn" : "animate__zoomOut"
+          status ? "animate__zoomIn" : "animate__zoomOut animate__slow"
         }`}
       >
         <div className="title">
