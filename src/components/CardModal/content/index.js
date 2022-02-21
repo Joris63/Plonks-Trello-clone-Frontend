@@ -5,13 +5,11 @@ import ChecklistField from "./ChecklistField";
 import DescriptionField from "./DescriptionField";
 
 const CardModalContent = (props) => {
-  const { card } = props;
-
   return (
     <>
       <div className="main_content">
         <DescriptionField {...props} />
-        {card?.checklist && <ChecklistField {...props} />}
+        <ChecklistField {...props} />
         <ActivityField {...props} />
       </div>
       <ActionsList />
