@@ -100,13 +100,13 @@ const CommentForm = ({ comment, card, onSave }) => {
       <div
         style={{
           height: !open ? 40 : height + 5,
-          transition: text === "" ? "all 0.225s ease" : "",
+          transition: text === "" || comment ? "all 0.225s ease" : "",
         }}
         className="comment_form"
         id={`comment-form${comment ? `-${comment.id}` : ""}`}
       >
         <textarea
-          readOnly={comment && !active}
+          disabled={comment && !active}
           id={`comment-textarea${comment ? `-${comment.id}` : ""}`}
           placeholder="Write a comment..."
           style={{ height: !open ? 20 : height - 16 }}

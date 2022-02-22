@@ -1,6 +1,7 @@
 import React from "react";
+import ChecklistItem from "./CheckListItem";
 
-const ChecklistField = ({ card }) => {
+const ChecklistField = ({ checklist, card }) => {
   return (
     <div className="checklist">
       <div className="title">
@@ -13,14 +14,17 @@ const ChecklistField = ({ card }) => {
       <div className="content">
         <div className="progress_bar">
           <p className="percentage">50%</p>
-          <div className="bar"><div className="progress"></div></div>
+          <div className="bar">
+            <div className="progress"></div>
+          </div>
         </div>
         <div className="item_list">
-          
+          {card?.checklist?.map((item) => {
+            <ChecklistItem />;
+          })}
+          <ChecklistItem />
         </div>
-        <button className="text_button add_item">
-          Add an item
-        </button>
+        <button className="text_button add_item">Add an item</button>
       </div>
     </div>
   );
