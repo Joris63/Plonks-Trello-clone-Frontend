@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const DescriptionField = ({ card, handleSave }) => {
   const [editedCard, setEditedCard] = useState(card);

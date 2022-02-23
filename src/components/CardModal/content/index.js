@@ -9,7 +9,9 @@ const CardModalContent = (props) => {
     <>
       <div className="main_content">
         <DescriptionField {...props} />
-        <ChecklistField {...props} />
+        {props?.card?.checklists?.map((checklist) => (
+          <ChecklistField checklist={checklist} {...props} />
+        ))}
         <ActivityField {...props} />
       </div>
       <ActionsList />

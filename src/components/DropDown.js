@@ -5,7 +5,7 @@ const DropDown = ({
   title,
   open,
   position,
-  mode,
+  mode = "default",
   handleMode,
   handleClose,
   id,
@@ -60,7 +60,7 @@ const DropDown = ({
             <ion-icon name="chevron-back-outline"></ion-icon>
           </button>
         )}
-        <p className="title">{title}</p>
+        <p className="dropdown_title">{title}</p>
         <button className="close_btn" onClick={handleClose}>
           <ion-icon name="add-outline"></ion-icon>
         </button>

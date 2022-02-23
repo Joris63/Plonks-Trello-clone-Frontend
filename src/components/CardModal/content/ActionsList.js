@@ -2,7 +2,7 @@ import React from "react";
 
 const ActionsList = (props) => {
   return (
-    <div className="actions_list">
+    <div className="modules_list">
       <div className="module">
         <p className="module_title">Add to card</p>
         <ul className="module_list">
