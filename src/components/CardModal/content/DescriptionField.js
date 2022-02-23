@@ -70,18 +70,21 @@ const DescriptionField = ({ card, handleSave }) => {
 
   return (
     <div className="description">
-      <div className="title">
+      <div className="card_detail_title_wrapper">
         <ion-icon className="icon" name="document-text-outline" />
-        <div className="main">
-          <p className="name">Description</p>
+        <div className="card_detail_title">
+          <p className="detail_title">Description</p>
         </div>
         {!cardHasNoDescription && !editing && (
-          <button className="text_button edit" onClick={() => setEditing(true)}>
+          <button
+            className="text_button detail_title_action"
+            onClick={() => setEditing(true)}
+          >
             Edit
           </button>
         )}
       </div>
-      <div className="content">
+      <div className="card_detail_content">
         {cardHasNoDescription && !editing && (
           <button className="add_description" onClick={() => setEditing(true)}>
             <p>Add a more detailed description...</p>
@@ -99,9 +102,9 @@ const DescriptionField = ({ card, handleSave }) => {
                 setEditedCard({ ...editedCard, description: e.target.value })
               }
             />
-            <div className="actions">
+            <div className="description_form_actions">
               <button
-                className="text_button save"
+                className="text_button save_description_btn"
                 onClick={() => {
                   setEditing(false);
                   handleSave(editedCard);
@@ -110,7 +113,7 @@ const DescriptionField = ({ card, handleSave }) => {
                 Save
               </button>
               <button
-                className="cancel"
+                className="cancel_description_btn"
                 onClick={() => {
                   handleCancel();
                 }}

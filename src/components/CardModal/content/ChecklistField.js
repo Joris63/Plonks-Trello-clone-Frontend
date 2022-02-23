@@ -31,14 +31,14 @@ const ChecklistField = ({ checklist, card, handleSave }) => {
 
   return (
     <div className="checklist">
-      <div className="title">
+      <div className="card_detail_title_wrapper">
         <ion-icon className="icon" name="checkbox-outline" />
-        <div className="main">
-          <p className="name">{checklist?.name}</p>
+        <div className="card_detail_title">
+          <p className="detail_title">{checklist?.name}</p>
         </div>
-        <button className="text_button edit">Delete</button>
+        <button className="text_button detail_title_action">Delete</button>
       </div>
-      <div className="content">
+      <div className="card_detail_content">
         <div className="progress_bar">
           <p className="percentage">{`${percentage || 0}%`}</p>
           <div className="bar">
@@ -48,7 +48,7 @@ const ChecklistField = ({ checklist, card, handleSave }) => {
             ></div>
           </div>
         </div>
-        <div className="item_list">
+        <div className="checklist_item_list">
           {checklist?.items?.map((item) => (
             <ChecklistItem item={item} onSave={handleChecklistSave} />
           ))}
@@ -60,7 +60,7 @@ const ChecklistField = ({ checklist, card, handleSave }) => {
           )}
         </div>
         <button
-          className="text_button add_item"
+          className="text_button add_checklist_item"
           onClick={() => setAdding(true)}
         >
           Add an item

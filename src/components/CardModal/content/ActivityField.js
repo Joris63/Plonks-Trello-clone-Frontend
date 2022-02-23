@@ -5,15 +5,15 @@ import CommentForm from "./CommentForm";
 const ActivityField = ({ card, handleSave }) => {
   return (
     <div className="activity">
-      <div className="title">
+      <div className="card_detail_title_wrapper">
         <ion-icon className="icon" name="list-outline" />
-        <div className="main">
-          <p className="name">Actvity</p>
+        <div className="card_detail_title">
+          <p className="detail_title">Actvity</p>
         </div>
-        <button className="text_button edit">Show details</button>
+        <button className="text_button detail_title_action">Show details</button>
       </div>
-      <div className="content">
-        <div className="text_field">
+      <div className="card_detail_content">
+        <div className="add_comment_wrapper">
           <img
             src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
             alt="Profile"
@@ -28,10 +28,10 @@ const ActivityField = ({ card, handleSave }) => {
                   src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
                   alt="Profile"
                 />
-                <div className="info">
-                  <header>
-                    <p className="sender">JorisK</p>
-                    <p className="time">- {activity.sentAt}</p>
+                <div className="comment_info">
+                  <header className="comment_header">
+                    <p className="comment_sender">JorisK</p>
+                    <p className="comment_date">- {activity.sentAt}</p>
                   </header>
                   <CommentForm
                     comment={activity}
@@ -46,11 +46,11 @@ const ActivityField = ({ card, handleSave }) => {
                   src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
                   alt="Profile"
                 />
-                <div className="info">
-                  <p className="history">
+                <div className="event_info">
+                  <p className="event_history">
                     <b>JorisK</b> {activity.message}
                   </p>
-                  <p className="time">{activity.time}</p>
+                  <p className="event_date">{activity.time}</p>
                 </div>
               </li>
             )

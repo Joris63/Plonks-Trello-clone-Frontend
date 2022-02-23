@@ -117,20 +117,20 @@ const CommentForm = ({ comment, card, onSave }) => {
           onFocus={handleCommentBox}
         />
         {open && (
-          <div className="actions animate__animated animate__fadeIn animate__slow">
+          <div className="comment_form_actions animate__animated animate__fadeIn animate__slow">
             <button
-              className="text_button save"
+              className="text_button comment_save_btn"
               disabled={text === ""}
               onClick={handleSave}
             >
               {comment ? "Save" : "Send"}
             </button>
-            <div className="comment_options">
-              <button className="option">
+            <div className="comment_form_options">
+              <button className="comment_option">
                 <ion-icon name="at-outline" />
               </button>
               <button
-                className="option"
+                className="comment_option"
                 onFocus={handleCommentBox}
                 onBlur={handleCommentBox}
               >

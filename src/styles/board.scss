@@ -470,15 +470,27 @@
             gap: 20px;
             align-items: flex-start;
 
-            & .title {
+            & .card_detail_title_wrapper {
+                display: flex;
                 align-items: center;
                 margin-bottom: 10px;
+                gap: 20px;
 
-                & .main p.name {
-                    font-size: 1em;
+                & ion-icon {
+                    font-size: 1.6em;
                 }
 
-                & button {
+                & .card_detail_title {
+                    flex-grow: 1;
+
+                    & .detail_title {
+                        font-weight: 500;
+                        font-size: 1em;
+                        margin: 0;
+                    }
+                }
+
+                & .detail_title_action {
                     font-size: 0.9em;
                     background: #e9e9e9;
 
@@ -496,9 +508,11 @@
                 flex-direction: column;
                 gap: 25px;
 
-                & .description .content {
+                & .description .card_detail_content {
                     padding-left: 45px;
+                }
 
+                & .card_detail_content {
                     & .add_description {
                         transition: all 0.225s ease;
                         background: #e9e9e9;
@@ -537,12 +551,12 @@
                             }
                         }
 
-                        & .actions {
+                        & .description_form_actions {
                             display: flex;
                             align-items: center;
                             gap: 5px;
 
-                            & .save {
+                            & .save_description_btn {
                                 background: lightblue;
                                 font-size: 0.9em;
 
@@ -553,7 +567,7 @@
                                 }
                             }
 
-                            & .cancel {
+                            & .cancel_description_btn {
                                 transition: all 0.225s ease;
                                 display: flex;
                                 justify-content: center;
@@ -586,10 +600,8 @@
                         word-break: break-all;
                         font-size: 0.9em;
                     }
-                }
 
-                & .activity .content {
-                    & .text_field {
+                    & .add_comment_wrapper {
                         display: flex;
                         gap: 5px;
                         transition: all 0.225s ease;
@@ -622,23 +634,23 @@
                             gap: 10px;
                             transition: all 0.225s ease;
 
-                            & .info {
+                            & .comment_info {
                                 display: flex;
                                 width: calc(100% - 10px);
                                 flex-direction: column;
 
-                                & header {
+                                & .comment_header {
                                     display: flex;
                                     gap: 5px;
                                     align-items: flex-end;
 
-                                    & .sender {
+                                    & .comment_sender {
                                         font-weight: bold;
                                         margin: 0;
                                         font-size: 0.9em;
                                     }
 
-                                    & .time {
+                                    & .comment_date {
                                         margin: 0;
                                         color: #7d7d7d;
                                         font-size: 0.8em;
@@ -653,16 +665,16 @@
                             transition: all 0.225s ease;
                             align-items: center;
 
-                            & .info {
+                            & .event_info {
                                 display: flex;
                                 flex-direction: column;
 
-                                & .history {
+                                & .event_history {
                                     margin: 0;
                                     font-size: 0.9em;
                                 }
 
-                                & .time {
+                                & .event_date {
                                     margin: 0;
                                     color: #7d7d7d;
                                     font-size: 0.8em;
@@ -692,7 +704,7 @@
                             }
                         }
 
-                        & .actions {
+                        & .comment_form_actions {
                             display: flex;
                             justify-content: space-between;
                             align-items: center;
@@ -700,7 +712,7 @@
                             padding: 0px 8px;
                             transform: translate(0, -52px);
 
-                            & .save {
+                            & .comment_save_btn {
                                 background: lightblue;
 
                                 &:hover,
@@ -720,12 +732,12 @@
                                 }
                             }
 
-                            & .comment_options {
+                            & .comment_form_options {
                                 display: flex;
                                 gap: 5px;
                                 align-items: center;
 
-                                & button {
+                                & .comment_option {
                                     transition: all 0.225s ease;
                                     display: flex;
                                     justify-content: center;
@@ -766,9 +778,7 @@
                             }
                         }
                     }
-                }
 
-                & .checklist .content {
                     & .progress_bar {
                         display: flex;
                         gap: 10px;
@@ -799,12 +809,12 @@
                         }
                     }
 
-                    & .item_list {
+                    & .checklist_item_list {
                         width: calc(100% + 16px);
                         min-height: 8px;
                         transform: translateX(-8px);
 
-                        & .item {
+                        & .checklist_item {
                             transition: all 0.225s ease;
                             width: calc(100% - 16px);
                             display: flex;
@@ -877,7 +887,7 @@
                                 }
                             }
 
-                            & .item_form {
+                            & .checklist_item_form {
                                 margin-left: 5px;
                                 flex-grow: 1;
 
@@ -890,7 +900,7 @@
                                     font-size: 0.9em;
                                 }
 
-                                & .actions {
+                                & .checklist_item_form_actions {
                                     display: flex;
                                     align-items: center;
                                     justify-content: space-between;
@@ -900,7 +910,7 @@
                                         align-items: center;
                                         gap: 5px;
 
-                                        & .save {
+                                        & .save_checklist_item_btn {
                                             background: lightblue;
                                             font-size: 0.9em;
 
@@ -911,7 +921,7 @@
                                             }
                                         }
 
-                                        & .cancel {
+                                        & .cancel_checklist_item_btn {
                                             transition: all 0.225s ease;
                                             display: flex;
                                             justify-content: center;
@@ -941,7 +951,7 @@
                                         gap: 5px;
                                         align-items: center;
 
-                                        & .option {
+                                        & .checklist_item_option {
                                             transition: all 0.225s ease;
                                             display: flex;
                                             justify-content: center;
@@ -965,28 +975,28 @@
                         }
                     }
 
-                    & .add_item {
+                    & .add_checklist_item {
                         font-size: 0.9em;
                         margin-left: 40px;
                     }
                 }
             }
 
-            & .modules_list {
+            & .modal_actions_list {
                 width: 25%;
 
-                & .module {
+                & .modal_actions_module {
                     margin-top: 5px;
                     margin-bottom: 20px;
 
-                    & .module_title {
+                    & .modal_actions_module_title {
                         font-size: 0.9em;
                         font-weight: 500;
                         margin: 0;
                         margin-bottom: 10px;
                     }
 
-                    & .module_list {
+                    & .modal_actions_module_list {
                         list-style: none;
                         margin: 0;
                         padding: 0;
@@ -994,7 +1004,7 @@
                         flex-direction: column;
                         gap: 10px;
 
-                        & .module_action {
+                        & .modal_action {
                             & .icon_text_button {
                                 background: #e9e9e9;
 

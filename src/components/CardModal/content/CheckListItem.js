@@ -70,7 +70,7 @@ const ChecklistItem = ({
   }, [editing]);
 
   return (
-    <div className="item">
+    <div className="checklist_item">
       <label className="check_container">
         {item && (
           <>
@@ -89,7 +89,7 @@ const ChecklistItem = ({
           </>
         )}
       </label>
-      <div id={`item-form${item ? `-${item.id}` : ""}`} className="item_form">
+      <div id={`checklist_item-form${item ? `-${item.id}` : ""}`} className="checklist_item_form">
         <textarea
           disabled={item && !editing}
           id={`item-textarea${item ? `-${item.id}` : ""}`}
@@ -104,10 +104,10 @@ const ChecklistItem = ({
           onFocus={handleItemForm}
         />
         {editing && (
-          <div className="actions">
+          <div className="checklist_item_form_actions">
             <div className="actions_left">
               <button
-                className="text_button save"
+                className="text_button save_checklist_item_btn"
                 onClick={() => {
                   setEditing(false);
                   handleSave();
@@ -116,7 +116,7 @@ const ChecklistItem = ({
                 {item ? "Add" : "Save"}
               </button>
               <button
-                className="cancel"
+                className="cancel_checklist_item_btn"
                 onClick={() => {
                   if (item) {
                     setEditing(false);
@@ -129,7 +129,7 @@ const ChecklistItem = ({
               </button>
             </div>
             <div className="actions_right">
-              <button className="option">
+              <button className="checklist_item_option">
                 <ion-icon name="at-outline" />
               </button>
               <button className="option">
