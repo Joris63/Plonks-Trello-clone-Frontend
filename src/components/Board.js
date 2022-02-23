@@ -8,7 +8,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import AddList from "./AddList";
 import CardEditor from "./CardEditor";
-import ListActionDropdown from "./ListActionDropdown";
+import ListActionDropdown from "./dropdowns/ListActionDropdown";
 import Modal from "./CardModal";
 import "animate.css";
 

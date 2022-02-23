@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DropDown from "./DropDown";
+import DropDown from "../DropDown";
 import { v4 as uuidv4 } from "uuid";
 
 const ChecklistDropdown = ({ open = true, handleClose, anchorId }) => {

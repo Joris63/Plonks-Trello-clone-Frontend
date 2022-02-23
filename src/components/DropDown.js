@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const DropDown = ({
   title,
   open,
-  position = { x: 0, y: 0 },
+  position,
   mode = "default",
   handleMode,
   handleClose,
@@ -50,9 +50,9 @@ const DropDown = ({
 
   return open ? (
     <div
-      className="dropdown"
       id={id}
-      style={{ top: position?.y + 40, left: position?.x + 10 }}
+      className="dropdown"
+      style={{ top: (position?.y || 0) + 40, left: (position?.x || 0) + 10 }}
     >
       <header>
         {mode !== "default" && (
