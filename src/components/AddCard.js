@@ -63,14 +63,14 @@ const AddCard = ({
 
     setHeight(textarea.scrollHeight);
   }
-  
+
   return newCard?.list_id === list.id ? (
     <Draggable draggableId={`add-card-${list.id}`} index={index}>
       {(provided, snapshot) => (
         <li
-          className={`add_card ${snapshot.isDragging ? "" : "withPadding"} ${
-            snapshot.isDragging && snapshot.mode === "SNAP" ? "pulse" : ""
-          }`}
+          className={`add_card_wrapper ${
+            snapshot.isDragging ? "" : "withPadding"
+          } ${snapshot.isDragging && snapshot.mode === "SNAP" ? "pulse" : ""}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -78,6 +78,7 @@ const AddCard = ({
         >
           <textarea
             id={`add-card-txt-${list.id}`}
+            className="add_card_form"
             style={
               snapshot.isDragging
                 ? { height: height + 32 }
@@ -91,11 +92,11 @@ const AddCard = ({
             }
           />
           <div
-            className="buttons"
+            className="add_card_actions"
             style={{ opacity: snapshot.isDragging ? 0 : 1, transitionDelay: 0 }}
           >
             <button
-              className="text_button save"
+              className="text_button add_card_btn"
               onClick={() => {
                 if (newCard.content && newCard.content !== "") {
                   handleAddCard();
@@ -104,7 +105,7 @@ const AddCard = ({
             >
               Add card
             </button>
-            <div className="cancel">
+            <div className="cancel_card_btn">
               <button
                 onClick={() => {
                   handleAddCancel(list.id);
@@ -113,15 +114,15 @@ const AddCard = ({
                 <ion-icon name="add-outline" />
               </button>
             </div>
-            <div className="options">
-              <button className="option_btn" onClick={() => setOpen(!open)}>
+            <div className="add_card_options">
+              <button className="add_card_option_btn" onClick={() => setOpen(!open)}>
                 <ion-icon name="ellipsis-horizontal" />
               </button>
               <DropDown
                 title="Options"
                 open={open}
                 id={`options_drpdwn-${list.id}`}
-                toggleOpen={() => setOpen(!open)}
+                handleClose={() => setOpen(false)}
               >
                 <AddCardActions />
               </DropDown>
@@ -131,9 +132,9 @@ const AddCard = ({
       )}
     </Draggable>
   ) : (
-    <li className="add_card_btn">
+    <li className="open_add_card_wrapper">
       <button
-        className="icon_text_button"
+        className="open_add_card_btn icon_text_button"
         onClick={() =>
           setNewCard({ ...newCard, list_id: list.id, list_name: list.name })
         }

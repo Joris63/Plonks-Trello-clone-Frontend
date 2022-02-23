@@ -44,13 +44,13 @@ const Modal = ({ title, subtitle, open, onClose, children }) => {
           status ? "animate__zoomIn" : "animate__zoomOut animate__slow"
         }`}
       >
-        <div className="title">
+        <div className="modal_title">
           <ion-icon className="icon" name="card-outline" />
-          <div className="main">
-            <p className="name">{title}</p>
+          <div className="modal_header">
+            <p className="modal_name">{title}</p>
             {subtitle && <p>{subtitle}</p>}
           </div>
-          <button className="cancel" onClick={() => handleClose()}>
+          <button className="close_modal_btn" onClick={() => handleClose()}>
             <ion-icon name="add-outline" />
           </button>
         </div>

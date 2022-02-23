@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const DropDown = ({
   title,
   open,
-  position,
+  position = { x: 0, y: 0 },
   mode = "default",
   handleMode,
   handleClose,
@@ -48,7 +48,7 @@ const DropDown = ({
     return () => window.removeEventListener("mousedown", handleOutsideClick);
   }, [open, rect, id, handleClose]);
 
-  return open && position ? (
+  return open ? (
     <div
       className="dropdown"
       id={id}

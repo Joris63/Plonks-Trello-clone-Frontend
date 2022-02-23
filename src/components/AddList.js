@@ -50,16 +50,17 @@ const AddList = ({
           <div className="add_list">
             <input
               id="add-list-input"
+              className="add_list_form"
               value={newList?.name || ""}
               placeholder="Enter list title..."
               onChange={(e) => setNewList({ ...newList, name: e.target.value })}
             />
-            <div className="buttons">
-              <button className="save" onClick={() => handleAddList()}>
+            <div className="add_list_actions">
+              <button className="add_list_btn" onClick={() => handleAddList()}>
                 Add list
               </button>
               <button
-                className="cancel"
+                className="cancel_list_btn"
                 onClick={() => {
                   handleAddCancel();
                 }}
@@ -74,7 +75,7 @@ const AddList = ({
   ) : (
     <button
       style={{ transform: `translate(${index * 282}px, 0)` }}
-      className="icon_text_button add_list_btn"
+      className="icon_text_button open_add_list_btn"
       onClick={() => setNewList({})}
     >
       <ion-icon name="add-sharp" />

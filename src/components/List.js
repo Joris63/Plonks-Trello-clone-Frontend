@@ -80,11 +80,11 @@ const List = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <header>
+          <header className="list_header">
             {editedList.editing ? (
               <input
                 id={`name-input-${list.id}`}
-                className="name"
+                className="list_name_form"
                 value={editedList.name}
                 onChange={(e) =>
                   setEditedList({ ...editedList, name: e.target.value })
@@ -93,15 +93,15 @@ const List = ({
             ) : (
               <p
                 onClick={() => setEditedList({ ...editedList, editing: true })}
-                className="name"
+                className="list_name"
               >
                 {list.name}
               </p>
             )}
-            <div className="action">
+            <div className="list_actions">
               <button
                 id={`list-action-${list.id}`}
-                className="action_btn"
+                className="list_action_btn"
                 onClick={() => setHighlightedList(list)}
               >
                 <ion-icon name="ellipsis-horizontal" />

@@ -17,7 +17,7 @@
             margin-right: 10px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-            & input {
+            & .add_list_form {
                 padding: 8px;
                 border-radius: 8px;
                 border: none;
@@ -30,11 +30,11 @@
                 }
             }
 
-            & .buttons {
+            & .add_list_actions {
                 display: flex;
                 gap: 10px;
 
-                & .save {
+                & .add_list_btn {
                     font-size: 0.9em;
                     background: lightblue;
                     border: none;
@@ -43,7 +43,7 @@
                     cursor: pointer;
                 }
 
-                & .cancel {
+                & .cancel_list_btn {
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -61,7 +61,7 @@
         }
     }
 
-    & .add_list_btn {
+    & .open_add_list_btn {
         position: absolute;
         height: fit-content;
         background: #e9e9e9;
@@ -91,17 +91,18 @@
             outline: 2px solid lightblue;
         }
 
-        & header {
+        & .list_header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 8px;
 
-            & input {
+            & .list_name_form {
                 padding: 4px 8px;
             }
 
-            & .name {
+            & .list_name_form,
+            & .list_name {
                 margin: 0;
                 padding: 4px;
                 font-size: 1em;
@@ -116,11 +117,11 @@
                 }
             }
 
-            & .action {
+            & .list_actions {
                 position: relative;
                 margin-left: 5px;
 
-                & .action_btn {
+                & .list_action_btn {
                     background: none;
                     border: none;
                     cursor: pointer;
@@ -165,7 +166,7 @@
                     outline: 2px solid lightblue;
                 }
 
-                & .content {
+                & .card_name {
                     margin: 0;
                     font-size: 0.9em;
                     word-wrap: break-word;
@@ -174,7 +175,7 @@
                     white-space: pre-wrap;
                 }
 
-                & .edit {
+                & .card_edit_btn {
                     position: absolute;
                     top: 7px;
                     right: 5px;
@@ -195,22 +196,22 @@
                 }
 
                 &:hover {
-                    & .content {
+                    & .card_name {
                         width: 90%;
                     }
 
-                    & .edit {
+                    & .card_edit_btn {
                         display: flex;
                     }
                 }
             }
 
-            & .add_card_btn {
+            & .open_add_card_wrapper {
                 position: absolute;
                 bottom: 0;
                 width: 256px;
 
-                & button {
+                & .open_add_card_btn {
                     background: transparent;
                     transition: all 0.225s ease;
 
@@ -222,13 +223,13 @@
                 }
             }
 
-            & .add_card {
+            & .add_card_wrapper {
                 position: relative;
                 font-size: 0.9em;
                 border-radius: 8px;
                 margin-bottom: 10px;
 
-                & textarea {
+                & .add_card_form {
                     top: 0;
                     position: absolute;
                 }
@@ -237,7 +238,7 @@
                     outline: 2px solid lightblue;
                 }
 
-                & .buttons {
+                & .add_card_actions {
                     width: 100%;
                     position: absolute;
                     bottom: -1px;
@@ -248,7 +249,7 @@
                     opacity: 1;
                     height: 40px;
 
-                    & .save {
+                    & .add_card_btn {
                         transition: all 0.225s ease;
                         background: lightblue;
 
@@ -259,7 +260,7 @@
                         }
                     }
 
-                    & .cancel {
+                    & .cancel_card_btn {
                         flex-grow: 1;
 
                         & button {
@@ -287,10 +288,10 @@
                         }
                     }
 
-                    & .options {
+                    & .add_card_options {
                         position: relative;
 
-                        & .option_btn {
+                        & .add_card_option_btn {
                             transition: all 0.225s ease;
                             display: flex;
                             justify-content: center;
@@ -321,7 +322,7 @@
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1000;
 
-    & .cancel {
+    & .close_card_editor {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -340,23 +341,23 @@
         }
     }
 
-    & .editor {
+    & .card_editor_container {
         position: absolute;
         display: flex;
         gap: 10px;
 
-        & .card {
+        & .card_wrapper {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             gap: 10px;
             font-size: 0.9em;
 
-            & textarea:focus {
+            & .card_editor_form:focus {
                 outline: 2px solid lightblue;
             }
 
-            & button {
+            & .save_card_btn {
                 background: lightblue;
                 width: fit-content;
 
@@ -368,12 +369,12 @@
             }
         }
 
-        & .actions {
+        & .card_editor_actions {
             display: flex;
             flex-direction: column;
             gap: 10px;
 
-            & button {
+            & .card_editor_action_btn {
                 background-color: rgba(0, 0, 0, 0.6);
                 color: white;
                 transform: translate(0, 0);
@@ -425,7 +426,7 @@
         padding: 12px 24px;
         width: 768px;
 
-        & .title {
+        & .modal_title {
             display: flex;
             justify-content: space-between;
             gap: 20px;
@@ -435,21 +436,21 @@
                 margin-top: 3px;
             }
 
-            & .main {
+            & .modal_header {
                 flex-grow: 1;
 
                 & p {
                     font-size: 0.9em;
                     margin: 0;
 
-                    &.name {
+                    &.modal_name {
                         font-size: 1.2em;
                         font-weight: 500;
                     }
                 }
             }
 
-            & .cancel {
+            & .close_modal_btn {
                 border: none;
                 background: none;
                 font-size: 1.5em;

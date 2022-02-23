@@ -15,9 +15,9 @@ const Card = ({ card, index, setEditedCard }) => {
           {...provided.dragHandleProps}
           onClick={() => setEditedCard({ ...card, editor: false, modal: true })}
         >
-          <p className="content">{card.content}</p>
+          <p className="card_name">{card.content}</p>
           <button
-            className="edit"
+            className="card_edit_btn"
             onClick={(e) => {
               e.stopPropagation();
               setEditedCard({ ...card, editor: true, modal: false });

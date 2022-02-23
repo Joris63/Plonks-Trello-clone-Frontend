@@ -118,13 +118,17 @@ const CardEditor = ({
 
   return (
     <div id="card-editor" className="card_editor_overlay">
-      <button className="cancel" onClick={() => handleCancel()}>
+      <button className="close_card_editor" onClick={() => handleCancel()}>
         <ion-icon name="add-outline" />
       </button>
-      <div className="editor" style={{ top: position?.y, left: position?.x }}>
-        <div className="card">
+      <div
+        className="card_editor_container"
+        style={{ top: position?.y, left: position?.x }}
+      >
+        <div className="card_wrapper">
           <textarea
             id="card-textarea"
+            className="card_editor_form"
             value={editedCard?.content}
             placeholder="Enter a title for this card..."
             onInput={ResizeTextArea}
@@ -133,7 +137,7 @@ const CardEditor = ({
             }
           />
           <button
-            className="text_button"
+            className="save_card_btn text_button"
             onClick={() => {
               handleCardEdit(editedCard);
               handleCancel();
@@ -142,22 +146,26 @@ const CardEditor = ({
             Save
           </button>
         </div>
-        <div className="actions">
-          <button className="icon_text_button">
+        <div className="card_editor_actions">
+          <button className="card_editor_action_btn icon_text_button">
             <ion-icon name="card-outline"></ion-icon>
             <p>Open card</p>
           </button>
-          <button className="icon_text_button">
+          <button className="card_editor_action_btn icon_text_button">
             <ion-icon name="pricetag-outline"></ion-icon>
             <p>Edit labels</p>
           </button>
-          <button className="icon_text_button">
-            <ion-icon name="checkbox-outline"></ion-icon>
-            <p>Add checklist</p>
-          </button>
-          <button className="icon_text_button">
+          <button className="card_editor_action_btn icon_text_button">
             <ion-icon name="person-outline"></ion-icon>
             <p>Change members</p>
+          </button>
+          <button className="card_editor_action_btn icon_text_button">
+            <ion-icon name="arrow-forward-outline" />
+            <p>Move</p>
+          </button>
+          <button className="card_editor_action_btn icon_text_button">
+            <ion-icon name="archive-outline"></ion-icon>
+            <p>Archive</p>
           </button>
         </div>
       </div>
