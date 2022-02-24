@@ -168,7 +168,6 @@ textarea {
 
         button {
             transition: all 0.225s ease;
-            background: none;
             border: none;
             border-radius: 8px;
             font-size: 0.9rem;
@@ -177,8 +176,8 @@ textarea {
             width: 100%;
             text-align: left;
 
-            &:hover {
-                background: rgba(0, 0, 0, 0.12);
+            &.create_new_label {
+                text-align: center;
             }
 
             &.warning {

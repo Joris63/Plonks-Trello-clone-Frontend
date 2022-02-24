@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import DropDown from "../DropDown";
 
 const ListActions = ({
@@ -18,6 +18,7 @@ const ListActions = ({
       {mode === "default" && (
         <>
           <button
+            className="list_action_btn"
             onClick={() => {
               handleClose();
               setNewCard({ list_id: list.id });
@@ -26,16 +27,30 @@ const ListActions = ({
             Add a card...
           </button>
           <hr />
-          <button onClick={() => handleMode("sort")}>Sort by...</button>
+          <button
+            className="list_action_btn"
+            onClick={() => handleMode("sort")}
+          >
+            Sort by...
+          </button>
           <hr />
-          <button onClick={() => handleMode("move")}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleMode("move")}
+          >
             Move all cards in this list...
           </button>
-          <button onClick={() => handleMode("archive")}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleMode("archive")}
+          >
             Archive all cards in this list...
           </button>
           <hr />
-          <button onClick={() => handleArchive(list.id)}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleArchive(list.id)}
+          >
             Archive this list
           </button>
         </>
@@ -43,13 +58,22 @@ const ListActions = ({
 
       {mode === "sort" && (
         <>
-          <button onClick={() => handleSort(list.id, "createdLast")}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleSort(list.id, "createdLast")}
+          >
             Date created (newest first)
           </button>
-          <button onClick={() => handleSort(list.id, "createdFirst")}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleSort(list.id, "createdFirst")}
+          >
             Date created (oldest first)
           </button>
-          <button onClick={() => handleSort(list.id, "alphabet")}>
+          <button
+            className="list_action_btn"
+            onClick={() => handleSort(list.id, "alphabet")}
+          >
             Card name (alphabetically)
           </button>
         </>
@@ -60,6 +84,7 @@ const ListActions = ({
           (childList) =>
             !childList.id.includes("add-list") && (
               <button
+                className="list_action_btn"
                 key={`move-to-${childList.id}`}
                 disabled={childList.id === list.id}
                 onClick={() => handleMoveAllCards(list.id, childList.id)}
