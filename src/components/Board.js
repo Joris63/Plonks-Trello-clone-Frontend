@@ -11,9 +11,7 @@ import CardEditor from "./CardEditor";
 import ListActionDropdown from "./dropdowns/ListActionDropdown";
 import Modal from "./CardModal";
 import "animate.css";
-import MembersDropdown from "./dropdowns/MembersDropdown";
-import LabelsDropdown from "./dropdowns/LabelsDropdown";
-import MoveCardDropdown from "./dropdowns/MoveCardDropdown";
+import { getDefaultUser } from "../defaultUser";
 
 const allLists = [
   {
@@ -73,6 +71,19 @@ const allLists = [
     createdAt: 1644313051214,
   },
 ];
+
+const getBoard = () => ({
+  labels: [
+    { color: "green", name: "" },
+    { color: "yellow", name: "" },
+    { color: "orange", name: "" },
+    { color: "red", name: "" },
+    { color: "purple", name: "" },
+    { color: "blue", name: "" },
+  ],
+  lists: allLists,
+  boardMembers: [getDefaultUser()],
+});
 
 function UpdateItemOrders(array) {
   array.forEach((item) => {
@@ -482,7 +493,6 @@ const Board = (props) => {
         handleArchiveAllCards={archiveAllCards}
         handleArchive={handleListArchive}
       />
-      <MoveCardDropdown />
       <Modal
         card={editedCard}
         handleCardEdit={handleCardEdit}
@@ -493,3 +503,4 @@ const Board = (props) => {
 };
 
 export default Board;
+export { getBoard };

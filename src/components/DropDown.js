@@ -52,7 +52,7 @@ const DropDown = ({
     <div
       id={id}
       className="dropdown"
-      style={{ top: (position?.y || 0) + 40, left: (position?.x || 0) + 10 }}
+      style={{ top: position?.y || 0, left: position?.x || 0 }}
     >
       <header>
         {mode !== "default" && (

@@ -1,9 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
+import { getBoard } from "../Board";
 import DropDown from "../DropDown";
 
-const LabelsActions = ({ mode, handleMode, label }) => {
+const LabelsActions = ({ mode, handleMode }) => {
   const [search, setSearch] = useState("");
-  const [editedLabel, setEditedLabel] = useState(label || { name: "" });
+  const [editedLabel, setEditedLabel] = useState(null);
+
+  const board = getBoard();
 
   return (
     <div className="actions_list">
@@ -16,69 +19,40 @@ const LabelsActions = ({ mode, handleMode, label }) => {
           />
           <p className="content_title">Labels</p>
           <ul className="labels_list">
-            <li className="label_wrapper">
-              <button className="card_label_green label_btn">
-                Yes
-                <span className="active_label">
-                  <ion-icon name="checkmark-outline"></ion-icon>
-                </span>
-              </button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
-            <li className="label_wrapper">
-              <button className="card_label_yellow label_btn">Yes</button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
-            <li className="label_wrapper">
-              <button className="card_label_orange label_btn">Yes</button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
-            <li className="label_wrapper">
-              <button className="card_label_red label_btn">Yes</button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
-            <li className="label_wrapper">
-              <button className="card_label_purple label_btn">Yes</button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
-            <li className="label_wrapper">
-              <button className="card_label_blue label_btn">Yes</button>
-              <button
-                className="label_edit_btn"
-                onClick={() => handleMode("edit")}
-              >
-                <ion-icon name="pencil" />
-              </button>
-            </li>
+            {board.labels
+              .filter((label) =>
+                search.toLowerCase().includes(label.name.toLowerCase())
+              )
+              .map((label) => (
+                <li className="label_wrapper" key={`label-${label.color}`}>
+                  <button
+                    className={`${
+                      label.color && `card_label_${label.color}`
+                    } label_btn`}
+                  >
+                    {label.name}
+                    <span className="active_label">
+                      <ion-icon name="checkmark-outline"></ion-icon>
+                    </span>
+                  </button>
+                  <button
+                    className="label_edit_btn"
+                    onClick={() => {
+                      handleMode("edit");
+                      setEditedLabel(label);
+                    }}
+                  >
+                    <ion-icon name="pencil" />
+                  </button>
+                </li>
+              ))}
           </ul>
           <button
             className="dropdown_btn create_new_label_btn"
-            onClick={() => handleMode("create")}
+            onClick={() => {
+              handleMode("create");
+              setEditedLabel({ color: "green", name: "" });
+            }}
           >
             Create a new label
           </button>
@@ -95,21 +69,104 @@ const LabelsActions = ({ mode, handleMode, label }) => {
           />
           <p className="content_title">Select a color</p>
           <div className="label_selector_container">
-            <button className="label_selector card_label_green">
-              <ion-icon name="checkmark-outline"></ion-icon>
+            <button
+              className="label_selector card_label_green"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "green" })}
+            >
+              {editedLabel.color === "green" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
             </button>
-            <button className="label_selector card_label_yellow"></button>
-            <button className="label_selector card_label_orange"></button>
-            <button className="label_selector card_label_red"></button>
-            <button className="label_selector card_label_purple"></button>
-            <button className="label_selector card_label_blue"></button>
-            <button className="label_selector card_label_lightblue"></button>
-            <button className="label_selector card_label_lime"></button>
-            <button className="label_selector card_label_pink"></button>
-            <button className="label_selector card_label_black"></button>
+            <button
+              className="label_selector card_label_yellow"
+              onClick={() =>
+                setEditedLabel({ ...editedLabel, color: "yellow" })
+              }
+            >
+              {editedLabel.color === "yellow" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_orange"
+              onClick={() =>
+                setEditedLabel({ ...editedLabel, color: "orange" })
+              }
+            >
+              {editedLabel.color === "orange" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_red"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "red" })}
+            >
+              {editedLabel.color === "red" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_purple"
+              onClick={() =>
+                setEditedLabel({ ...editedLabel, color: "purple" })
+              }
+            >
+              {editedLabel.color === "purple" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_blue"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "blue" })}
+            >
+              {editedLabel.color === "blue" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_lightblue"
+              onClick={() =>
+                setEditedLabel({ ...editedLabel, color: "lightblue" })
+              }
+            >
+              {editedLabel.color === "lightblue" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_lime"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "lime" })}
+            >
+              {editedLabel.color === "lime" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_pink"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "pink" })}
+            >
+              {editedLabel.color === "pink" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
+            <button
+              className="label_selector card_label_black"
+              onClick={() => setEditedLabel({ ...editedLabel, color: "black" })}
+            >
+              {editedLabel.color === "black" && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
           </div>
           <div className="no_color_selector">
-            <button className="label_selector card_label_no_color"></button>
+            <button
+              className="label_selector card_label_no_color"
+              onClick={() => setEditedLabel({ ...editedLabel, color: null })}
+            >
+              {!editedLabel.color && (
+                <ion-icon name="checkmark-outline"></ion-icon>
+              )}
+            </button>
             <div className="no_color_info">
               <p className="no_color">No color.</p>
               <p className="no_color_description">

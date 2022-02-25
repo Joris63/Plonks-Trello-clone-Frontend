@@ -25,7 +25,7 @@
                 margin-bottom: 10px;
                 font-size: 0.9em;
 
-                &:focus {
+                &:focus-visible {
                     outline: 2px solid lightblue;
                 }
             }
@@ -71,7 +71,7 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
         &:hover,
-        &:focus {
+        &:focus-visible {
             outline: none;
             background: #d2d2d2;
         }
@@ -87,7 +87,7 @@
         margin-right: 10px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-        &:focus-visible {
+        &:focus-visible-visible {
             outline: 2px solid lightblue;
         }
 
@@ -112,7 +112,7 @@
                 width: 100%;
                 border: none;
 
-                &:focus {
+                &:focus-visible {
                     outline: 2px solid lightblue;
                 }
             }
@@ -135,7 +135,7 @@
                     transition: all 0.225s ease;
 
                     &:hover,
-                    &:focus {
+                    &:focus-visible {
                         outline: none;
                         background: #d2d2d2;
                     }
@@ -162,7 +162,7 @@
                 list-style: none;
                 margin-bottom: 10px;
 
-                &:focus-visible {
+                &:focus-visible-visible {
                     outline: 2px solid lightblue;
                 }
 
@@ -216,7 +216,7 @@
                     transition: all 0.225s ease;
 
                     &:hover,
-                    &:focus {
+                    &:focus-visible {
                         outline: none;
                         background: #d2d2d2;
                     }
@@ -234,7 +234,7 @@
                     position: absolute;
                 }
 
-                &:focus-visible {
+                &:focus-visible-visible {
                     outline: 2px solid lightblue;
                 }
 
@@ -254,7 +254,7 @@
                         background: lightblue;
 
                         &:hover,
-                        &:focus {
+                        &:focus-visible {
                             outline: none;
                             background: #8ac7db;
                         }
@@ -281,7 +281,7 @@
                             }
 
                             &:hover,
-                            &:focus {
+                            &:focus-visible {
                                 outline: none;
                                 background: #d2d2d2;
                             }
@@ -304,7 +304,7 @@
                             border-radius: 50%;
 
                             &:hover,
-                            &:focus {
+                            &:focus-visible {
                                 outline: none;
                                 background: #d2d2d2;
                             }
@@ -353,7 +353,7 @@
             gap: 10px;
             font-size: 0.9em;
 
-            & .card_editor_form:focus {
+            & .card_editor_form:focus-visible {
                 outline: 2px solid lightblue;
             }
 
@@ -362,7 +362,7 @@
                 width: fit-content;
 
                 &:hover,
-                &:focus {
+                &:focus-visible {
                     outline: none;
                     background: #8ac7db;
                 }
@@ -381,7 +381,7 @@
                 transition: transform 0.225s ease;
 
                 &:hover,
-                &:focus {
+                &:focus-visible {
                     outline: none;
                     transform: translate(10px, 0);
                 }
@@ -495,7 +495,7 @@
                     background: #e9e9e9;
 
                     &:hover,
-                    &:focus {
+                    &:focus-visible {
                         outline: none;
                         background: #d2d2d2;
                     }
@@ -532,7 +532,7 @@
                         }
 
                         &:hover,
-                        &:focus {
+                        &:focus-visible {
                             outline: none;
                             background: #d2d2d2;
                         }
@@ -546,7 +546,7 @@
                             font-size: 0.9em;
                             border: 3px solid lightblue;
 
-                            &:focus {
+                            &:focus-visible {
                                 outline: none;
                             }
                         }
@@ -561,7 +561,7 @@
                                 font-size: 0.9em;
 
                                 &:hover,
-                                &:focus {
+                                &:focus-visible {
                                     outline: none;
                                     background: #8ac7db;
                                 }
@@ -580,7 +580,7 @@
                                 padding: 4px;
 
                                 &:hover,
-                                &:focus {
+                                &:focus-visible {
                                     outline: none;
                                     background: #d2d2d2;
                                 }
@@ -716,7 +716,7 @@
                                 background: lightblue;
 
                                 &:hover,
-                                &:focus {
+                                &:focus-visible {
                                     outline: none;
                                     background: #8ac7db;
                                 }
@@ -750,7 +750,7 @@
                                     cursor: pointer;
 
                                     &:hover,
-                                    &:focus {
+                                    &:focus-visible {
                                         outline: none;
                                         background: #e9e9e9;
                                     }
@@ -772,7 +772,7 @@
                             cursor: pointer;
 
                             &:hover,
-                            & :focus {
+                            & :focus-visible {
                                 text-decoration: underline;
                                 outline: none;
                             }
@@ -915,7 +915,7 @@
                                             font-size: 0.9em;
 
                                             &:hover,
-                                            &:focus {
+                                            &:focus-visible {
                                                 outline: none;
                                                 background: #8ac7db;
                                             }
@@ -934,7 +934,7 @@
                                             padding: 4px;
 
                                             &:hover,
-                                            &:focus {
+                                            &:focus-visible {
                                                 outline: none;
                                                 background: #d2d2d2;
                                             }
@@ -964,7 +964,7 @@
                                             cursor: pointer;
 
                                             &:hover,
-                                            &:focus {
+                                            &:focus-visible {
                                                 outline: none;
                                                 background: #e9e9e9;
                                             }
@@ -1009,7 +1009,7 @@
                                 background: #e9e9e9;
 
                                 &:hover,
-                                &:focus {
+                                &:focus-visible {
                                     outline: none;
                                     background: #d2d2d2;
                                 }
@@ -1026,7 +1026,7 @@
     background: none;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         outline: none;
         background: rgba(0, 0, 0, 0.12);
     }
@@ -1089,7 +1089,7 @@
     background: none;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         outline: none;
         background: rgba(0, 0, 0, 0.12);
     }
@@ -1100,6 +1100,7 @@
 }
 
 .label_btn {
+    min-height: 32px;
     cursor: pointer;
     text-align: left;
     transition: all 0.225s ease;
@@ -1126,7 +1127,7 @@
     }
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         outline: none;
         box-shadow: -5px 0 #97a0af;
     }
@@ -1137,7 +1138,7 @@
     text-align: center;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         outline: none;
         background: #d2d2d2;
     }
@@ -1162,7 +1163,7 @@
         color: white;
 
         &:hover,
-        &:focus {
+        &:focus-visible {
             outline: none;
             opacity: 0.7;
         }
@@ -1185,7 +1186,7 @@
         height: 40px;
 
         &:hover,
-        &:focus {
+        &:focus-visible {
             outline: none;
             opacity: 0.7;
         }
@@ -1213,7 +1214,7 @@
             text-align: center;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 outline: none;
                 background: #ff3f34 !important;
             }
@@ -1264,7 +1265,7 @@
     width: 100%;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         outline: none;
         background: #d2d2d2;
     }
@@ -1278,7 +1279,7 @@
     background: #61bd4f;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #519839;
     }
@@ -1287,7 +1288,7 @@
     background: #f2d600;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #d9b51c;
     }
@@ -1296,7 +1297,7 @@
     background: #ff9f1a;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #cd8313;
     }
@@ -1305,7 +1306,7 @@
     background: #eb5a46;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #b04632;
     }
@@ -1314,7 +1315,7 @@
     background: #c377e0;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #89609e;
     }
@@ -1323,7 +1324,7 @@
     background: #0079bf;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #055a8c;
     }
@@ -1332,7 +1333,7 @@
     background: #00c2e0;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #0098b7;
     }
@@ -1341,7 +1342,7 @@
     background: #51e898;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #4bbf6b;
     }
@@ -1350,7 +1351,7 @@
     background: #ff78cb;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #c9558f;
     }
@@ -1359,7 +1360,7 @@
     background: #344563;
 
     &.label_btn:hover,
-    &.label_btn:focus {
+    &.label_btn:focus-visible {
         outline: none;
         box-shadow: -5px 0 #091e42;
     }

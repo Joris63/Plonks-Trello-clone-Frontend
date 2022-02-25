@@ -1,4 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+import LabelsDropdown from "./dropdowns/LabelsDropdown";
+import MembersDropdown from "./dropdowns/MembersDropdown";
+import MoveCardDropdown from "./dropdowns/MoveCardDropdown";
 
 const CardEditor = ({
   editedCard,
@@ -7,6 +10,7 @@ const CardEditor = ({
   handleCardEdit,
 }) => {
   const [position, setPosition] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   function ResizeTextArea(e) {
     const textarea = document.getElementById("card-textarea");
@@ -16,11 +20,11 @@ const CardEditor = ({
   }
 
   function handleClose(e) {
-    const node = e.target.nodeName.toLowerCase();
+    const dropDownIsOpen = document.getElementsByClassName("dropdown").length;
+
     if (
-      node !== "button" &&
-      !e.path.some((node) => node.nodeName?.toLowerCase() === "button") &&
-      node !== "textarea"
+      e.target === document.getElementById("card-editor") &&
+      !dropDownIsOpen
     ) {
       setPosition(null);
       setEditedCard(null);
@@ -59,14 +63,13 @@ const CardEditor = ({
     document
       .getElementById("card-textarea")
       ?.removeEventListener("keydown", handleKeyPress);
-    document
-      .getElementById("card-editor")
-      ?.removeEventListener("click", handleClose);
+    window.removeEventListener("mousedown", handleClose);
   }
 
   function handleCancel() {
     setPosition(null);
     setEditedCard(null);
+    setOpenDropdown(null);
   }
 
   useEffect(() => {
@@ -97,9 +100,7 @@ const CardEditor = ({
         .getElementById("card-textarea")
         ?.addEventListener("keydown", handleKeyPress);
 
-      document
-        .getElementById("card-editor")
-        ?.addEventListener("click", handleClose);
+      window.addEventListener("mousedown", handleClose);
 
       const textarea = document?.getElementById("card-textarea");
 
@@ -147,27 +148,61 @@ const CardEditor = ({
           </button>
         </div>
         <div className="card_editor_actions">
-          <button className="card_editor_action_btn icon_text_button">
-            <ion-icon name="card-outline"></ion-icon>
-            <p>Open card</p>
-          </button>
-          <button className="card_editor_action_btn icon_text_button">
-            <ion-icon name="pricetag-outline"></ion-icon>
-            <p>Edit labels</p>
-          </button>
-          <button className="card_editor_action_btn icon_text_button">
-            <ion-icon name="person-outline"></ion-icon>
-            <p>Change members</p>
-          </button>
-          <button className="card_editor_action_btn icon_text_button">
-            <ion-icon name="arrow-forward-outline" />
-            <p>Move</p>
-          </button>
-          <button className="card_editor_action_btn icon_text_button">
-            <ion-icon name="archive-outline"></ion-icon>
-            <p>Archive</p>
-          </button>
+          <div>
+            <button className="card_editor_action_btn icon_text_button">
+              <ion-icon name="card-outline"></ion-icon>
+              <p>Open card</p>
+            </button>
+          </div>
+          <div id="edit-label-btn">
+            <button
+              className="card_editor_action_btn icon_text_button"
+              onClick={() => setOpenDropdown("label")}
+            >
+              <ion-icon name="pricetag-outline"></ion-icon>
+              <p>Edit labels</p>
+            </button>
+          </div>
+          <div id="edit-members-btn">
+            <button
+              className="card_editor_action_btn icon_text_button"
+              onClick={() => setOpenDropdown("member")}
+            >
+              <ion-icon name="person-outline"></ion-icon>
+              <p>Change members</p>
+            </button>
+          </div>
+          <div id="move-card-btn">
+            <button
+              className="card_editor_action_btn icon_text_button"
+              onClick={() => setOpenDropdown("move")}
+            >
+              <ion-icon name="arrow-forward-outline" />
+              <p>Move</p>
+            </button>
+          </div>
+          <div>
+            <button className="card_editor_action_btn icon_text_button">
+              <ion-icon name="archive-outline"></ion-icon>
+              <p>Archive</p>
+            </button>
+          </div>
         </div>
+        <LabelsDropdown
+          open={openDropdown === "label"}
+          handleClose={() => setOpenDropdown(null)}
+          anchorId="edit-label-btn"
+        />
+        <MembersDropdown
+          open={openDropdown === "member"}
+          handleClose={() => setOpenDropdown(null)}
+          anchorId="edit-members-btn"
+        />
+        <MoveCardDropdown
+          open={openDropdown === "move"}
+          handleClose={() => setOpenDropdown(null)}
+          anchorId="move-card-btn"
+        />
       </div>
     </div>
   );

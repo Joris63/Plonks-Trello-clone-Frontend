@@ -47,7 +47,7 @@ textarea {
 
 .dropdown {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     width: 300px;
     background: #fff;
     padding: 8px;
@@ -76,7 +76,7 @@ textarea {
             border-radius: 50%;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 outline: none;
                 background: #d2d2d2;
             }
@@ -110,7 +110,7 @@ textarea {
             }
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 outline: none;
                 background: #d2d2d2;
             }
@@ -150,7 +150,7 @@ textarea {
             margin-bottom: 10px;
             font-size: 0.9em;
 
-            &:focus {
+            &:focus-visible {
                 border: 2px solid lightblue;
                 outline: none;
             }
@@ -171,7 +171,7 @@ textarea {
             width: fit-content;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 outline: none;
                 background: #8ac7db;
             }
@@ -189,7 +189,7 @@ textarea {
             background: none;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 outline: none;
                 background: rgba(0, 0, 0, 0.12);
             }
@@ -200,7 +200,7 @@ textarea {
                 text-align: center;
 
                 &:hover,
-                &:focus {
+                &:focus-visible {
                     outline: none;
                     background: #ff3f34;
                 }

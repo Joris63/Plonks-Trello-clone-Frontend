@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import DropDown from "../DropDown";
 
-const MembersDropdown = ({ open = true, card, handleClose, anchorId }) => {
+const MembersDropdown = ({ open, card, handleClose, anchorId }) => {
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const location = document
       .getElementById(anchorId)
       ?.getBoundingClientRect() || { left: 0, top: 0 };

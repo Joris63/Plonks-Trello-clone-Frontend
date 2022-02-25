@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import DropDown from "../DropDown";
 import { v4 as uuidv4 } from "uuid";
 
-const ChecklistDropdown = ({ open = true, handleClose, anchorId }) => {
+const ChecklistDropdown = ({ open, handleClose, anchorId }) => {
   const [position, setPosition] = useState(null);
   const [checklist, setChecklist] = useState({
     id: uuidv4(),
@@ -10,7 +10,7 @@ const ChecklistDropdown = ({ open = true, handleClose, anchorId }) => {
     items: [],
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const location = document
       .getElementById(anchorId)
       ?.getBoundingClientRect() || { left: 0, top: 0 };
