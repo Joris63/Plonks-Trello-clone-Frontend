@@ -153,7 +153,6 @@ const ListActionDropdown = ({
       open={list}
       position={position}
       mode={dropdownMode}
-      handleMode={setDropdownMode}
       handleBack={() => setDropdownMode("default")}
       id="list-action-drpdwn"
       handleClose={() => setList(null)}

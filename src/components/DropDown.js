@@ -6,7 +6,7 @@ const DropDown = ({
   open,
   position,
   mode = "default",
-  handleMode,
+  handleBack,
   handleClose,
   id,
   children,
@@ -56,7 +56,7 @@ const DropDown = ({
     >
       <header>
         {mode !== "default" && (
-          <button className="back_btn" onClick={() => handleMode("default")}>
+          <button className="back_btn" onClick={handleBack}>
             <ion-icon name="chevron-back-outline"></ion-icon>
           </button>
         )}

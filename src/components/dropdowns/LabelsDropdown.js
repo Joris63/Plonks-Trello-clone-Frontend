@@ -165,6 +165,16 @@ const LabelsDropdown = ({ open = true, card, handleClose, anchorId }) => {
     }
   }
 
+  function getBack() {
+    switch (dropdownMode) {
+      case "delete":
+        return "edit";
+
+      default:
+        return "default";
+    }
+  }
+
   useLayoutEffect(() => {
     const location = document
       .getElementById(anchorId)
@@ -186,7 +196,7 @@ const LabelsDropdown = ({ open = true, card, handleClose, anchorId }) => {
       id="labels-drpdwn"
       handleClose={handleClose}
       mode={dropdownMode}
-      handleMode={setDropdownMode}
+      handleBack={() => setDropdownMode(getBack())}
       title={getDropdownTitle()}
     >
       <LabelsActions mode={dropdownMode} handleMode={setDropdownMode} />

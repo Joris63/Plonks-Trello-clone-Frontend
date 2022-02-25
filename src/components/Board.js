@@ -13,6 +13,7 @@ import Modal from "./CardModal";
 import "animate.css";
 import MembersDropdown from "./dropdowns/MembersDropdown";
 import LabelsDropdown from "./dropdowns/LabelsDropdown";
+import MoveCardDropdown from "./dropdowns/MoveCardDropdown";
 
 const allLists = [
   {
@@ -481,7 +482,7 @@ const Board = (props) => {
         handleArchiveAllCards={archiveAllCards}
         handleArchive={handleListArchive}
       />
-      <LabelsDropdown />
+      <MoveCardDropdown />
       <Modal
         card={editedCard}
         handleCardEdit={handleCardEdit}
