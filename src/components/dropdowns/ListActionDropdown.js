@@ -18,7 +18,7 @@ const ListActions = ({
       {mode === "default" && (
         <>
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => {
               handleClose();
               setNewCard({ list_id: list.id });
@@ -27,28 +27,22 @@ const ListActions = ({
             Add a card...
           </button>
           <hr />
-          <button
-            className="list_action_btn"
-            onClick={() => handleMode("sort")}
-          >
+          <button className="dropdown_btn" onClick={() => handleMode("sort")}>
             Sort by...
           </button>
           <hr />
-          <button
-            className="list_action_btn"
-            onClick={() => handleMode("move")}
-          >
+          <button className="dropdown_btn" onClick={() => handleMode("move")}>
             Move all cards in this list...
           </button>
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => handleMode("archive")}
           >
             Archive all cards in this list...
           </button>
           <hr />
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => handleArchive(list.id)}
           >
             Archive this list
@@ -59,19 +53,19 @@ const ListActions = ({
       {mode === "sort" && (
         <>
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => handleSort(list.id, "createdLast")}
           >
             Date created (newest first)
           </button>
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => handleSort(list.id, "createdFirst")}
           >
             Date created (oldest first)
           </button>
           <button
-            className="list_action_btn"
+            className="dropdown_btn"
             onClick={() => handleSort(list.id, "alphabet")}
           >
             Card name (alphabetically)
@@ -84,7 +78,7 @@ const ListActions = ({
           (childList) =>
             !childList.id.includes("add-list") && (
               <button
-                className="list_action_btn"
+                className="dropdown_btn"
                 key={`move-to-${childList.id}`}
                 disabled={childList.id === list.id}
                 onClick={() => handleMoveAllCards(list.id, childList.id)}
@@ -139,26 +133,19 @@ const ListActionDropdown = ({
   }, [list]);
 
   function getDropdownTitle() {
-    let title = "List Actions";
-
     switch (dropdownMode) {
       case "sort":
-        title = "Sort list";
-        break;
+        return "Sort list";
 
       case "move":
-        title = "Move all cards in list";
-        break;
+        return "Move all cards in list";
 
       case "archive":
-        title = "Archive all cards in list";
-        break;
+        return "Archive all cards in list";
 
       default:
-        break;
+        return "List Actions";
     }
-
-    return title;
   }
 
   return (

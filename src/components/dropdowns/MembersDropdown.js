@@ -36,7 +36,7 @@ const MembersDropdown = ({ open = true, card, handleClose, anchorId }) => {
         <p className="content_title">Board members</p>
         <ul className="board_members_list">
           <li className="board_member_wrapper">
-            <button className="board_member">
+            <button className="dropdown_btn board_member">
               <img
                 src="https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg"
                 alt="Profile"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../styles/board.scss";
 import "../styles/common.scss";
+import "../styles/board.scss";
 import List from "./List";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
