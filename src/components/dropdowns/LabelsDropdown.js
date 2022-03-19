@@ -2,11 +2,10 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { getBoard } from "../Board";
 import DropDown from "../DropDown";
 
-const LabelsActions = ({ mode, handleMode }) => {
+const LabelsActions = ({ card, mode, handleMode, handleCardSave }) => {
   const [search, setSearch] = useState("");
+  const [board, setBoard] = useState(getBoard());
   const [editedLabel, setEditedLabel] = useState(null);
-
-  const board = getBoard();
 
   return (
     <div className="actions_list">
