@@ -28,22 +28,37 @@ const navigation = [
   },
 ];
 
-const SidebarItem = ({ name, link = "/#", icon, rightIcon }) => {
+const SidebarItem = ({ name, link = "/#", icon, rightIcon, handleClick }) => {
+  const itemContent = (
+    <>
+      {icon && (
+        <span className="sidebar_item_icon">
+          <i className={`fa-light ${icon ? icon : ""}`}></i>
+        </span>
+      )}
+      <div className="sidebar_item_name">{name}</div>
+      {rightIcon && (
+        <span className="sidebar_item_right_icon">
+          <i className={`fa-regular ${rightIcon ? rightIcon : ""}`}></i>
+        </span>
+      )}
+    </>
+  );
+
   return (
     <li className="sidebar_item_wrapper">
-      <a className={`sidebar_item${icon ? "" : " child"}`} href={link}>
-        {icon && (
-          <span className="sidebar_item_icon">
-            <i className={`fa-regular ${icon ? icon : ""}`}></i>
-          </span>
-        )}
-        <div className="sidebar_item_name">{name}</div>
-        {rightIcon && (
-          <span className="sidebar_item_right_icon">
-            <i className="fa-regular fa-angle-down"></i>
-          </span>
-        )}
-      </a>
+      {handleClick ? (
+        <div
+          className={`sidebar_item${icon ? "" : " child"}`}
+          onClick={handleClick}
+        >
+          {itemContent}
+        </div>
+      ) : (
+        <a className={`sidebar_item${icon ? "" : " child"}`} href={link}>
+          {itemContent}
+        </a>
+      )}
     </li>
   );
 };
@@ -57,17 +72,12 @@ const SidebarItemWithChildren = ({ name, icon, children }) => {
 
   return (
     <>
-      <li className="sidebar_item_wrapper">
-        <div className="sidebar_item" onClick={toggleOpen}>
-          <span className="sidebar_item_icon">
-            <i className={`fa-regular ${icon ? icon : ""}`}></i>
-          </span>
-          <div className="sidebar_item_name">{name}</div>
-          <span className="sidebar_item_right_icon">
-            <i className={`fa-regular fa-angle-${open ? "up" : "down"}`}></i>
-          </span>
-        </div>
-      </li>
+      <SidebarItem
+        name={name}
+        icon={icon}
+        rightIcon={`fa-angle-${open ? "up" : "down"}`}
+        handleClick={toggleOpen}
+      />
       <li
         className="sidebar_item_children_wrapper"
         style={{ height: open ? children.length * 54 : null }}
@@ -91,7 +101,7 @@ const Sidebar = ({ open, handleClose }) => {
       <div className="sidebar_header">
         <a className="app_title" href="/#">
           <div className="app_logo">
-            <i className="fa-regular fa-square-kanban"></i>
+            <i className="fa-duotone fa-square-kanban"></i>
           </div>
           <div className="app_name">Plonks</div>
         </a>

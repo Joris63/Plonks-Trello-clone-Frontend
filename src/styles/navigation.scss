@@ -29,6 +29,7 @@
 
     &:hover,
     &:focus-within {
+        outline: none;
         background-color: rgba(0, 0, 0, 0.1);
     }
 }
@@ -82,6 +83,7 @@
 }
 
 .app_logo {
+    color: rgba(83, 82, 237, 1);
     font-size: 1.8em;
     min-width: 40px;
     height: 40px;
@@ -142,7 +144,8 @@
 
     &:hover,
     &:focus-within {
-        background-color: rgba(112, 161, 255, 0.3);
+        outline: none;
+        background-color: rgba(83, 82, 237, 0.3);
     }
 
     &.child {
@@ -203,19 +206,32 @@
     align-items: center;
 }
 
-.navbar_profile_btn {
-    margin-left: 8px;
-    padding: 8px;
-    font-size: 1em;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: background 0.225s ease;
-    background-color: transparent;
-    border-style: none;
-    cursor: pointer;
+.navbar_profile {
+    &_btn {
+        display: flex;
+        align-items: center;
+        margin-left: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background 0.225s ease;
+        background-color: transparent;
+        border-style: none;
+        cursor: pointer;
 
-    &:hover,
-    &:focus-within {
-        background-color: rgba(112, 161, 255, 0.3);
+        &:hover,
+        &:focus-within {
+            outline: none;
+            background-color: rgba(83, 82, 237, 0.3);
+        }
+    }
+
+    &_name {
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    &_icon {
+        margin-left: 10px;
+        font-size: 1.1em;
     }
 }
