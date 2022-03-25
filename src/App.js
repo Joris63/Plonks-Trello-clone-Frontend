@@ -1,26 +1,29 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navigation/Navbar";
 import Sidebar from "./components/navigation/Sidebar";
+import EditProfilePage from "./pages/EditProfilePage";
 import "./styles/index.scss";
 
 function App() {
   const [open, setOpen] = useState(false);
 
-  function handleOpenSidebar() {
-    setOpen(true);
-  }
-
-  function handleCloseSidebar() {
-    setOpen(false);
+  function handleToggleOpen() {
+    setOpen(!open);
   }
 
   return (
-    <div className="container">
-      <Sidebar open={open} handleClose={handleCloseSidebar} />
-      <div className="main active">
-        <Navbar handleOpen={handleOpenSidebar} />
+    <Router>
+      <div className="container">
+        <Sidebar open={open} handleToggle={handleToggleOpen} />
+        <div className={`main${open ? " active" : ""}`}>
+          <Navbar handleOpen={handleToggleOpen} />
+          <Routes>
+            <Route exact path="/" element={<EditProfilePage />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

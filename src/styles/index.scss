@@ -42,14 +42,14 @@ body {
 
 .main {
   position: absolute;
-  width: calc(100% - 0px);
-  left: 0;
+  width: calc(100% - 65px);
+  left: 65px;
   background: var(--background2);
   min-height: 100vh;
-  transition: width 0.5s, left 0.5s;
+  transition: width 0.225s, left 0.225s;
 
   &.active {
-    width: calc(100% - 225px);
-    left: 225px;
+    width: calc(100% - 250px);
+    left: 250px;
   }
 }

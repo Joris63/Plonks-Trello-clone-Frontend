@@ -1,0 +1,15 @@
+<svg xmlnsSvg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" style="enable-background:new 0 0 45 45;" xml:space="preserve" version="1.1" id="svg2">
+	<g transform="matrix(1.25,0,0,-1.25,0,45)" id="g10">
+		<g id="g12">
+			<g clip-path="url(#clipPath16)" id="g14">
+				<g transform="translate(0,9)" id="g20">
+					<path id="path22" style="fill:#0038a8;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 c 0,-2.209 1.791,-4 4,-4 l 28,0 c 2.209,0 4,1.791 4,4 L 36,4 0,4 0,0 Z" />
+				</g>
+				<path id="path24" style="fill:#eeeeee;fill-opacity:1;fill-rule:nonzero;stroke:none" d="M 0,13 36,13 36,23 0,23 0,13 Z" />
+				<g transform="translate(32,31)" id="g26">
+					<path id="path28" style="fill:#d52b1e;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 -28,0 c -2.209,0 -4,-1.791 -4,-4 l 0,-4 36,0 0,4 C 4,-1.791 2.209,0 0,0" />
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

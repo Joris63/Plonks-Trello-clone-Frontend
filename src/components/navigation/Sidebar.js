@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/navigation.scss";
 
 const navigation = [
@@ -20,7 +20,11 @@ const navigation = [
   },
   {
     name: "Boards",
-    icon: "fa-grid-2",
+    icon: "fa-objects-column",
+  },
+  {
+    name: "Tasks",
+    icon: "fa-square-check",
   },
   {
     name: "Teams",
@@ -33,7 +37,7 @@ const SidebarItem = ({ name, link = "/#", icon, rightIcon, handleClick }) => {
     <>
       {icon && (
         <span className="sidebar_item_icon">
-          <i className={`fa-light ${icon ? icon : ""}`}></i>
+          <i className={`fa-regular ${icon ? icon : ""}`}></i>
         </span>
       )}
       <div className="sidebar_item_name">{name}</div>
@@ -63,11 +67,28 @@ const SidebarItem = ({ name, link = "/#", icon, rightIcon, handleClick }) => {
   );
 };
 
-const SidebarItemWithChildren = ({ name, icon, children }) => {
+const SidebarItemWithChildren = ({
+  name,
+  icon,
+  children,
+  drawerOpen,
+  handleOpen,
+}) => {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!drawerOpen) {
+      setOpen(false);
+    }
+  }, [drawerOpen]);
+
   function toggleOpen() {
-    setOpen(!open);
+    if (!drawerOpen) {
+      handleOpen();
+      setOpen(true);
+    } else {
+      setOpen(!open);
+    }
   }
 
   return (
@@ -95,7 +116,7 @@ const SidebarItemWithChildren = ({ name, icon, children }) => {
   );
 };
 
-const Sidebar = ({ open, handleClose }) => {
+const Sidebar = ({ open, handleToggle }) => {
   return (
     <div className={`sidebar${open ? " active" : ""}`}>
       <div className="sidebar_header">
@@ -105,7 +126,7 @@ const Sidebar = ({ open, handleClose }) => {
           </div>
           <div className="app_name">Plonks</div>
         </a>
-        <button className="navbar_icon_btn" onClick={handleClose}>
+        <button className="navbar_icon_btn" onClick={handleToggle}>
           <i className="fa-solid fa-chevron-left"></i>
         </button>
       </div>
@@ -114,16 +135,18 @@ const Sidebar = ({ open, handleClose }) => {
           if (child.children) {
             return (
               <SidebarItemWithChildren
-                key={`sidebar_item_${child?.name}_${index}`}
                 {...child}
+                key={`sidebar_item_${child?.name}_${index}`}
+                drawerOpen={open}
+                handleOpen={handleToggle}
               />
             );
           }
 
           return (
             <SidebarItem
-              key={`sidebar_item_${child?.name}_${index}`}
               {...child}
+              key={`sidebar_item_${child?.name}_${index}`}
             />
           );
         })}
