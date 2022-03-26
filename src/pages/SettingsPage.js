@@ -13,6 +13,7 @@ const basicFields = [
   {
     name: "Username",
     unique: true,
+    hint: 'Password must be between at least 8 characters long!'
   },
   {
     name: "Email",

@@ -38,11 +38,10 @@ const FormField = ({
       <input
         id={`field-${name.replace(/\s/g, "")}`}
         className="form_field"
-        placeholder={name}
         type={inputType}
         required={!optional}
       />
-      <small className="form_field_hint">{hint}</small>
+      {hint && <small className="form_field_hint">{hint}</small>}
     </div>
   );
 };

@@ -87,7 +87,7 @@
 }
 
 .slider_input:checked + .checkbox_slider {
-  background-color: #66bb6a;
+  background-color: rgba(39, 174, 96, 1);
 }
 
 .slider_input:checked + .checkbox_slider:before {
@@ -142,21 +142,22 @@
 
   &.success .form_field_label,
   &.success .form_field_hint {
-    color: #259337;
+    color: rgba(39, 174, 96, 1);
   }
 
-  &.success .form_field_bar::after {
-    background: #259337;
+  &.success .form_field {
+    border: 2px solid rgba(39, 174, 96, 0.3);
+    background-color: rgba(39, 174, 96, 0.05);
   }
 
   &.error .form_field_label,
   &.error .form_field_hint {
-    color: #d9534f;
+    color: rgba(231, 76, 60, 1);
   }
 
-  &.error .form_field_bar,
-  &.error .form_field_bar::after {
-    background: #d9534f;
+  &.error .form_field {
+    border: 2px solid rgba(231, 76, 60, 0.3);
+    background-color: rgba(231, 76, 60, 0.05);
   }
 }
 
@@ -165,6 +166,8 @@
   font-size: 0.6875rem;
   color: #a6a6a6;
   display: block;
+  margin-top: 4px;
+  margin-left: 4px;
 }
 
 .form_field_label {
@@ -185,23 +188,10 @@
   padding: 8px;
   display: block;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95em;
   line-height: 1.5;
   width: 100%;
-  color: #333;
   box-shadow: none;
-
-  &:-ms-input-placeholder {
-    color: #a6a6a6;
-    transform: scale(0.9);
-    transform-origin: left top;
-  }
-
-  &::placeholder {
-    color: #a6a6a6;
-    transform: scale(0.9);
-    transform-origin: left top;
-  }
 
   &:focus-within {
     outline: none;
