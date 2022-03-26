@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { IsElementOffscreen } from "../../utils/helpers/common";
 import "animate.css";
 import "../../styles/common.scss";
+import { Link } from "react-router-dom";
 
 let justOpened = false;
 
@@ -82,13 +83,17 @@ const Dropdown = ({ open, anchor, handleClose }) => {
     >
       <ul className="dropdown_actions_list">
         <li className="dropdown_action_wrapper">
-          <button className="dropdown_action">
+          <Link
+            className="dropdown_action"
+            to="/settings"
+            onClick={handleClose}
+          >
             <i className="dropdown_action_icon fa-solid fa-gear"></i>
             Settings
-          </button>
+          </Link>
         </li>
         <li className="dropdown_action_wrapper">
-          <button className="dropdown_action">
+          <button className="dropdown_action" onClick={handleClose}>
             <i className="dropdown_action_icon fa-solid fa-right-from-bracket"></i>
             Logout
           </button>

@@ -3,15 +3,14 @@
 */
 .dropdown {
   position: fixed;
+  z-index: 10000;
   top: 0;
   left: 0;
   width: 225px;
   border-radius: 8px;
   padding: 12px;
+  background-color: var(--background1);
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-}
-
-.dropdown_actions_list {
 }
 
 .dropdown_action_wrapper {
@@ -23,6 +22,7 @@
 }
 
 .dropdown_action {
+  display: block;
   cursor: pointer;
   width: 100%;
   font-size: 0.9em;
@@ -32,6 +32,8 @@
   background-color: transparent;
   border-style: none;
   transition: background 0.225s ease;
+  text-decoration: none;
+  color: var(--text1);
 
   &_icon {
     margin-right: 12px;

@@ -87,7 +87,7 @@ const NotificationSettings = (props) => {
                   type="checkbox"
                   className="slider_input"
                   id={`notif-setting-${index}`}
-                  handleChange={() => setSettings([])}
+                  onChange={() => setSettings([])}
                 />
                 <div className="checkbox_slider round"></div>
               </label>
@@ -146,9 +146,9 @@ const EditProfilePage = (props) => {
             <div className="user_profile_picture_wrapper">
               <div className="user_profile_picture">
                 <i className="fa-solid fa-j"></i>
-              </div>
-              <div className="user_profile_picture_edit">
-                <i class="fa-solid fa-pen"></i>
+                <div className="user_profile_picture_edit">
+                  <i className="fa-solid fa-pen"></i>
+                </div>
               </div>
             </div>
             <Form fields={basicFields} />

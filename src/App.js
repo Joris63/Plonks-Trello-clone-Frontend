@@ -19,7 +19,7 @@ function App() {
         <div className={`main${open ? " active" : ""}`}>
           <Navbar handleOpen={handleToggleOpen} />
           <Routes>
-            <Route exact path="/" element={<EditProfilePage />} />
+            <Route exact path="/settings" element={<EditProfilePage />} />
           </Routes>
         </div>
       </div>
