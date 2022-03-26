@@ -8,6 +8,7 @@ import {
 } from "../../utils/helpers/common";
 
 const FormField = ({
+  formName,
   name = "",
   value = "",
   handleChange,
@@ -23,6 +24,7 @@ const FormField = ({
   minLength = 0,
   maxlength,
 }) => {
+  const [hidden, setHidden] = useState(type === "password");
   const [touched, setTouched] = useState(false);
   const [warning, setWarning] = useState(() => checkForWarning(value));
 
@@ -31,23 +33,31 @@ const FormField = ({
   }, [value]);
 
   function checkForWarning(string) {
+    if (value === "" && !optional) {
+      return "Field is required.";
+    }
+
     if (requiresNr && !CheckForNumberInString(string)) {
-      return label + " must contain at least one number.";
+      return "Must contain at least one number.";
     }
 
     if (requiresCaps && !CheckForCapsInString(string)) {
-      return label + " must contain at least one uppercase letter";
+      return "Must contain at least one uppercase letter";
     }
 
     if (!CheckLengthInString(string, minLength)) {
-      return label + " must be at least 8 characters long.";
+      return "Must be at least 8 characters long.";
     }
 
     if (type === "password" && CheckForBadCharacters(string)) {
-      return label + " must not contain quotes or spaces.";
+      return "Must not contain quotes or spaces.";
     }
 
     return null;
+  }
+
+  function toggleHide() {
+    setHidden(!hidden);
   }
 
   return (
@@ -59,19 +69,31 @@ const FormField = ({
       <label className="form_field_label" htmlFor={`field-${name}`}>
         {label}
       </label>
-      <input
-        id={`field-${name}`}
-        className="form_field"
-        placeholder={placeholder}
-        type={type}
-        required={!optional}
-        value={value}
-        minLength={minLength}
-        maxLength={maxlength}
-        name={name}
-        onChange={handleChange}
-        onBlur={() => setTouched(true)}
-      />
+      <div style={{ position: "relative" }}>
+        <input
+          id={`${formName}-field-${name}`}
+          className="form_field"
+          placeholder={placeholder}
+          type={
+            type !== "password" || (type === "password" && !hidden)
+              ? type
+              : "text"
+          }
+          required={!optional}
+          value={value}
+          minLength={minLength}
+          maxLength={maxlength}
+          name={name}
+          onChange={handleChange}
+          onBlur={() => setTouched(true)}
+        />
+        {type === "password" && (
+          <div
+            className={`form_field_toggle_hide ${hidden ? "hidden" : ""}`}
+            onClick={toggleHide}
+          />
+        )}
+      </div>
       {((warning && touched) || hint) && (
         <small className="form_field_hint">{warning || hint}</small>
       )}

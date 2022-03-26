@@ -152,7 +152,6 @@ const Sidebar = ({ open, handleToggle }) => {
             );
           })}
         </ul>
-        <div className="themeSwitch"></div>
       </div>
       {open && (
         <div className="sidebar_mobile_overlay"></div>

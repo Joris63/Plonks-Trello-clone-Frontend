@@ -1,7 +1,186 @@
 /*
   Auth Page
 */
+.auth_app_title {
+    position: absolute;
+    left: 12px;
+    top: 9.5px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text1);
+    z-index: 1;
 
+    &.alternate {
+        color: white;
+
+        & .auth_app_logo {
+            color: white;
+        }
+    }
+}
+
+.auth_app_name {
+    margin-left: 12px;
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.auth_app_logo {
+    color: rgba(83, 82, 237, 1);
+    font-size: 1.8em;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register_wrapper {
+    right: 0;
+}
+
+.login_wrapper {
+    left: 0;
+}
+
+.auth_form_wrapper {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    padding: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.auth_form_content {
+    max-width: 300px;
+}
+
+.auth_form_title {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.auth_submit_btn {
+    margin: 32px auto 12px auto;
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border-style: none;
+    background: rgba(83, 82, 237, 1);
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.auth_form_forgot_password,
+.auth_form_extra_btn {
+    display: inline-block;
+    color: rgba(83, 82, 237, 0.8);
+    font-size: 0.9em;
+    margin-left: auto;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: color 0.225s ease;
+
+    &:hover,
+    &:focus-within {
+        outline: none;
+        color: rgba(83, 82, 237, 1);
+    }
+}
+
+.auth_form_extra_opts {
+    font-size: 0.9em;
+    margin-left: auto;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: color 0.225s ease;
+}
+
+.auth_form_extra_btn {
+    font-size: 1em;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.auth_overlay {
+    overflow: hidden;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: calc(100vw - 700px);
+    background-color: rgba(83, 82, 237, 1);
+    transition: right 0.7s cubic-bezier(0.72, -0.39, 0.5, 0.74);
+
+    &.register {
+        right: 700px;
+
+        & .auth_overlay_content {
+            left: 0;
+        }
+    }
+}
+
+.auth_overlay_content {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: -700px;
+    transition: left 0.7s cubic-bezier(0.72, -0.39, 0.5, 0.74);
+}
+
+.auth_info_wrapper {
+    height: calc(100vh - 100px);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 225px;
+    top: 0;
+    right: 100px;
+    transition: left 0.7s cubic-bezier(0.75, -0.01, 0.5, 0.74), right 0.7s cubic-bezier(0.75, -0.01, 0.5, 0.74);
+
+    &.active {
+        right: -500px;
+    }
+
+    &.register {
+        right: 0;
+        left: 100px;
+
+        &.active {
+            left: -500px;
+        }
+    }
+}
+
+.auth_info_svg {
+    filter: drop-shadow(3px 5px 5px rgb(0 0 0 / 0.6));
+    width: 600px;
+}
+
+.auth_info_text {
+    font-size: 1.8em;
+    color: white;
+    font-weight: 600;
+}
+
+.auth_info_sub_text {
+    text-align: center;
+    max-width: 350px;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
 
 /*
   Account & App settings page

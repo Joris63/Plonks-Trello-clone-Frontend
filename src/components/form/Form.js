@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../../styles/common.scss";
 import { TurnStringToCamelCase } from "../../utils/helpers/common";
 import FormField from "./FormField";
 
-const Form = ({ fields }) => {
+const Form = ({ formName, children: customBtn, fields = [], handleSubmit }) => {
   const [state, setState] = useState(setInitialState());
 
   function setInitialState() {
@@ -25,6 +25,10 @@ const Form = ({ fields }) => {
     setState({ ...state, [name]: newValue });
   }
 
+  if (fields.length < 1) {
+    return null;
+  }
+
   return (
     <form className="form">
       {fields.map((field) => {
@@ -33,6 +37,7 @@ const Form = ({ fields }) => {
         return (
           <FormField
             key={`field-${name}`}
+            formName={formName}
             name={name}
             value={state[name]}
             handleChange={handleChange}
@@ -40,7 +45,13 @@ const Form = ({ fields }) => {
           />
         );
       })}
-      <button className="save_form_btn">Save</button>
+      {customBtn ? (
+        customBtn
+      ) : (
+        <button type="submit" className="save_form_btn" onClick={handleSubmit}>
+          Save
+        </button>
+      )}
     </form>
   );
 };

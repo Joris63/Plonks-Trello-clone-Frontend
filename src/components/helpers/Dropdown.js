@@ -93,10 +93,10 @@ const Dropdown = ({ open, anchor, handleClose }) => {
           </Link>
         </li>
         <li className="dropdown_action_wrapper">
-          <button className="dropdown_action" onClick={handleClose}>
+          <Link className="dropdown_action" to="/login" onClick={handleClose}>
             <i className="dropdown_action_icon fa-solid fa-right-from-bracket"></i>
             Logout
-          </button>
+          </Link>
         </li>
       </ul>
     </div>

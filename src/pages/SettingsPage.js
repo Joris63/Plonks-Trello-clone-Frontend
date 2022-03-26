@@ -1,10 +1,11 @@
 import Form from "../components/form/Form";
+import { useState } from "react";
+import "../styles/common.scss";
+import "../styles/pages.scss";
+
 import { ReactComponent as USFlag } from "../assets/us-flag.svg";
 import { ReactComponent as NLFlag } from "../assets/nl-flag.svg";
 import { ReactComponent as FRFlag } from "../assets/fr-flag.svg";
-import "../styles/common.scss";
-import "../styles/pages.scss";
-import { useState } from "react";
 
 const basicFields = [
   {

@@ -168,6 +168,7 @@
   display: block;
   margin-top: 4px;
   margin-left: 4px;
+  transition: color 0.225s ease;
 }
 
 .form_field_label {
@@ -180,9 +181,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.9em;
+  transition: color 0.225s ease;
 }
 
 .form_field {
+  position: relative;
   border: 2px solid rgba(83, 82, 237, 0.3);
   background-color: rgba(83, 82, 237, 0.05);
   padding: 8px;
@@ -192,9 +195,37 @@
   line-height: 1.5;
   width: 100%;
   box-shadow: none;
+  transition: background 0.225s ease, border 0.225s ease;
 
   &:focus-within {
     outline: none;
+  }
+}
+
+.form_field_toggle_hide {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover:before {
+    color: rgb(0, 0, 0, 0.8);
+  }
+
+  &::before {
+    transition: color 0.225s ease;
+    content: "\f06e";
+    font: var(--fa-font-solid);
+    font-size: 1em;
+    color: rgb(0, 0, 0, 0.5);
+  }
+
+  &.hidden::before {
+    content: "\f070";
   }
 }
 
