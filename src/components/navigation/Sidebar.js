@@ -118,41 +118,46 @@ const SidebarItemWithChildren = ({
 
 const Sidebar = ({ open, handleToggle }) => {
   return (
-    <div className={`sidebar${open ? " active" : ""}`}>
-      <div className="sidebar_header">
-        <a className="app_title" href="/#">
-          <div className="app_logo">
-            <i className="fa-duotone fa-square-kanban"></i>
-          </div>
-          <div className="app_name">Plonks</div>
-        </a>
-        <button className="navbar_icon_btn" onClick={handleToggle}>
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
-      <ul className="sidebar_items">
-        {navigation.map((child, index) => {
-          if (child.children) {
+    <>
+      <div className={`sidebar${open ? " active" : ""}`}>
+        <div className="sidebar_header">
+          <a className="app_title" href="/#">
+            <div className="app_logo">
+              <i className="fa-duotone fa-square-kanban"></i>
+            </div>
+            <div className="app_name">Plonks</div>
+          </a>
+          <button className="navbar_icon_btn" onClick={handleToggle}>
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+        </div>
+        <ul className="sidebar_items">
+          {navigation.map((child, index) => {
+            if (child.children) {
+              return (
+                <SidebarItemWithChildren
+                  {...child}
+                  key={`sidebar_item_${child?.name}_${index}`}
+                  drawerOpen={open}
+                  handleOpen={handleToggle}
+                />
+              );
+            }
+
             return (
-              <SidebarItemWithChildren
+              <SidebarItem
                 {...child}
                 key={`sidebar_item_${child?.name}_${index}`}
-                drawerOpen={open}
-                handleOpen={handleToggle}
               />
             );
-          }
-
-          return (
-            <SidebarItem
-              {...child}
-              key={`sidebar_item_${child?.name}_${index}`}
-            />
-          );
-        })}
-      </ul>
-      <div className="themeSwitch"></div>
-    </div>
+          })}
+        </ul>
+        <div className="themeSwitch"></div>
+      </div>
+      {open && (
+        <div className="sidebar_mobile_overlay"></div>
+      )}
+    </>
   );
 };
 
