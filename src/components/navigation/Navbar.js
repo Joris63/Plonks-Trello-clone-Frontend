@@ -41,6 +41,9 @@ const RightNavbar = (props) => {
           onClick={toggleOpen}
           ref={profileBtnRef}
         >
+          <div className="navbar_profile_picture">
+            <i className="fa-solid fa-j"></i>
+          </div>
           <div className="navbar_profile_name">Joris Kamminga</div>
           <span className="navbar_profile_icon">
             <i className={`fa-regular fa-angle-${open ? "up" : "down"}`}></i>

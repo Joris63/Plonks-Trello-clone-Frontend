@@ -12,10 +12,7 @@
     flex-direction: column;
 }
 
-.app_settings_language,
-.app_settings_notifications,
-.user_profile_security_info,
-.user_profile_basic_info {
+.app_settings_wrapper {
     display: flex;
     flex-direction: column;
     max-width: 500px;
@@ -63,7 +60,6 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
-    height: 60px;
 }
 
 .app_setting_title {
@@ -76,7 +72,7 @@
     font-size: 0.9em;
 }
 
-.app_language_selector {
+.app_setting_selector {
     position: relative;
     height: 40px;
     display: flex;
@@ -94,18 +90,18 @@
     }
 }
 
-.language_info {
+.setting_info {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.language_name {
+.setting_name {
     font-size: 0.95em;
     font-weight: 500;
 }
 
-.language_radio_btn {
+.setting_radio_btn {
     content: "";
     position: absolute;
     height: 13px;
@@ -118,10 +114,10 @@
     box-shadow: 0px 0px 0px 2px #0066ff;
 }
 
-.language_radio_input {
+.setting_radio_input {
     opacity: 0;
 
-    &:checked + .language_radio_btn {
+    &:checked + .setting_radio_btn {
         background-color: #0066ff;
     }
 }

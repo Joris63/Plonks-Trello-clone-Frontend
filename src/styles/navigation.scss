@@ -250,6 +250,17 @@
         }
     }
 
+    &_picture {
+        height: 35px;
+        width: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: #7bed9f;
+        display: none;
+    }
+
     &_name {
         font-size: 1.1em;
         font-weight: 600;
@@ -265,5 +276,25 @@
     .navbar {
         left: 0;
         width: 100vw;
+    }
+}
+
+@media only screen and (max-width: 570px) {
+    .navbar_profile {
+        &_btn {
+            &:hover,
+            &:focus-within {
+                outline: none;
+                background-color: transparent;
+            }
+        }
+
+        &_name {
+            display: none;
+        }
+
+        &_picture {
+            display: flex;
+        }
     }
 }

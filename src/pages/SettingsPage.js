@@ -62,11 +62,16 @@ const languageOptions = [
   { abbr: "fr", name: "Français", flag: <FRFlag /> },
 ];
 
+const themeOptions = [
+  { abbr: "light", name: "Light mode" },
+  { abbr: "dark", name: "Dark mode" },
+];
+
 const NotificationSettings = (props) => {
   const [settings, setSettings] = useState(notificationSettings);
 
   return (
-    <div className="app_settings_notifications">
+    <div className="app_settings_wrapper">
       <div className="form_title">Notifications</div>
       <div style={{ marginBottom: 8, marginTop: 16 }}>
         {settings.map((setting, index) => (
@@ -103,29 +108,29 @@ const LanguageSettings = (props) => {
   const [mode, setMode] = useState("en");
 
   return (
-    <div className="app_settings_language">
+    <div className="app_settings_wrapper">
       <div className="form_title">Language</div>
       <div style={{ marginBottom: 16, marginTop: 16 }}>
         <div className="form_subtitle">Select a language</div>
         {languageOptions.map((language, index) => (
           <label
             key={`language-selector-${language.abbr}-${index}`}
-            className={`app_language_selector ${
+            className={`app_setting_selector ${
               language.abbr === mode ? "active" : ""
             }`}
             htmlFor={`${language.abbr}-language`}
           >
-            <div className="language_info">
+            <div className="setting_info">
               <input
-                className="language_radio_input"
+                className="setting_radio_input"
                 type="radio"
                 name="language"
                 checked={language.abbr === mode}
                 id={`${language.abbr}-language`}
                 onChange={() => setMode(language.abbr)}
               />
-              <div className="language_radio_btn"></div>
-              <div className="language_name">{language.name}</div>
+              <div className="setting_radio_btn"></div>
+              <div className="setting_name">{language.name}</div>
             </div>
             <div className="language_flag">{language.flag}</div>
           </label>
@@ -135,13 +140,48 @@ const LanguageSettings = (props) => {
   );
 };
 
-const EditProfilePage = (props) => {
+const ThemeSettings = (props) => {
+  const [mode, setMode] = useState("light");
+
+  return (
+    <div className="app_settings_wrapper">
+      <div className="form_title">Theme</div>
+      <div style={{ marginBottom: 16, marginTop: 16 }}>
+        <div className="form_subtitle">Select a theme</div>
+        {themeOptions.map((theme, index) => (
+          <label
+            key={`language-selector-${theme.abbr}-${index}`}
+            className={`app_setting_selector ${
+              theme.abbr === mode ? "active" : ""
+            }`}
+            htmlFor={`${theme.abbr}-theme`}
+          >
+            <div className="setting_info">
+              <input
+                className="setting_radio_input"
+                type="radio"
+                name="theme"
+                checked={theme.abbr === mode}
+                id={`${theme.abbr}-theme`}
+                onChange={() => setMode(theme.abbr)}
+              />
+              <div className="setting_radio_btn"></div>
+              <div className="setting_name">{theme.name}</div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const SettingsPage = (props) => {
   return (
     <div className="page_content">
       <div className="page_title">Account & Settings</div>
       <div className="settings_wrapper">
         <div className="user_profile_wrapper">
-          <div className="user_profile_basic_info">
+          <div className="app_settings_wrapper">
             <div className="form_title">My Account</div>
             <div className="user_profile_picture_wrapper">
               <div className="user_profile_picture">
@@ -153,7 +193,7 @@ const EditProfilePage = (props) => {
             </div>
             <Form fields={basicFields} />
           </div>
-          <div className="user_profile_security_info">
+          <div className="app_settings_wrapper">
             <div className="form_title">Security</div>
             <Form fields={passwordFields} />
           </div>
@@ -161,10 +201,11 @@ const EditProfilePage = (props) => {
         <div className="app_settings_wrapper">
           <NotificationSettings />
           <LanguageSettings />
+          <ThemeSettings />
         </div>
       </div>
     </div>
   );
 };
 
-export default EditProfilePage;
+export default SettingsPage;
