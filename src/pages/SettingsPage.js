@@ -8,32 +8,31 @@ import { useState } from "react";
 
 const basicFields = [
   {
-    name: "Full name",
+    label: "Full name",
   },
   {
-    name: "Username",
+    label: "Username",
     unique: true,
-    hint: 'Password must be between at least 8 characters long!'
   },
   {
-    name: "Email",
-    email: true,
+    label: "Email",
+    type: "email",
     unique: true,
   },
 ];
 
 const passwordFields = [
   {
-    name: "New Password",
+    label: "New password",
     requiresCaps: true,
     requiresNr: true,
     minLength: 8,
-    password: true,
+    type: "password",
     fullWidth: false,
   },
   {
-    name: "Old password",
-    password: true,
+    label: "Old password",
+    type: "password",
     fullWidth: false,
   },
 ];

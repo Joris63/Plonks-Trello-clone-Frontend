@@ -8,4 +8,41 @@ function IsElementOffscreen(el) {
   return res;
 }
 
-export { IsElementOffscreen };
+function TurnStringToCamelCase(string) {
+  const words = string.split(" ").map((word, index) => {
+    if (index === 0) {
+      return (word = word[0].toLowerCase() + word.substr(1));
+    } else {
+      return (word = word[0].toUpperCase() + word.substr(1));
+    }
+  });
+
+  return words.join("");
+}
+
+function CheckForNumberInString(string) {
+  return /\d/.test(string);
+}
+
+function CheckForCapsInString(string) {
+  return [...string].some((character) => /^[A-Z]*$/.test(character));
+}
+
+function CheckLengthInString(string, minLength) {
+  return string.length >= minLength;
+}
+
+function CheckForBadCharacters(string) {
+  return [...string].some(
+    (character) => /^\s*$/.test(character) || /['||"]/.test(character)
+  );
+}
+
+export {
+  IsElementOffscreen,
+  TurnStringToCamelCase,
+  CheckForNumberInString,
+  CheckForCapsInString,
+  CheckLengthInString,
+  CheckForBadCharacters,
+};

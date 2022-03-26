@@ -1,47 +1,80 @@
+import { useEffect, useState } from "react";
 import "../../styles/common.scss";
+import {
+  CheckForBadCharacters,
+  CheckForCapsInString,
+  CheckForNumberInString,
+  CheckLengthInString,
+} from "../../utils/helpers/common";
 
 const FormField = ({
+  name = "",
+  value = "",
+  handleChange,
   fullWidth = true,
-  name,
+  label,
+  placeholder = "",
   hint,
   optional = false,
   unique = false,
   requiresNr = false,
   requiresCaps = false,
-  email = false,
-  password = false,
+  type = "text",
   minLength = 0,
   maxlength,
 }) => {
-  let inputType = "text";
+  const [touched, setTouched] = useState(false);
+  const [warning, setWarning] = useState(() => checkForWarning(value));
 
-  if (password) {
-    inputType = "password";
-  }
+  useEffect(() => {
+    setWarning(checkForWarning(value));
+  }, [value]);
 
-  if (email) {
-    inputType = "email";
+  function checkForWarning(string) {
+    if (requiresNr && !CheckForNumberInString(string)) {
+      return label + " must contain at least one number.";
+    }
+
+    if (requiresCaps && !CheckForCapsInString(string)) {
+      return label + " must contain at least one uppercase letter";
+    }
+
+    if (!CheckLengthInString(string, minLength)) {
+      return label + " must be at least 8 characters long.";
+    }
+
+    if (type === "password" && CheckForBadCharacters(string)) {
+      return label + " must not contain quotes or spaces.";
+    }
+
+    return null;
   }
 
   return (
     <div
       className={`form_field_wrapper form_input ${
-        fullWidth ? "full_width" : ""
-      }`}
+        warning && touched ? "error" : ""
+      } ${fullWidth ? "full_width" : ""}`}
     >
-      <label
-        className="form_field_label"
-        htmlFor={`field-${name.replace(/\s/g, "")}`}
-      >
-        {name}
+      <label className="form_field_label" htmlFor={`field-${name}`}>
+        {label}
       </label>
       <input
-        id={`field-${name.replace(/\s/g, "")}`}
+        id={`field-${name}`}
         className="form_field"
-        type={inputType}
+        placeholder={placeholder}
+        type={type}
         required={!optional}
+        value={value}
+        minLength={minLength}
+        maxLength={maxlength}
+        name={name}
+        onChange={handleChange}
+        onBlur={() => setTouched(true)}
       />
-      {hint && <small className="form_field_hint">{hint}</small>}
+      {((warning && touched) || hint) && (
+        <small className="form_field_hint">{warning || hint}</small>
+      )}
     </div>
   );
 };
