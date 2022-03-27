@@ -34,22 +34,17 @@ const registerFields = [
   },
 ];
 
-const AuthSubmitButton = ({ text, handleSubmit }) => {
-  return (
-    <button type="submit" className="auth_submit_btn" onClick={handleSubmit}>
-      {text}
-    </button>
-  );
-};
-
 const LoginForm = ({ toggleMode }) => {
   return (
     <div className="auth_form_wrapper login_wrapper" id="login">
       <div className="auth_form_content">
         <div className="auth_form_title">Sign in</div>
-        <Form formName="login" fields={loginFields}>
+        <Form
+          formName="login"
+          fields={loginFields}
+          buttonProps={{ text: "Sign in", class: "auth_submit_btn" }}
+        >
           <div className="auth_form_forgot_password">Forgot password?</div>
-          <AuthSubmitButton text="Sign in" />
         </Form>
         <div className="auth_form_extra_opts">
           Don't have an account?
@@ -70,9 +65,11 @@ const RegisterForm = ({ toggleMode }) => {
           Create
           <br /> an account
         </div>
-        <Form formName="register" fields={registerFields}>
-          <AuthSubmitButton text="Create an account" />
-        </Form>
+        <Form
+          formName="register"
+          fields={registerFields}
+          buttonProps={{ text: "Create an account", class: "auth_submit_btn" }}
+        ></Form>
         <div className="auth_form_extra_opts">
           Already have an account?
           <div className="auth_form_extra_btn" onClick={toggleMode}>
