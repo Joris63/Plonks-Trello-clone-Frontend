@@ -22,7 +22,7 @@ const FormField = ({
   requiresCaps = false,
   type = "text",
   minLength = 0,
-  maxlength,
+  maxLength,
 }) => {
   const [hidden, setHidden] = useState(type === "password");
   const [touched, setTouched] = useState(false);
@@ -82,7 +82,7 @@ const FormField = ({
           required={!optional}
           value={value}
           minLength={minLength}
-          maxLength={maxlength}
+          maxLength={maxLength}
           name={name}
           onChange={handleChange}
           onBlur={() => setTouched(true)}

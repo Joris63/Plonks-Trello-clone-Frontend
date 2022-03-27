@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "../components/form/Form";
 import "../styles/pages.scss";
 
@@ -36,14 +36,60 @@ const registerFields = [
 
 const AuthSubmitButton = ({ text, handleSubmit }) => {
   return (
-    <button className="auth_submit_btn" onClick={handleSubmit}>
+    <button type="submit" className="auth_submit_btn" onClick={handleSubmit}>
       {text}
     </button>
   );
 };
 
+const LoginForm = ({ toggleMode }) => {
+  return (
+    <div className="auth_form_wrapper login_wrapper" id="login">
+      <div className="auth_form_content">
+        <div className="auth_form_title">Sign in</div>
+        <Form formName="login" fields={loginFields}>
+          <div className="auth_form_forgot_password">Forgot password?</div>
+          <AuthSubmitButton text="Sign in" />
+        </Form>
+        <div className="auth_form_extra_opts">
+          Don't have an account?
+          <div className="auth_form_extra_btn" onClick={toggleMode}>
+            Create one
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const RegisterForm = ({ toggleMode }) => {
+  return (
+    <div className="auth_form_wrapper register_wrapper" id="register">
+      <div className="auth_form_content">
+        <div className="auth_form_title">
+          Create
+          <br /> an account
+        </div>
+        <Form formName="register" fields={registerFields}>
+          <AuthSubmitButton text="Create an account" />
+        </Form>
+        <div className="auth_form_extra_opts">
+          Already have an account?
+          <div className="auth_form_extra_btn" onClick={toggleMode}>
+            Sign in
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AuthPage = (props) => {
   const [mode, setMode] = useState("login");
+
+  useEffect(() => {
+    document.getElementById(mode).scrollIntoView();
+  }, [mode]);
 
   function toggleMode() {
     if (mode === "login") {
@@ -61,37 +107,9 @@ const AuthPage = (props) => {
         </div>
         <div className="auth_app_name">Plonks</div>
       </div>
-      <div className="login_wrapper auth_form_wrapper">
-        <div className="auth_form_content">
-          <div className="auth_form_title">Sign in</div>
-          <Form formName="login" fields={loginFields}>
-            <div className="auth_form_forgot_password">Forgot password?</div>
-            <AuthSubmitButton text="Sign in" />
-          </Form>
-          <div className="auth_form_extra_opts">
-            Don't have an account?
-            <div className="auth_form_extra_btn" onClick={toggleMode}>
-              Create one
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="register_wrapper auth_form_wrapper">
-        <div className="auth_form_content">
-          <div className="auth_form_title">
-            Create
-            <br /> an account
-          </div>
-          <Form formName="register" fields={registerFields}>
-            <AuthSubmitButton text="Create an account" />
-          </Form>
-          <div className="auth_form_extra_opts">
-            Already have an account?
-            <div className="auth_form_extra_btn" onClick={toggleMode}>
-              Sign in
-            </div>
-          </div>
-        </div>
+      <div className="auth_page_wrapper">
+        <LoginForm toggleMode={toggleMode} />
+        <RegisterForm toggleMode={toggleMode} />
       </div>
       <div className={`auth_overlay ${mode}`}>
         <div className="auth_overlay_content">
