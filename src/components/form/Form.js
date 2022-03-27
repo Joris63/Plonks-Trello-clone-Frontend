@@ -17,7 +17,7 @@ const Form = ({
   children,
   fields = [],
   buttonProps = { text: "Save", class: "save_form_btn" },
-  handleSubmit,
+  onSubmit,
 }) => {
   const [state, setState] = useState(setInitialState());
   const [ready, setReady] = useState(true);
@@ -79,6 +79,12 @@ const Form = ({
     const newValue = e.target.value;
 
     setState({ ...state, [name]: newValue });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onSubmit(state);
   }
 
   if (fields.length < 1) {

@@ -11,39 +11,29 @@ import AuthPage from "./pages/AuthPage";
 import SettingsPage from "./pages/SettingsPage";
 import "./styles/index.scss";
 
-const AuthLayout = () => {
-  return <Outlet />;
-};
-
-const DefaultLayout = () => {
-  const [open, setOpen] = useState(false);
+const App = () => {
+  const [token, setToken] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleToggleOpen() {
-    setOpen(!open);
+    setDrawerOpen(!drawerOpen);
+  }
+
+  if (!token) {
+    return <AuthPage setToken={setToken} />;
   }
 
   return (
-    <div className="container">
-      <Sidebar open={open} handleToggle={handleToggleOpen} />
-      <div className={`main${open ? " active" : ""}`}>
-        <Navbar handleOpen={handleToggleOpen} />
-        <Outlet />
-      </div>
-    </div>
-  );
-};
-
-const App = () => {
-  return (
     <Router>
-      <Routes>
-        <Route element={<DefaultLayout />}>
-          <Route exact path="/settings" element={<SettingsPage />} />
-        </Route>
-        <Route element={<AuthLayout />}>
-          <Route exact path="/login" element={<AuthPage />} />
-        </Route>
-      </Routes>
+      <div className="container">
+        <Sidebar open={drawerOpen} handleToggle={handleToggleOpen} />
+        <div className={`main${drawerOpen ? " active" : ""}`}>
+          <Navbar handleOpen={handleToggleOpen} />
+          <Routes>
+            <Route exact path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 };

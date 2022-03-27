@@ -3,6 +3,7 @@ import Form from "../components/form/Form";
 import "../styles/pages.scss";
 
 import { ReactComponent as SrcumBoard } from "../assets/scrum_board.svg";
+import { Login, Register } from "../services/UserService";
 
 const loginFields = [
   {
@@ -34,7 +35,7 @@ const registerFields = [
   },
 ];
 
-const LoginForm = ({ toggleMode }) => {
+const LoginForm = ({ toggleMode, setToken }) => {
   return (
     <div className="auth_form_wrapper login_wrapper" id="login">
       <div className="auth_form_content">
@@ -43,6 +44,7 @@ const LoginForm = ({ toggleMode }) => {
           formName="login"
           fields={loginFields}
           buttonProps={{ text: "Sign in", class: "auth_submit_btn" }}
+          onSubmit={Login}
         >
           <div className="auth_form_forgot_password">Forgot password?</div>
         </Form>
@@ -57,7 +59,7 @@ const LoginForm = ({ toggleMode }) => {
   );
 };
 
-const RegisterForm = ({ toggleMode }) => {
+const RegisterForm = ({ toggleMode, setToken }) => {
   return (
     <div className="auth_form_wrapper register_wrapper" id="register">
       <div className="auth_form_content">
@@ -69,6 +71,7 @@ const RegisterForm = ({ toggleMode }) => {
           formName="register"
           fields={registerFields}
           buttonProps={{ text: "Create an account", class: "auth_submit_btn" }}
+          onSubmit={Register}
         ></Form>
         <div className="auth_form_extra_opts">
           Already have an account?
@@ -81,7 +84,7 @@ const RegisterForm = ({ toggleMode }) => {
   );
 };
 
-const AuthPage = (props) => {
+const AuthPage = ({ setToken }) => {
   const [mode, setMode] = useState("login");
 
   useEffect(() => {
@@ -105,8 +108,8 @@ const AuthPage = (props) => {
         <div className="auth_app_name">Plonks</div>
       </div>
       <div className="auth_page_wrapper">
-        <LoginForm toggleMode={toggleMode} />
-        <RegisterForm toggleMode={toggleMode} />
+        <LoginForm toggleMode={toggleMode} setToken={setToken} />
+        <RegisterForm toggleMode={toggleMode} setToken={setToken} />
       </div>
       <div className={`auth_overlay ${mode}`}>
         <div className="auth_overlay_content">
