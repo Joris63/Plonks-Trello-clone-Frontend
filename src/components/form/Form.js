@@ -107,7 +107,11 @@ const Form = ({
   function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit(allFields);
+    const data = Object.fromEntries(
+      allFields.map((field) => [field?.name, field?.value])
+    );
+
+    onSubmit(data);
   }
 
   if (fields.length < 1) {

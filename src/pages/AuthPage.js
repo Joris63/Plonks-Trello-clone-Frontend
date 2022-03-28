@@ -52,26 +52,39 @@ const ExternalLoginOptions = () => {
   );
 };
 
-const LoginForm = ({ mode, toggleMode, setToken }) => {
+const LoginForm = ({ mode, toggleMode }) => {
   const [id, setId] = useState(`login-form-${uuidv4()}`);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (mode === "register") {
-      setTimeout(() => setId(`login-form-${uuidv4()}`), 500);
+      setTimeout(() => {
+        setId(`login-form-${uuidv4()}`);
+        setError(null);
+      }, 500);
     }
   }, [mode]);
+
+  function handleSubmit(data) {
+    Login(data).then((result) => {
+      if (!result.success) {
+        setError(result.message);
+      }
+    });
+  }
 
   return (
     <div className="auth_form_wrapper login_wrapper" id="login">
       <div className="auth_form_content">
         <div className="auth_form_title">Sign in</div>
         <ExternalLoginOptions />
+        {error && <div className="auth_form_error">{error}</div>}
         <Form
           id={id}
           formName="login"
           fields={loginFields}
           buttonProps={{ text: "Sign in", class: "auth_submit_btn" }}
-          onSubmit={Login}
+          onSubmit={handleSubmit}
         >
           <div className="auth_form_forgot_password">Forgot password?</div>
         </Form>
@@ -86,14 +99,26 @@ const LoginForm = ({ mode, toggleMode, setToken }) => {
   );
 };
 
-const RegisterForm = ({ mode, toggleMode, setToken }) => {
+const RegisterForm = ({ mode, toggleMode }) => {
   const [id, setId] = useState(`register-form-${uuidv4()}`);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (mode === "login") {
-      setTimeout(() => setId(`register-form-${uuidv4()}`), 500);
+      setTimeout(() => {
+        setId(`register-form-${uuidv4()}`);
+        setError(null);
+      }, 500);
     }
   }, [mode]);
+
+  function handleSubmit(data) {
+    Register(data).then((result) => {
+      if (!result.success) {
+        setError(result.message);
+      }
+    });
+  }
 
   return (
     <div className="auth_form_wrapper register_wrapper" id="register">
@@ -103,12 +128,13 @@ const RegisterForm = ({ mode, toggleMode, setToken }) => {
           <br /> an account
         </div>
         <ExternalLoginOptions />
+        {error && <div className="auth_form_error">{error}</div>}
         <Form
           id={id}
           formName="register"
           fields={registerFields}
           buttonProps={{ text: "Create an account", class: "auth_submit_btn" }}
-          onSubmit={Register}
+          onSubmit={handleSubmit}
         />
         <div className="auth_form_extra_opts">
           Already have an account?
@@ -121,7 +147,7 @@ const RegisterForm = ({ mode, toggleMode, setToken }) => {
   );
 };
 
-const AuthPage = ({ setToken }) => {
+const AuthPage = () => {
   const [mode, setMode] = useState("login");
 
   useEffect(() => {
@@ -145,8 +171,8 @@ const AuthPage = ({ setToken }) => {
         <div className="auth_app_name">Plonks</div>
       </div>
       <div className="auth_page_wrapper">
-        <LoginForm mode={mode} toggleMode={toggleMode} setToken={setToken} />
-        <RegisterForm mode={mode} toggleMode={toggleMode} setToken={setToken} />
+        <LoginForm mode={mode} toggleMode={toggleMode} />
+        <RegisterForm mode={mode} toggleMode={toggleMode} />
       </div>
       <div className={`auth_overlay ${mode}`}>
         <div className="auth_overlay_content">

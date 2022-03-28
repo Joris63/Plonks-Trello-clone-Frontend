@@ -1,26 +1,20 @@
 import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navigation/Navbar";
 import Sidebar from "./components/navigation/Sidebar";
 import AuthPage from "./pages/AuthPage";
 import SettingsPage from "./pages/SettingsPage";
 import "./styles/index.scss";
-
 const App = () => {
-  const [token, setToken] = useState(null);
+  const isAuthenticated = false;
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleToggleOpen() {
     setDrawerOpen(!drawerOpen);
   }
 
-  if (!token) {
-    return <AuthPage setToken={setToken} />;
+  if (!isAuthenticated) {
+    return <AuthPage />;
   }
 
   return (
