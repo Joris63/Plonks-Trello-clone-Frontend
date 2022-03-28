@@ -69,7 +69,7 @@
     padding: 12px 24px;
     border-radius: 8px;
     border-style: none;
-    background: rgba(83, 82, 237, 1);
+    background-color: rgba(83, 82, 237, 1);
     color: white;
     cursor: pointer;
     font-size: 1em;
@@ -151,7 +151,7 @@
     position: absolute;
     top: 0;
     right: 100px;
-    transition: left 0.7s ease-in-out, right 0.7s ease-in-out;
+    transition: left 0.7s ease-out, right 0.7s ease-out;
 
     &.active {
         right: -30%;
@@ -258,6 +258,62 @@
 
     .auth_info_svg {
         max-height: 300px;
+    }
+}
+
+/* 
+  External Login options
+*/
+.external_login_options {
+    width: 100%;
+    overflow: hidden;
+}
+
+.gooogle_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcfcfc;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.225s ease;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 600;
+
+    &:hover {
+        box-shadow: 0 3px 8px rgba(117, 117, 117, 0.5);
+        user-select: none;
+    }
+}
+
+.external_icon_svg {
+    margin-right: 10px;
+}
+
+.external_options_seperator {
+    position: relative;
+    width: fit-content;
+    margin: 16px auto 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        height: 1.5px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        top: 50%;
+    }
+
+    &::before {
+        left: calc(-8px - 100%);
+    }
+
+    &::after {
+        right: calc(-8px - 100%);
     }
 }
 

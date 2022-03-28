@@ -4,12 +4,11 @@ import "../../styles/common.scss";
 const FormField = ({
   formName,
   field = {},
-  value,
   handleChange,
+  handleTouch,
   checkForWarning,
 }) => {
   const [hidden, setHidden] = useState(field?.type === "password");
-  const [touched, setTouched] = useState(false);
   const [warning, setWarning] = useState(() => checkForWarning(field));
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const FormField = ({
   return (
     <div
       className={`form_field_wrapper form_input ${
-        warning && touched ? "error" : ""
+        warning && field?.touched ? "error" : ""
       } ${field?.fullWidth ? "full_width" : ""}`}
     >
       <label
@@ -43,12 +42,12 @@ const FormField = ({
               : "text"
           }
           required={!field?.optional}
-          value={value}
+          value={field?.value}
           minLength={field?.minLength}
           maxLength={field?.maxLength}
           name={field?.name}
           onChange={handleChange}
-          onBlur={() => setTouched(true)}
+          onBlur={() => handleTouch(field?.name, true)}
         />
         {field?.type === "password" && (
           <div
@@ -57,7 +56,7 @@ const FormField = ({
           />
         )}
       </div>
-      {((warning && touched) || field?.hint) && (
+      {((warning && field?.touched) || field?.hint) && (
         <small className="form_field_hint">{warning || field?.hint}</small>
       )}
     </div>

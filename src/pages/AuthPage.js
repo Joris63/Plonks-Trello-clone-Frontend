@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Form from "../components/form/Form";
 import "../styles/pages.scss";
 
@@ -35,12 +36,38 @@ const registerFields = [
   },
 ];
 
-const LoginForm = ({ toggleMode, setToken }) => {
+const ExternalLoginOptions = () => {
+  return (
+    <div className="external_login_options">
+      <div className="gooogle_btn auth_submit_btn">
+        <img
+          className="external_icon_svg"
+          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          alt=""
+        />
+        <div>Sign in with Google</div>
+      </div>
+      <div className="external_options_seperator">or Sign in with Email</div>
+    </div>
+  );
+};
+
+const LoginForm = ({ mode, toggleMode, setToken }) => {
+  const [id, setId] = useState(`login-form-${uuidv4()}`);
+
+  useEffect(() => {
+    if (mode === "register") {
+      setTimeout(() => setId(`login-form-${uuidv4()}`), 500);
+    }
+  }, [mode]);
+
   return (
     <div className="auth_form_wrapper login_wrapper" id="login">
       <div className="auth_form_content">
         <div className="auth_form_title">Sign in</div>
+        <ExternalLoginOptions />
         <Form
+          id={id}
           formName="login"
           fields={loginFields}
           buttonProps={{ text: "Sign in", class: "auth_submit_btn" }}
@@ -59,7 +86,15 @@ const LoginForm = ({ toggleMode, setToken }) => {
   );
 };
 
-const RegisterForm = ({ toggleMode, setToken }) => {
+const RegisterForm = ({ mode, toggleMode, setToken }) => {
+  const [id, setId] = useState(`register-form-${uuidv4()}`);
+
+  useEffect(() => {
+    if (mode === "login") {
+      setTimeout(() => setId(`register-form-${uuidv4()}`), 500);
+    }
+  }, [mode]);
+
   return (
     <div className="auth_form_wrapper register_wrapper" id="register">
       <div className="auth_form_content">
@@ -67,12 +102,14 @@ const RegisterForm = ({ toggleMode, setToken }) => {
           Create
           <br /> an account
         </div>
+        <ExternalLoginOptions />
         <Form
+          id={id}
           formName="register"
           fields={registerFields}
           buttonProps={{ text: "Create an account", class: "auth_submit_btn" }}
           onSubmit={Register}
-        ></Form>
+        />
         <div className="auth_form_extra_opts">
           Already have an account?
           <div className="auth_form_extra_btn" onClick={toggleMode}>
@@ -108,8 +145,8 @@ const AuthPage = ({ setToken }) => {
         <div className="auth_app_name">Plonks</div>
       </div>
       <div className="auth_page_wrapper">
-        <LoginForm toggleMode={toggleMode} setToken={setToken} />
-        <RegisterForm toggleMode={toggleMode} setToken={setToken} />
+        <LoginForm mode={mode} toggleMode={toggleMode} setToken={setToken} />
+        <RegisterForm mode={mode} toggleMode={toggleMode} setToken={setToken} />
       </div>
       <div className={`auth_overlay ${mode}`}>
         <div className="auth_overlay_content">

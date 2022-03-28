@@ -11,80 +11,105 @@ import {
   CheckForNumberInString,
   CheckLengthInString,
 } from "../../utils/helpers/common";
+import _, { isEqual } from "lodash";
 
 const Form = ({
+  id,
   formName,
   children,
   fields = [],
   buttonProps = { text: "Save", class: "save_form_btn" },
   onSubmit,
 }) => {
-  const [state, setState] = useState(setInitialState());
+  const [allFields, setAllFields] = useState(setInitialState());
   const [ready, setReady] = useState(true);
 
   const checkForWarning = useCallback(
     (field) => {
-      const value =
-        state[field?.name] || state[TurnStringToCamelCase(field.label)];
-
-      if (value === "" && !field?.optional) {
+      if (field?.value === "" && !field?.optional) {
         return "Field is required.";
       }
 
-      if (field?.requiresNr && !CheckForNumberInString(value)) {
+      if (field?.requiresNr && !CheckForNumberInString(field?.value)) {
         return "Must contain at least one number.";
       }
 
-      if (field?.requiresCaps && !CheckForCapsInString(value)) {
+      if (field?.requiresCaps && !CheckForCapsInString(field?.value)) {
         return "Must contain at least one uppercase letter";
       }
 
-      if (field?.type === "email" && !ValidateEmail(value)) {
+      if (field?.type === "email" && !ValidateEmail(field?.value)) {
         return `Must be a valid email.`;
       }
 
-      if (!CheckLengthInString(value, field?.minLength)) {
+      if (!CheckLengthInString(field?.value, field?.minLength)) {
         return `Must be at least ${field?.minLength} characters long.`;
       }
 
-      if (field?.type === "password" && CheckForBadCharacters(value)) {
+      if (field?.type === "password" && CheckForBadCharacters(field?.value)) {
         return "Must not contain quotes or spaces.";
       }
 
       return null;
     },
-    [state]
+    [allFields]
   );
 
   useEffect(() => {
+    handleReset();
+  }, [id]);
+
+  useEffect(() => {
     setReady(
-      fields.some((field) => typeof checkForWarning(field) === "string")
+      allFields?.some((field) => typeof checkForWarning(field) === "string")
     );
-  }, [state]);
+  }, [allFields]);
 
   function setInitialState() {
-    const result = {};
+    return fields.map((field) => ({
+      name: TurnStringToCamelCase(field.label),
+      value: "",
+      fullWidth: true,
+      placeholder: "",
+      optional: false,
+      unique: false,
+      requiresNr: false,
+      requiresCaps: false,
+      type: "text",
+      minLength: 0,
+      touched: false,
+      ...field,
+    }));
+  }
 
-    fields.forEach((field) => {
-      const fieldName = TurnStringToCamelCase(field.label);
-
-      result[fieldName] = field.value || "";
-    });
-
-    return result;
+  function handleReset() {
+    setAllFields(setInitialState());
   }
 
   function handleChange(e) {
     const name = e.target.name;
     const newValue = e.target.value;
+    const updatedFields = _.cloneDeep(allFields);
+    const field = updatedFields.find((field) => field.name === name);
 
-    setState({ ...state, [name]: newValue });
+    field.value = newValue;
+
+    setAllFields(updatedFields);
+  }
+
+  function handleTouch(name, touched) {
+    const updatedFields = _.cloneDeep(allFields);
+    const field = updatedFields.find((field) => field.name === name);
+
+    field.touched = touched;
+
+    setAllFields(updatedFields);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit(state);
+    onSubmit(allFields);
   }
 
   if (fields.length < 1) {
@@ -93,34 +118,16 @@ const Form = ({
 
   return (
     <form className="form">
-      {fields.map((field) => {
-        const name = TurnStringToCamelCase(field.label);
-        const updatedField = {
-          name,
-          value: "",
-          fullWidth: true,
-          placeholder: "",
-          optional: false,
-          unique: false,
-          requiresNr: false,
-          requiresCaps: false,
-          type: "text",
-          minLength: 0,
-          ...field,
-        };
-
-        return (
-          <FormField
-            key={`field-${name}`}
-            formName={formName}
-            field={updatedField}
-            name={name}
-            value={state[name]}
-            handleChange={handleChange}
-            checkForWarning={checkForWarning}
-          />
-        );
-      })}
+      {allFields.map((field) => (
+        <FormField
+          key={`field-${field?.name}`}
+          formName={formName}
+          field={field}
+          handleChange={handleChange}
+          handleTouch={handleTouch}
+          checkForWarning={checkForWarning}
+        />
+      ))}
       {children && children}
       <button
         disabled={ready}
