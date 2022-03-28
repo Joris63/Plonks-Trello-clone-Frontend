@@ -1,8 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { IsElementOffscreen } from "../../utils/helpers/common";
-import "animate.css";
-import "../../styles/common.scss";
 import { Link } from "react-router-dom";
+import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
+import "../../styles/common.scss";
 
 let justOpened = false;
 

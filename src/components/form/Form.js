@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import "../../styles/common.scss";
-import {
-  TurnStringToCamelCase,
-  ValidateEmail,
-} from "../../utils/helpers/common";
+import _ from "lodash";
 import FormField from "./FormField";
 import {
   CheckForBadCharacters,
   CheckForCapsInString,
   CheckForNumberInString,
   CheckLengthInString,
-} from "../../utils/helpers/common";
-import _, { isEqual } from "lodash";
+  ValidateEmail,
+} from "../../utils/helpers/validation.helpers";
+import { TurnStringToCamelCase } from "../../utils/helpers/common.helpers";
+import "../../styles/common.scss";
 
 const Form = ({
   id,
