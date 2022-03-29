@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Form from "../components/form/Form";
+import jwt from "jwt-decode"; // import dependency
 import "../styles/pages.scss";
 
 import { ReactComponent as SrcumBoard } from "../assets/scrum_board.svg";
-import { Login, Register } from "../services/AuthService";
+import { Login, Register, SocialLogin } from "../services/AuthService";
 import { FirePopup, FireToast } from "../utils/helpers/toasts.helpers";
+import GoogleLogin from "react-google-login";
 
 const loginFields = [
   {
@@ -38,16 +40,50 @@ const registerFields = [
 ];
 
 const ExternalLoginOptions = () => {
+  function handleGoogleResponse(response) {
+    const { profileObj: profile } = response;
+    const data = {
+      username: profile.name,
+      email: profile.email,
+      password: profile.googleId,
+      picturePath: profile.imageUrl,
+    };
+
+    SocialLogin(data).then((result) => {
+      if (!result.success) {
+        FireToast("Sign in failed", "error");
+      } else {
+        console.log(result.message);
+        const message =
+          result.message === "registered" ? "Welcome!" : "Welcome back!";
+
+        FirePopup(message, null, "success", 1500);
+      }
+    });
+  }
+
   return (
     <div className="external_login_options">
-      <div className="gooogle_btn auth_submit_btn">
-        <img
-          className="external_icon_svg"
-          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-          alt=""
-        />
-        <div>Sign in with Google</div>
-      </div>
+      <GoogleLogin
+        clientId="831239906317-3ehjmd84e52gsvcren9aqfu9ami0r5au.apps.googleusercontent.com"
+        render={(renderProps) => (
+          <button
+            className="gooogle_btn auth_submit_btn"
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+          >
+            <img
+              className="external_icon_svg"
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+              alt=""
+            />
+            <div>Sign in with Google</div>
+          </button>
+        )}
+        onSuccess={handleGoogleResponse}
+        onFailure={handleGoogleResponse}
+        cookiePolicy={"single_host_origin"}
+      />
       <div className="external_options_seperator">or Sign in with Email</div>
     </div>
   );

@@ -20,6 +20,24 @@ function Login(data) {
     });
 }
 
+function SocialLogin(data) {
+  return axios
+    .post("https://localhost:7072/api/account/socialLogin", data, baseHeader)
+    .then((response) => {
+      if (response.data) {
+        const { token, success, ...rest } = response.data;
+
+        if (success) {
+          sessionStorage.setItem("user", JSON.stringify(token));
+        }
+
+        return { success, ...rest };
+      } else {
+        return response;
+      }
+    });
+}
+
 function Register(data) {
   return axios
     .post("https://localhost:7072/api/account/register", data, baseHeader)
@@ -38,4 +56,4 @@ function Register(data) {
     });
 }
 
-export { Login, Register };
+export { Login, SocialLogin, Register };

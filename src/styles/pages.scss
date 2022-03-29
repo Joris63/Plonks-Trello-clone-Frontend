@@ -300,6 +300,13 @@
         box-shadow: 0 3px 8px rgba(117, 117, 117, 0.5);
         user-select: none;
     }
+
+    &:disabled,
+    &[disabled] {
+        cursor: default;
+        background: #fcfcfc;
+        opacity: 0.5;
+    }
 }
 
 .external_icon_svg {
