@@ -61,7 +61,6 @@
     font-size: 1.8em;
     font-weight: 600;
     margin-bottom: 12px;
-    margin-top: 16px;
 }
 
 .auth_form_error {
@@ -221,6 +220,10 @@
 
     .auth_form_wrapper {
         max-width: 100%;
+
+        &.login_wrapper {
+            padding-top: 64px;
+        }
     }
 
     .auth_overlay {

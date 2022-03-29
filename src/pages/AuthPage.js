@@ -4,7 +4,8 @@ import Form from "../components/form/Form";
 import "../styles/pages.scss";
 
 import { ReactComponent as SrcumBoard } from "../assets/scrum_board.svg";
-import { Login, Register } from "../services/UserService";
+import { Login, Register } from "../services/AuthService";
+import { FirePopup, FireToast } from "../utils/helpers/toasts.helpers";
 
 const loginFields = [
   {
@@ -57,11 +58,9 @@ const LoginForm = ({ mode, toggleMode }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (mode === "register") {
-      setTimeout(() => {
-        setId(`login-form-${uuidv4()}`);
-        setError(null);
-      }, 500);
+    if (mode === "login") {
+      setId(`login-form-${uuidv4()}`);
+      setError(null);
     }
   }, [mode]);
 
@@ -69,6 +68,10 @@ const LoginForm = ({ mode, toggleMode }) => {
     Login(data).then((result) => {
       if (!result.success) {
         setError(result.message);
+
+        FireToast("Sign in failed", "error");
+      } else {
+        FirePopup("Welcome back!", null, "success", 1500);
       }
     });
   }
@@ -104,11 +107,9 @@ const RegisterForm = ({ mode, toggleMode }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (mode === "login") {
-      setTimeout(() => {
-        setId(`register-form-${uuidv4()}`);
-        setError(null);
-      }, 500);
+    if (mode === "register") {
+      setId(`register-form-${uuidv4()}`);
+      setError(null);
     }
   }, [mode]);
 
@@ -116,6 +117,10 @@ const RegisterForm = ({ mode, toggleMode }) => {
     Register(data).then((result) => {
       if (!result.success) {
         setError(result.message);
+
+        FireToast("Registration failed", "error");
+      } else {
+        FirePopup("Welcome!", result.message, "success", 1500);
       }
     });
   }
