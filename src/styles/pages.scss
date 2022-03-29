@@ -61,6 +61,7 @@
     font-size: 1.8em;
     font-weight: 600;
     margin-bottom: 12px;
+    margin-top: 16px;
 }
 
 .auth_form_error {
@@ -223,25 +224,29 @@
     }
 
     .auth_overlay {
-        top: 50%;
+        top: 670px;
         right: 0;
-        height: 100vh;
-        width: 100vw;
+        left: 0;
+        width: unset;
 
         &.register {
+            height: 670px;
             right: 0;
             top: 0;
 
             & .auth_overlay_content {
-                bottom: -100%;
+                top: 0;
+                bottom: -800px;
             }
         }
     }
 
     .auth_overlay_content {
+        height: unset;
+        top: -670px;
+        right: 0;
         left: 0;
         bottom: 0;
-        height: 200vh;
     }
 
     .auth_info_wrapper {
