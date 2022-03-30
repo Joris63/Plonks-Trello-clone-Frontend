@@ -1,5 +1,6 @@
 import Form from "../components/form/Form";
 import { useState } from "react";
+import useRefreshToken from "../hooks/useRefreshTokens";
 import "../styles/common.scss";
 import "../styles/pages.scss";
 
@@ -177,9 +178,13 @@ const ThemeSettings = (props) => {
 };
 
 const SettingsPage = (props) => {
+  const refresh = useRefreshToken();
+
   return (
     <div className="page_content">
-      <div className="page_title">Account & Settings</div>
+      <div className="page_title" onClick={() => refresh()}>
+        Account & Settings
+      </div>
       <div className="settings_wrapper">
         <div className="user_profile_wrapper">
           <div className="app_settings_wrapper">
