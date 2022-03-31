@@ -44,7 +44,7 @@ const LoginForm = ({ mode, toggleMode }) => {
         const result = response?.data;
 
         if (result.status === "Success") {
-          const accessToken = result?.data?.accessToken;
+          const accessToken = result?.data;
           const { id, username, email, picture } = jwtDecode(accessToken);
 
           setAuth({ user: { id, username, email, picture }, accessToken });
