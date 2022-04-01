@@ -2,10 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Dropdown from "../helpers/Dropdown";
 import "../../styles/navigation.scss";
 import "animate.css";
+import useAuth from "../../hooks/useAuth";
 
 const RightNavbar = (props) => {
   const [wiggle, setWiggle] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const { auth } = useAuth();
 
   const profileBtnRef = useRef(null);
 
@@ -41,10 +44,14 @@ const RightNavbar = (props) => {
           onClick={toggleOpen}
           ref={profileBtnRef}
         >
-          <div className="navbar_profile_picture">
-            <i className="fa-solid fa-j"></i>
-          </div>
-          <div className="navbar_profile_name">Joris Kamminga</div>
+          {auth?.user?.picturePath ? (
+            <img className="navbar_profile_picture" src={auth?.user?.picturePath} alt="profile" />
+          ) : (
+            <div className="navbar_profile_picture">
+              <i className={`fa-solid fa-${auth?.user?.username?.charAt()}`}></i>
+            </div>
+          )}
+          <div className="navbar_profile_name">{auth?.user?.username}</div>
           <span className="navbar_profile_icon">
             <i className={`fa-regular fa-angle-${open ? "up" : "down"}`}></i>
           </span>

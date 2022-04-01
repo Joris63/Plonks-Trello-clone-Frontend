@@ -171,6 +171,64 @@
   transition: color 0.225s ease;
 }
 
+.form_password_field_hints_wrapper {
+  max-width: 260px;
+  position: fixed;
+  z-index: 100;
+  background-color: #2f3542;
+  padding: 24px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9em;
+
+  &::before {
+    content: "";
+    transform: rotate(45deg);
+    position: absolute;
+    background-color: #2f3542;
+    bottom: -7.5px;
+    left: 16px;
+    height: 15px;
+    width: 15px;
+  }
+}
+
+.form_password_field_hints_list {
+  padding-left: 16px;
+}
+
+.form_password_field_hint {
+  position: relative;
+  margin-bottom: 8px;
+  color: #fff;
+
+  &:before {
+    content: "\e122";
+    position: absolute;
+    font: var(--fa-font-solid);
+    font-size: 0.8em;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -16px;
+  }
+
+  &.success {
+    color: rgba(39, 174, 96, 1);
+
+    &::before {
+      content: "\f00c";
+    }
+  }
+
+  &.error {
+    color: rgba(231, 76, 60, 1);
+
+    &::before {
+      content: "\f00d";
+    }
+  }
+}
+
 .form_field_label {
   display: inline-block;
   margin-bottom: 4px;

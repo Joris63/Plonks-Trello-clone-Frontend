@@ -6,19 +6,8 @@ import "../styles/pages.scss";
 import { ReactComponent as USFlag } from "../assets/us-flag.svg";
 import { ReactComponent as NLFlag } from "../assets/nl-flag.svg";
 import { ReactComponent as FRFlag } from "../assets/fr-flag.svg";
-
-const basicFields = [
-  {
-    label: "Username",
-    unique: true,
-  },
-  {
-    label: "Email",
-    type: "email",
-    unique: true,
-  },
-];
-
+import useAuth from "../hooks/useAuth";
+  
 const passwordFields = [
   {
     label: "New password",
@@ -174,6 +163,21 @@ const ThemeSettings = (props) => {
 };
 
 const SettingsPage = (props) => {
+  const { auth } = useAuth();
+
+  const basicFields = [
+    {
+      label: "Username",
+      value: auth?.user?.username,
+    },
+    {
+      label: "Email",
+      type: "email",
+      unique: true,
+      value: auth?.user?.email,
+    },
+  ];
+
   return (
     <div className="page_content">
       <div className="page_title">Account & Settings</div>

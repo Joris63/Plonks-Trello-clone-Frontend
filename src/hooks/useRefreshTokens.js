@@ -22,11 +22,11 @@ const useRefreshToken = () => {
         window.localStorage.setItem("refreshToken", refreshToken);
 
         setAuth((prev) => {
-          const { id, username, email, picture } = jwtDecode(accessToken);
+          const { id, username, email, picturePath } = jwtDecode(accessToken);
 
           return {
             ...prev,
-            user: { id, username, email, picture },
+            user: { id, username, email, picturePath },
             accessToken: accessToken,
           };
         });

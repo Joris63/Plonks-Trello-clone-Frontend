@@ -7,7 +7,7 @@ let justOpened = false;
 
 const Dropdown = ({ open, anchor, handleClose }) => {
   const [position, setPosition] = useState(null);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(null); 
 
   useLayoutEffect(() => {
     function AdjustPosition() {

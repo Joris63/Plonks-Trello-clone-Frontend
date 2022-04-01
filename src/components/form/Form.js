@@ -66,7 +66,7 @@ const Form = ({
   function setInitialState() {
     return fields.map((field) => ({
       name: TurnStringToCamelCase(field.label),
-      value: "",
+      value: field.value || "",
       fullWidth: true,
       placeholder: "",
       optional: false,
