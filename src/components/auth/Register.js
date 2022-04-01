@@ -47,22 +47,20 @@ const RegisterForm = ({ mode, toggleMode }) => {
 
   async function handleSubmit(data) {
     await axios
-      .post("/authenticate/register", data)
+      .post("/auth/register", data)
       .then((response) => {
-        const result = response?.data;
+        const { id, username, email, picturePath, accessToken, refreshToken } =
+          response?.data;
 
-        if (result.status === "Success") {
-          const accessToken = result?.dataaccessToken;
-          const { id, username, email, picture } = jwtDecode(accessToken);
+        window.localStorage.setItem("refreshToken", refreshToken);
 
-          setAuth({ user: { id, username, email, picture }, accessToken });
+        setAuth({ user: { id, username, email, picturePath }, accessToken });
 
-          FirePopup("Welcome!", null, "success", 1000);
+        FirePopup("Welcome!", null, "success", 1000);
 
-          setTimeout(() => {
-            navigate(from, { replace: true });
-          }, 1000);
-        }
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 1000);
       })
       .catch((err) => {
         if (!err?.response) {

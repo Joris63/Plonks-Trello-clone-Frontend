@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import axios from "../api/axios";
 import useAuth from "./useAuth";
 
@@ -5,18 +6,40 @@ const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const response = await axios.get(`authenticate/refresh`, {
-      withCredentials: true,
-    });
+    const oldRefreshToken = window.localStorage.getItem("refreshToken");
 
-    setAuth((prev) => {
-      return {
-        ...prev,
-        accessToken: response.data,
-      };
-    });
+    return await axios
+      .post(
+        `auth/refresh-token`,
+        { refreshToken: oldRefreshToken },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        const { accessToken, refreshToken } = response?.data;
 
-    return response;
+        window.localStorage.setItem("refreshToken", refreshToken);
+
+        setAuth((prev) => {
+          const { id, username, email, picture } = jwtDecode(accessToken);
+
+          return {
+            ...prev,
+            user: { id, username, email, picture },
+            accessToken: accessToken,
+          };
+        });
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          console.log("No server response.");
+        } else if (err.response?.status === 400) {
+          console.log(err?.response?.data.message);
+        } else {
+          console.log("Something went wrong.");
+        }
+      });
   };
 
   return refresh;

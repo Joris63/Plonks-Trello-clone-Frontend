@@ -39,22 +39,20 @@ const LoginForm = ({ mode, toggleMode }) => {
 
   async function handleSubmit(data) {
     await axios
-      .post("/authenticate/login", data)
+      .post("/auth/login", data)
       .then((response) => {
-        const result = response?.data;
+        const { id, username, email, picturePath, accessToken, refreshToken } =
+          response?.data;
 
-        if (result.status === "Success") {
-          const accessToken = result?.data;
-          const { id, username, email, picture } = jwtDecode(accessToken);
+        window.localStorage.setItem("refreshToken", refreshToken);
 
-          setAuth({ user: { id, username, email, picture }, accessToken });
+        setAuth({ user: { id, username, email, picturePath }, accessToken });
 
-          FirePopup("Welcome back!", null, "success", 1000);
+        FirePopup("Welcome back!", null, "success", 1000);
 
-          setTimeout(() => {
-            navigate(from, { replace: true });
-          }, 1000);
-        }
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
