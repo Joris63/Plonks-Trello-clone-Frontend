@@ -297,6 +297,14 @@
   cursor: pointer;
 }
 
+@media (max-width: 500px) {
+  .form_field_wrapper {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
 /*
   Page
 */

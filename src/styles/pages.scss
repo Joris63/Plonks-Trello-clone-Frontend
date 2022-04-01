@@ -227,13 +227,13 @@
     }
 
     .auth_overlay {
-        top: 670px;
+        top: 930px;
         right: 0;
         left: 0;
         width: unset;
 
         &.register {
-            height: 670px;
+            height: 930px;
             right: 0;
             top: 0;
 
@@ -246,7 +246,7 @@
 
     .auth_overlay_content {
         height: unset;
-        top: -670px;
+        top: -930px;
         right: 0;
         left: 0;
         bottom: 0;
@@ -263,7 +263,8 @@
         }
 
         &.register {
-            top: 100vh;
+            top: unset;
+            bottom: 0;
             left: 5%;
 
             &.active {
