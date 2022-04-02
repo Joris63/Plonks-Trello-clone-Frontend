@@ -35,7 +35,7 @@ const useRefreshToken = () => {
         if (!err?.response) {
           console.log("No server response.");
         } else if (err.response?.status === 400) {
-          console.log(err?.response?.data.message);
+          console.log(err?.response?.message);
         } else {
           console.log("Something went wrong.");
         }

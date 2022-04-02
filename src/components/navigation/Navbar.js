@@ -3,6 +3,7 @@ import Dropdown from "../helpers/Dropdown";
 import "../../styles/navigation.scss";
 import "animate.css";
 import useAuth from "../../hooks/useAuth";
+import ProfileDropdown from "./ProfileDropdown";
 
 const RightNavbar = (props) => {
   const [wiggle, setWiggle] = useState(false);
@@ -57,7 +58,7 @@ const RightNavbar = (props) => {
           </span>
         </button>
       </div>
-      <Dropdown open={open} anchor={profileBtnRef} handleClose={toggleOpen} />
+      <ProfileDropdown open={open} anchor={profileBtnRef} handleClose={toggleOpen} />
     </>
   );
 };

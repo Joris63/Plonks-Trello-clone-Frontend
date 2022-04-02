@@ -1,13 +1,12 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
 import "../../styles/common.scss";
 
 let justOpened = false;
 
-const Dropdown = ({ open, anchor, handleClose }) => {
+const Dropdown = ({ open, anchor, handleClose, children }) => {
   const [position, setPosition] = useState(null);
-  const dropdownRef = useRef(null); 
+  const dropdownRef = useRef(null);
 
   useLayoutEffect(() => {
     function AdjustPosition() {
@@ -80,24 +79,7 @@ const Dropdown = ({ open, anchor, handleClose }) => {
       style={{ top: position.y, left: position.x }}
       className="dropdown"
     >
-      <ul className="dropdown_actions_list">
-        <li className="dropdown_action_wrapper">
-          <Link
-            className="dropdown_action"
-            to="/settings"
-            onClick={handleClose}
-          >
-            <i className="dropdown_action_icon fa-solid fa-gear"></i>
-            Settings
-          </Link>
-        </li>
-        <li className="dropdown_action_wrapper">
-          <Link className="dropdown_action" to="/login" onClick={handleClose}>
-            <i className="dropdown_action_icon fa-solid fa-right-from-bracket"></i>
-            Logout
-          </Link>
-        </li>
-      </ul>
+      {children}
     </div>
   );
 };

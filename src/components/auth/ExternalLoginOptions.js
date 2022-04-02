@@ -24,14 +24,26 @@ const ExternalLoginOptions = () => {
     await axios
       .post("auth/social-login", data)
       .then((response) => {
-        const { id, username, email, picturePath, accessToken, refreshToken } =
-          response?.data;
+        const {
+          id,
+          username,
+          email,
+          picturePath,
+          accessToken,
+          refreshToken,
+          message,
+        } = response?.data;
 
         window.localStorage.setItem("refreshToken", refreshToken);
 
         setAuth({ user: { id, username, email, picturePath }, accessToken });
-        
-        FirePopup("Welcome back!", null, "success", 1000);
+
+        FirePopup(
+          message === "signedIn" ? "Welcome back!" : "Welcome!",
+          null,
+          "success",
+          1000
+        );
 
         setTimeout(() => {
           navigate(from, { replace: true });

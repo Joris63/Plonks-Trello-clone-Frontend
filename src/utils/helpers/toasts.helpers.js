@@ -3,9 +3,9 @@ import Swal from "sweetalert2";
 function FireToast(title, icon) {
   const Toast = Swal.mixin({
     toast: true,
-    position: "top-end",
+    position: "top",
     showConfirmButton: false,
-    timer: 2500,
+    timer: 1500,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);

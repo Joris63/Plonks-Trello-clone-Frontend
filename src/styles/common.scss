@@ -3,7 +3,7 @@
 */
 .dropdown {
   position: fixed;
-  z-index: 10000;
+  z-index: 100;
   top: 0;
   left: 0;
   width: 225px;
@@ -174,7 +174,7 @@
 .form_password_field_hints_wrapper {
   min-width: 260px;
   position: absolute;
-  z-index: 1000000;
+  z-index: 101;
   bottom: 58px;
   right: 0;
   background-color: #2f3542;
