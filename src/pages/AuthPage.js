@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { ReactComponent as ScrumBoard } from "../assets/scrum_board.svg";
 import LoginForm from "../components/auth/Login";
 import RegisterForm from "../components/auth/Register";
@@ -13,13 +13,27 @@ function getLoginFormHeight() {
 }
 
 const AuthPage = () => {
-  const [loginFormHeight, setLoginFormHeight] = useState(getLoginFormHeight());
+  const [loginFormHeight, setLoginFormHeight] = useState();
+  const [windowHeight, setWindowHeight] = useState(
+    window.matchMedia("(min-width: 969px)").matches
+  );
   const [mode, setMode] = useState("login");
 
-  useEffect(() => {
+  let authOverlayStyle = { height: loginFormHeight };
+
+  if (mode === "login") {
+    authOverlayStyle = windowHeight
+      ? { height: loginFormHeight }
+      : { top: loginFormHeight };
+  }
+
+  useLayoutEffect(() => {
     function handleResize() {
       setLoginFormHeight(getLoginFormHeight());
+      setWindowHeight(window.matchMedia("(min-width: 969px)").matches);
     }
+
+    setLoginFormHeight(getLoginFormHeight());
 
     window.addEventListener("resize", handleResize);
 
@@ -50,14 +64,7 @@ const AuthPage = () => {
         <LoginForm mode={mode} toggleMode={toggleMode} />
         <RegisterForm mode={mode} toggleMode={toggleMode} />
       </div>
-      <div
-        className={`auth_overlay ${mode}`}
-        style={
-          mode === "register"
-            ? { height: loginFormHeight }
-            : { top: loginFormHeight }
-        }
-      >
+      <div className={`auth_overlay ${mode}`} style={authOverlayStyle}>
         <div className="auth_overlay_content">
           <div className="auth_app_title alternate">
             <div className="auth_app_logo">

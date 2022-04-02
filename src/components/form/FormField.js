@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/common.scss";
-import {
-  CheckForCapsInString,
-  CheckForNumberInString,
-  CheckLengthInString,
-} from "../../utils/helpers/validation.helpers";
+import PasswordValidationBox from "./PasswordValidationBox";
 
 const FormField = ({
   formName,
@@ -15,27 +11,26 @@ const FormField = ({
 }) => {
   const [hidden, setHidden] = useState(field?.type === "password");
   const [warning, setWarning] = useState(() => checkForWarning(field));
-  const [position, setPosition] = useState(null);
+  const [hintOpen, setHintOpen] = useState(false);
 
   const fieldRef = useRef(null);
-  const hintBoxRef = useRef(null);
 
   useEffect(() => {
     setWarning(checkForWarning(field));
   }, [field]);
 
   function handleFocus() {
-    if (field?.type !== "password") {
-      return;
+    const validation =
+      field?.minLength ||
+      field?.maxLength ||
+      field?.requiresLower ||
+      field?.requiresUpper ||
+      field?.requiresNr ||
+      field?.requiresSymbol;
+
+    if (field?.type === "password" && validation) {
+      setHintOpen(true);
     }
-
-    const inputRect = fieldRef.current.getBoundingClientRect();
-    const hintBoxRect = hintBoxRef.current?.getBoundingClientRect();
-
-    setPosition({
-      x: inputRect.x + inputRect.width * 0.6,
-      y: inputRect.y - hintBoxRect?.height - 16,
-    });
   }
 
   function toggleHide() {
@@ -54,62 +49,6 @@ const FormField = ({
       >
         {field?.label}
       </label>
-      {field.type === "password" &&
-        (field?.minLength > 0 ||
-          field?.requireLower ||
-          field?.requireCaps ||
-          field?.requiresNr) && (
-          <div
-            ref={hintBoxRef}
-            style={
-              position
-                ? { left: position.x, top: position.y }
-                : { visibility: "hidden", pointerEvents: "none" }
-            }
-            className="form_password_field_hints_wrapper"
-          >
-            <ul className="form_password_field_hints_list">
-              {field?.minLength > 0 && (
-                <li
-                  className={`form_password_field_hint ${
-                    CheckLengthInString(field?.value, field?.minLength)
-                      ? "success"
-                      : "error"
-                  }`}
-                >
-                  At least {field.minLength} characters in length
-                </li>
-              )}
-              {field?.requireLower && (
-                <li
-                  className={`form_password_field_hint ${
-                    CheckForCapsInString(field?.value) ? "success" : "error"
-                  }`}
-                >
-                  At least one lower case letter (a-z)
-                </li>
-              )}
-              {field?.requiresCaps && (
-                <li
-                  className={`form_password_field_hint ${
-                    CheckForCapsInString(field?.value) ? "success" : "error"
-                  }`}
-                >
-                  At least one upper case letter (A-Z)
-                </li>
-              )}
-              {field?.requiresNr && (
-                <li
-                  className={`form_password_field_hint ${
-                    CheckForNumberInString(field?.value) ? "success" : "error"
-                  }`}
-                >
-                  At least one number (i.e. 0-9)
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
       <div style={{ position: "relative" }}>
         <input
           ref={fieldRef}
@@ -130,8 +69,13 @@ const FormField = ({
           onFocus={handleFocus}
           onBlur={() => {
             handleTouch(field?.name, true);
-            setPosition(null);
+            setHintOpen(false);
           }}
+        />
+        <PasswordValidationBox
+          open={hintOpen}
+          field={field}
+          anchor={fieldRef}
         />
         {field?.type === "password" && (
           <div

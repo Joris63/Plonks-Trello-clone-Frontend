@@ -21,8 +21,10 @@ const registerFields = [
   {
     label: "Password",
     type: "password",
-    requiresCaps: true,
+    requiresLower: true,
+    requiresUpper: true,
     requiresNr: true,
+    requiresSymbol: true,
     minLength: 8,
     placeholder: "Your password",
   },

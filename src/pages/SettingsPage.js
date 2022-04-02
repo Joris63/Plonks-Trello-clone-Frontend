@@ -11,7 +11,7 @@ import useAuth from "../hooks/useAuth";
 const passwordFields = [
   {
     label: "New password",
-    requiresCaps: true,
+    RequiresUpper: true,
     requiresNr: true,
     minLength: 8,
     type: "password",

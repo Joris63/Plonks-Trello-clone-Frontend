@@ -1,13 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import FormField from "./FormField";
-import {
-  CheckForBadCharacters,
-  CheckForCapsInString,
-  CheckForNumberInString,
-  CheckLengthInString,
-  ValidateEmail,
-} from "../../utils/helpers/validation.helpers";
+import { CheckField } from "../../utils/helpers/validation.helpers";
 import { TurnStringToCamelCase } from "../../utils/helpers/common.helpers";
 import "../../styles/common.scss";
 
@@ -24,31 +18,7 @@ const Form = ({
 
   const checkForWarning = useCallback(
     (field) => {
-      if (field?.value === "" && !field?.optional) {
-        return "Field is required.";
-      }
-
-      if (field?.requiresNr && !CheckForNumberInString(field?.value)) {
-        return "Must contain at least one number.";
-      }
-
-      if (field?.requiresCaps && !CheckForCapsInString(field?.value)) {
-        return "Must contain at least one uppercase letter";
-      }
-
-      if (field?.type === "email" && !ValidateEmail(field?.value)) {
-        return `Must be a valid email.`;
-      }
-
-      if (!CheckLengthInString(field?.value, field?.minLength)) {
-        return `Must be at least ${field?.minLength} characters long.`;
-      }
-
-      if (field?.type === "password" && CheckForBadCharacters(field?.value)) {
-        return "Must not contain quotes or spaces.";
-      }
-
-      return null;
+      CheckField(field);
     },
     [allFields]
   );
@@ -72,7 +42,7 @@ const Form = ({
       optional: false,
       unique: false,
       requiresNr: false,
-      requiresCaps: false,
+      RequiresUpper: false,
       type: "text",
       minLength: 0,
       touched: false,

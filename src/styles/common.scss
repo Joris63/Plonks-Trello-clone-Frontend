@@ -172,9 +172,9 @@
 }
 
 .form_password_field_hints_wrapper {
-  max-width: 260px;
-  position: fixed;
-  z-index: 100;
+  min-width: 260px;
+  position: absolute;
+  z-index: 1000000;
   background-color: #2f3542;
   padding: 24px 16px;
   border-radius: 8px;
