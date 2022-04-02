@@ -22,14 +22,23 @@ const useRefreshToken = () => {
         window.localStorage.setItem("refreshToken", refreshToken);
 
         setAuth((prev) => {
-          const { id, username, email, picturePath } = jwtDecode(accessToken);
+          const { id, username, email, picturePath, socialLogin } =
+            jwtDecode(accessToken);
 
           return {
             ...prev,
-            user: { id, username, email, picturePath },
+            user: {
+              id,
+              username,
+              email,
+              picturePath,
+              socialLogin: socialLogin.toLowerCase() === "true",
+            },
             accessToken: accessToken,
           };
         });
+
+        return accessToken;
       })
       .catch((err) => {
         if (!err?.response) {

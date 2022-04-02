@@ -265,6 +265,12 @@
   &:focus-within {
     outline: none;
   }
+
+  &:disabled,
+  &[disabled] {
+      cursor: default;
+      opacity: 0.7;
+  }
 }
 
 .form_field_toggle_hide {

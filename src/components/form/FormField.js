@@ -54,6 +54,7 @@ const FormField = ({
           ref={fieldRef}
           id={`${formName}-field-input-${field?.name}`}
           className="form_field"
+          disabled={field?.disabled}
           placeholder={field?.placeholder}
           type={
             field?.type !== "password" || (field?.type === "password" && hidden)

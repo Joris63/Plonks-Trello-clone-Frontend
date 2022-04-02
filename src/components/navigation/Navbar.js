@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import Dropdown from "../helpers/Dropdown";
 import "../../styles/navigation.scss";
 import "animate.css";
 import useAuth from "../../hooks/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
+import { useRef, useState } from "react";
 
 const RightNavbar = (props) => {
-  const [wiggle, setWiggle] = useState(false);
+  //const [wiggle, setWiggle] = useState(false);
+  const wiggle = false;
   const [open, setOpen] = useState(false);
 
   const { auth } = useAuth();

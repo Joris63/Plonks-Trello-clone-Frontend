@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import GoogleLogin from "react-google-login";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
@@ -29,6 +28,7 @@ const ExternalLoginOptions = () => {
           username,
           email,
           picturePath,
+          socialLogin,
           accessToken,
           refreshToken,
           message,
@@ -36,7 +36,7 @@ const ExternalLoginOptions = () => {
 
         window.localStorage.setItem("refreshToken", refreshToken);
 
-        setAuth({ user: { id, username, email, picturePath }, accessToken });
+        setAuth({ user: { id, username, email, picturePath, socialLogin }, accessToken });
 
         FirePopup(
           message === "signedIn" ? "Welcome back!" : "Welcome!",

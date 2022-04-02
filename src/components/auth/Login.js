@@ -5,7 +5,6 @@ import ExternalLoginOptions from "./ExternalLoginOptions";
 import Form from "../form/Form";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import axios from "../../api/axios";
 
 const loginFields = [
@@ -41,12 +40,19 @@ const LoginForm = ({ mode, toggleMode }) => {
     await axios
       .post("/auth/login", data)
       .then((response) => {
-        const { id, username, email, picturePath, accessToken, refreshToken } =
-          response?.data;
+        const {
+          id,
+          username,
+          email,
+          picturePath,
+          socialLogin,
+          accessToken,
+          refreshToken,
+        } = response?.data;
 
         window.localStorage.setItem("refreshToken", refreshToken);
 
-        setAuth({ user: { id, username, email, picturePath }, accessToken });
+        setAuth({ user: { id, username, email, picturePath,socialLogin }, accessToken });
 
         FirePopup("Welcome back!", null, "success", 1000);
 
