@@ -155,7 +155,7 @@ const SettingsPage = (props) => {
               <label htmlFor="profile-pic-input">
                 {!profilePicPath ? (
                   <div className="user_profile_picture">
-                    <i className="fa-solid fa-j"></i>
+                    <i className={`fa-solid fa-${auth?.user?.username?.charAt()}`}></i>
                     <div className="user_profile_picture_edit">
                       <i className="fa-solid fa-pen"></i>
                     </div>

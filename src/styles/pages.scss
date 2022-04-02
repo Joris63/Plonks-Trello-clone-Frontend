@@ -392,7 +392,7 @@
 }
 
 .user_profile_picture_edit {
-    font-size: 0.6em;
+    font-size: 0.5em;
     position: absolute;
     height: 35px;
     width: 35px;
@@ -405,7 +405,7 @@
     top: 140px;
     left: 110px;
     cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .app_setting_wrapper {
@@ -478,4 +478,54 @@
 .language_flag {
     width: 30px;
     height: 30px;
+}
+
+/*
+  loading page
+*/
+.loading_page_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading_animation_wrapper {
+    width: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_item {
+        // .LoaderBalls__wrapper__item
+        $anim-drt: 0.4s;
+        $anim-ease: cubic-bezier(0.6, 0.05, 0.15, 0.95);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(83, 82, 237, 1);
+
+        &:nth-child(1) {
+            animation: bouncing $anim-drt alternate infinite $anim-ease;
+        }
+
+        &:nth-child(2) {
+            animation: bouncing $anim-drt $anim-drt/4 alternate infinite $anim-ease backwards;
+        }
+
+        &:nth-child(3) {
+            animation: bouncing $anim-drt $anim-drt/2 alternate infinite $anim-ease backwards;
+        }
+    }
+}
+
+@keyframes bouncing {
+    0% {
+        transform: translate3d(0, 10px, 0) scale(1.2, 0.85);
+    }
+
+    100% {
+        transform: translate3d(0, -20px, 0) scale(0.9, 1.1);
+    }
 }
