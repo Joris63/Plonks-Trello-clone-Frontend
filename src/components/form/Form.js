@@ -16,21 +16,12 @@ const Form = ({
   const [allFields, setAllFields] = useState(setInitialState());
   const [ready, setReady] = useState(true);
 
-  const checkForWarning = useCallback(
-    (field) => {
-      CheckField(field);
-    },
-    [allFields]
-  );
-
   useEffect(() => {
     handleReset();
   }, [id]);
 
   useEffect(() => {
-    setReady(
-      allFields?.some((field) => typeof checkForWarning(field) === "string")
-    );
+    setReady(allFields?.some((field) => typeof CheckField(field) === "string"));
   }, [allFields]);
 
   function setInitialState() {
@@ -97,7 +88,6 @@ const Form = ({
           field={field}
           handleChange={handleChange}
           handleTouch={handleTouch}
-          checkForWarning={checkForWarning}
         />
       ))}
       {children && children}

@@ -1,16 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/common.scss";
+import { CheckField } from "../../utils/helpers/validation.helpers";
 import PasswordValidationBox from "./PasswordValidationBox";
 
-const FormField = ({
-  formName,
-  field = {},
-  handleChange,
-  handleTouch,
-  checkForWarning,
-}) => {
+const FormField = ({ formName, field = {}, handleChange, handleTouch }) => {
   const [hidden, setHidden] = useState(field?.type === "password");
-  const [warning, setWarning] = useState(() => checkForWarning(field));
+  const [warning, setWarning] = useState(() => CheckField(field));
   const [hintOpen, setHintOpen] = useState(false);
 
   const fieldRef = useRef(null);
@@ -24,7 +19,7 @@ const FormField = ({
     field?.requiresSymbol;
 
   useEffect(() => {
-    setWarning(checkForWarning(field));
+    setWarning(CheckField(field));
   }, [field]);
 
   function handleFocus() {
@@ -87,10 +82,7 @@ const FormField = ({
           />
         )}
       </div>
-      {((warning &&
-        document.activeElement !== fieldRef.current &&
-        field?.touched) ||
-        field?.hint) && (
+      {((warning && field?.touched && !hintOpen) || field?.hint) && (
         <small className="form_field_hint">{warning || field?.hint}</small>
       )}
     </div>

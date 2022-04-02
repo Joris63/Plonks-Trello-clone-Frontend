@@ -1,6 +1,10 @@
 /* eslint-disable no-useless-escape */
+function CheckForQuotes(string) {
+  return /['||"]/.test(string);
+}
+
 function CheckForWhiteSpaces(string) {
-  return /^\S*$/.test(string);
+  return /\s/.test(string);
 }
 
 function CheckForUppercase(string) {
@@ -38,15 +42,19 @@ function CheckField(field) {
     return "Field is required.";
   }
 
-  if (!CheckForWhiteSpaces(field?.value)) {
+  if (CheckForQuotes(field?.value)) {
+    return "Field must not contain quotes.";
+  }
+
+  if (CheckForWhiteSpaces(field?.value)) {
     return "Field must not contain whitespaces.";
   }
 
-  if (field?.RequiresUpper && !CheckForUppercase(field?.value)) {
+  if (field?.requiresUpper && !CheckForUppercase(field?.value)) {
     return "Field must have at least one uppercase character.";
   }
 
-  if (field?.RequiresLower && !CheckForLowercase(field?.value)) {
+  if (field?.requiresLower && !CheckForLowercase(field?.value)) {
     return "Field must have at least one lowercase character.";
   }
 
@@ -54,7 +62,7 @@ function CheckField(field) {
     return "Field must contain at least one digit.";
   }
 
-  if (field?.RequiresSymbol && !CheckForSymbols(field?.value)) {
+  if (field?.requiresSymbol && !CheckForSymbols(field?.value)) {
     return "Field must contain at least one Special symbol.";
   }
 
@@ -70,6 +78,7 @@ function CheckField(field) {
 }
 
 export {
+  CheckForQuotes,
   CheckForWhiteSpaces,
   CheckForLowercase,
   CheckForUppercase,
