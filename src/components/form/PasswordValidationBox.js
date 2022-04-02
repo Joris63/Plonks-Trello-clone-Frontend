@@ -1,5 +1,3 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
 import {
   CheckForLowercase,
   CheckForNumber,
@@ -9,62 +7,12 @@ import {
   CheckMinLength,
 } from "../../utils/helpers/validation.helpers";
 
-const PasswordValidationBox = ({ open, field, anchor }) => {
-  const [position, setPosition] = useState(null);
-
-  const hintBoxRef = useRef(null);
-
-  useLayoutEffect(() => {
-    function AdjustPosition() {
-      const fieldRect = anchor?.current?.getBoundingClientRect();
-      const hintRect = hintBoxRef?.current?.getBoundingClientRect();
-      const isOffscreen = IsElementOffscreen(hintBoxRef.current);
-
-      const adjustment = { ...position };
-
-      if (isOffscreen.includes("right")) {
-        console.log("right");
-        console.log(fieldRect, hintRect);
-        adjustment.x = fieldRect?.x + fieldRect?.width - hintRect?.width;
-      }
-
-      setPosition(adjustment);
-    }
-
-    function handlePositioning() {
-      const fieldRect = anchor?.current?.getBoundingClientRect();
-      const hintRect = hintBoxRef?.current?.getBoundingClientRect();
-
-      setPosition({
-        x: 0,
-        y: fieldRect?.height + 16,
-      });
-
-      if (open) {
-        //AdjustPosition();
-      }
-    }
-
-    handlePositioning();
-
-    if (open) {
-      window.addEventListener("scroll", handlePositioning);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handlePositioning);
-    };
-  }, [anchor, open]);
-
+const PasswordValidationBox = ({ open, field }) => {
   return (
     <div
-      ref={hintBoxRef}
-      style={
-        open
-          ? { left: position.x + "px", bottom: position.y + "px" }
-          : { visibility: "hidden", pointerEvents: "none" }
-      }
-      className="form_password_field_hints_wrapper"
+      className={`form_password_field_hints_wrapper animate__animated ${
+        open ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+      }`}
     >
       <ul className="form_password_field_hints_list">
         {field?.minLength && (

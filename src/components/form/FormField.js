@@ -15,19 +15,19 @@ const FormField = ({
 
   const fieldRef = useRef(null);
 
+  const validation =
+    field?.minLength ||
+    field?.maxLength ||
+    field?.requiresLower ||
+    field?.requiresUpper ||
+    field?.requiresNr ||
+    field?.requiresSymbol;
+
   useEffect(() => {
     setWarning(checkForWarning(field));
   }, [field]);
 
   function handleFocus() {
-    const validation =
-      field?.minLength ||
-      field?.maxLength ||
-      field?.requiresLower ||
-      field?.requiresUpper ||
-      field?.requiresNr ||
-      field?.requiresSymbol;
-
     if (field?.type === "password" && validation) {
       setHintOpen(true);
     }
@@ -72,11 +72,13 @@ const FormField = ({
             setHintOpen(false);
           }}
         />
-        <PasswordValidationBox
-          open={hintOpen}
-          field={field}
-          anchor={fieldRef}
-        />
+        {validation && (
+          <PasswordValidationBox
+            open={hintOpen}
+            field={field}
+            anchor={fieldRef}
+          />
+        )}
         {field?.type === "password" && (
           <div
             className={`form_field_toggle_hide ${hidden ? "hidden" : ""}`}
