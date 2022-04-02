@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../../styles/navigation.scss";
 
 const navigation = [
@@ -21,6 +22,7 @@ const navigation = [
   {
     name: "Boards",
     icon: "fa-objects-column",
+    link: "/boards",
   },
   {
     name: "Tasks",
@@ -32,7 +34,7 @@ const navigation = [
   },
 ];
 
-const SidebarItem = ({ name, link = "/#", icon, rightIcon, handleClick }) => {
+const SidebarItem = ({ name, link = "/", icon, rightIcon, handleClick }) => {
   const itemContent = (
     <>
       {icon && (
@@ -59,9 +61,9 @@ const SidebarItem = ({ name, link = "/#", icon, rightIcon, handleClick }) => {
           {itemContent}
         </div>
       ) : (
-        <a className={`sidebar_item${icon ? "" : " child"}`} href={link}>
+        <Link className={`sidebar_item${icon ? "" : " child"}`} to={link}>
           {itemContent}
-        </a>
+        </Link>
       )}
     </li>
   );
@@ -153,9 +155,7 @@ const Sidebar = ({ open, handleToggle }) => {
           })}
         </ul>
       </div>
-      {open && (
-        <div className="sidebar_mobile_overlay"></div>
-      )}
+      {open && <div className="sidebar_mobile_overlay"></div>}
     </>
   );
 };
