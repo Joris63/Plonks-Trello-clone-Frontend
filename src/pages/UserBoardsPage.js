@@ -1,14 +1,25 @@
+import { useState } from "react";
+import CustomSelect from "../components/helpers/CustomSelect";
+
+const filterOptions = [
+  { name: "Most recently active", abbr: "activity-desc", active: true },
+  { name: "Last recently active", abbr: "activity-asc" },
+  { name: "Alphabetically A-Z", abbr: "alpha-asc" },
+  { name: "Alphabetically Z-A", abbr: "alpha-desc" },
+];
+
 const BoardsFilter = () => {
+  const [options, setOptions] = useState(filterOptions);
+
   return (
     <div className="board_filter_wrapper">
       <label className="board_filter_wrapper_label">Sort by</label>
       <div className="board_filter_select">
-        <div value="activity-desc" defaultChecked>
-          Most recently active
-        </div>
-        <div value="activity-asc">Last recently active</div>
-        <div value="alpha-desc">Alphabetically A-Z</div>
-        <div value="alpha-asc">Alphabetically Z-A</div>
+        <CustomSelect
+          name="board-select"
+          options={options}
+          onChange={setOptions}
+        />
       </div>
     </div>
   );
@@ -38,7 +49,50 @@ const UserBoardsPage = () => {
         <BoardsFilter />
         <BoardsSearch />
       </div>
-      <div className="boards_list"></div>
+      <div className="boards_list_count">Showing 1 of 1 boards</div>
+      <div className="boards_list">
+        <div className="board_btn_wrapper add_board">
+          <div className="add_board_btn_text">Create new board</div>
+        </div>
+        <div className="board_btn_wrapper favorite">
+          <div>
+            <div className="board_btn_title">Random board</div>
+            <div className="board_btn_activity">Last updated 1 hour ago</div>
+          </div>
+          <div className="board_btn_members_list">
+            <div className="board_btn_member_wrapper">
+              {false ? (
+                <img className="board_btn_member" src="" alt="profile" />
+              ) : (
+                <div className="board_btn_member">
+                  <i className={`fa-solid fa-j`}></i>
+                </div>
+              )}
+            </div>
+            <div className="board_btn_member_wrapper">
+              {false ? (
+                <img className="board_btn_member" src="" alt="profile" />
+              ) : (
+                <div className="board_btn_member">
+                  <i className={`fa-solid fa-j`}></i>
+                </div>
+              )}
+            </div>
+            <div className="board_btn_member_wrapper">
+              {false ? (
+                <img className="board_btn_member" src="" alt="profile" />
+              ) : (
+                <div className="board_btn_member">
+                  <i className={`fa-solid fa-j`}></i>
+                </div>
+              )}
+            </div>
+            <div className="board_btn_member add">
+              <i className="fa-solid fa-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

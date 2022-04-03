@@ -268,8 +268,8 @@
 
   &:disabled,
   &[disabled] {
-      cursor: default;
-      opacity: 0.7;
+    cursor: default;
+    opacity: 0.7;
   }
 }
 
@@ -339,4 +339,73 @@
 .swal_custom_confirm {
   background-color: rgba(83, 82, 237, 1);
   color: white;
+}
+
+/*
+  Select
+*/
+.select {
+  position: relative;
+  display: inline-block;
+  padding: 8px 40px 8px 15px;
+  border-radius: 8px;
+  width: 220px;
+  border: 2px solid rgba(83, 82, 237, 0.3);
+  background-color: rgba(83, 82, 237, 0.05);
+  text-align: left;
+  color: #444;
+  font-size: 0.95em;
+  cursor: pointer;
+  user-select: none;
+
+  &::before {
+    content: "\f107";
+    font: var(--fa-font-solid);
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+
+  &.active {
+    & .select_options_list {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &::before {
+      content: "\f106";
+    }
+  }
+}
+
+.select_options_list {
+  position: absolute;
+  z-index: 100;
+  top: 140%;
+  padding: 8px 0;
+  right: 0;
+  left: 0;
+  border-radius: 8px;
+  transition: 0.225s ease;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.select_option {
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: 0.225s ease;
+  user-select: none;
+
+  &:hover {
+    background: rgba(83, 82, 237, .1);
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 }

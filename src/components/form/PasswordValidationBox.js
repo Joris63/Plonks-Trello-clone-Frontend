@@ -11,7 +11,7 @@ const PasswordValidationBox = ({ open, field }) => {
   return (
     <div
       className={`form_password_field_hints_wrapper animate__animated ${
-        open ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+        open ? "animate__zoomIn" : "animate__zoomOut hidden"
       }`}
     >
       <ul className="form_password_field_hints_list">
