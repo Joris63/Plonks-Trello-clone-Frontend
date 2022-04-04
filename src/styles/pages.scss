@@ -598,7 +598,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgba(83, 82, 237, 0.7);
+    background-color: #a55eea;
     cursor: pointer;
     width: 265px;
     height: 100px;
@@ -607,29 +607,17 @@
     border-radius: 8px;
     font-size: 0.95em;
 
-    &::after {
-        transition: opacity 0.225s ease, color 0.225s ease;
-        opacity: 0;
-        content: "\f005";
-        position: absolute;
-        right: 12px;
-        bottom: 12px;
-        font: var(--fa-font-regular);
-        color: white;
-    }
-
     &:hover {
         & .board_btn_activity {
             opacity: 1;
         }
 
-        &:after {
+        & .board_btn_star {
             opacity: 1;
         }
     }
 
-    &.favorite:after {
-        font: var(--fa-font-solid);
+    &.favorite .board_btn_star {
         color: #f1c40f;
     }
 
@@ -642,6 +630,15 @@
             content: "";
         }
     }
+}
+
+.board_btn_star {
+    transition: opacity 0.225s ease, color 0.225s ease;
+    opacity: 0;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: white;
 }
 
 .add_board_btn_text {

@@ -141,7 +141,6 @@ const Sidebar = ({ open, handleToggle }) => {
       )
       ?.getBoundingClientRect();
 
-    console.log(pathname);
     return rect?.y - 60 || 0;
   }
 

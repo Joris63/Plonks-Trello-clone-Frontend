@@ -1,3 +1,5 @@
+import moment from "moment";
+
 function IsElementOffscreen(el) {
   const rect = el?.getBoundingClientRect();
 
@@ -38,4 +40,8 @@ function TurnStringToCamelCase(string) {
   return words.join("");
 }
 
-export { IsElementOffscreen, TurnStringToCamelCase };
+function FormatTime(timestamp) {
+  return moment(timestamp).calendar();
+}
+
+export { IsElementOffscreen, TurnStringToCamelCase, FormatTime };

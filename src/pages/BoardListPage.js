@@ -1,5 +1,7 @@
+import _ from "lodash";
 import { useState } from "react";
 import CustomSelect from "../components/helpers/CustomSelect";
+import { FormatTime } from "../utils/helpers/common.helpers";
 
 const filterOptions = [
   { name: "Most recently active", abbr: "activity-desc", active: true },
@@ -41,7 +43,32 @@ const BoardsSearch = ({ search, setSearch }) => {
   );
 };
 
+const boardsList = [
+  {
+    id: "7a98a16a-b665-43ee-929e-e59d7060f3c1",
+    title: "Board",
+    color: "#a55eea",
+    members: [],
+    lastUpdated: 1649098893480,
+    favorite: true,
+  },
+];
+
 const BoardListPage = () => {
+  const [boards, setBoards] = useState(boardsList);
+
+  function handleFavorite(boardId) {
+    const updatedBoards = _.cloneDeep(boards);
+    const board = boards.find((board) => board.id === boardId);
+
+    updatedBoards.splice(boards.indexOf(board), 1, {
+      ...board,
+      favorite: !board?.favorite,
+    });
+
+    setBoards(updatedBoards);
+  }
+
   return (
     <div className="page_content">
       <div className="page_title">Your boards</div>
@@ -54,44 +81,57 @@ const BoardListPage = () => {
         <div className="board_btn_wrapper add_board">
           <div className="add_board_btn_text">Create new board</div>
         </div>
-        <div className="board_btn_wrapper favorite">
-          <div>
-            <div className="board_btn_title">Random board</div>
-            <div className="board_btn_activity">Last updated 1 hour ago</div>
+        {boards.map((board) => (
+          <div
+            key={`board-${board?.id}`}
+            style={{ backgroundColor: board?.color }}
+            className={`board_btn_wrapper ${board?.favorite ? "favorite" : ""}`}
+          >
+            <div>
+              <div className="board_btn_title">{board?.title}</div>
+              <div className="board_btn_activity">
+                Last updated {FormatTime(board?.lastUpdated)?.toLowerCase()}
+              </div>
+              <div
+                className="board_btn_star"
+                onClick={() => handleFavorite(board.id)}
+              >
+                <i
+                  className={`fa-${
+                    board?.favorite ? "solid" : "regular"
+                  } fa-star`}
+                ></i>
+              </div>
+            </div>
+            <div className="board_btn_members_list">
+              {board?.members
+                ?.filter((member, index) => index < 4)
+                .map((member) => (
+                  <div
+                    key={`board-${board?.id}-member-${member?.id}`}
+                    className="board_btn_member_wrapper"
+                  >
+                    {member?.picturePath ? (
+                      <img
+                        className="board_btn_member"
+                        src={member?.picturePath}
+                        alt="profile"
+                      />
+                    ) : (
+                      <div className="board_btn_member">
+                        <i
+                          className={`fa-solid fa-${member.username.atChar()}`}
+                        ></i>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              <div className="board_btn_member add">
+                <i className="fa-solid fa-plus"></i>
+              </div>
+            </div>
           </div>
-          <div className="board_btn_members_list">
-            <div className="board_btn_member_wrapper">
-              {false ? (
-                <img className="board_btn_member" src="" alt="profile" />
-              ) : (
-                <div className="board_btn_member">
-                  <i className={`fa-solid fa-j`}></i>
-                </div>
-              )}
-            </div>
-            <div className="board_btn_member_wrapper">
-              {false ? (
-                <img className="board_btn_member" src="" alt="profile" />
-              ) : (
-                <div className="board_btn_member">
-                  <i className={`fa-solid fa-j`}></i>
-                </div>
-              )}
-            </div>
-            <div className="board_btn_member_wrapper">
-              {false ? (
-                <img className="board_btn_member" src="" alt="profile" />
-              ) : (
-                <div className="board_btn_member">
-                  <i className={`fa-solid fa-j`}></i>
-                </div>
-              )}
-            </div>
-            <div className="board_btn_member add">
-              <i className="fa-solid fa-plus"></i>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
