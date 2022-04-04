@@ -598,7 +598,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #a55eea;
     cursor: pointer;
     width: 265px;
     height: 100px;
@@ -633,12 +632,13 @@
 }
 
 .board_btn_star {
-    transition: opacity 0.225s ease, color 0.225s ease;
     opacity: 0;
     position: absolute;
     right: 12px;
     bottom: 12px;
     color: white;
+    transition: all .225s ease;
+    box-shadow: none;
 }
 
 .add_board_btn_text {
@@ -677,6 +677,13 @@
     &.add {
         background-color: #f1f2f6;
         font-size: 0.9em;
+        transition: all .225s ease;
+        box-shadow: none;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
     }
 }
 
