@@ -130,7 +130,7 @@
     bottom: 0;
     width: calc(100vw - 35%);
     background-color: rgba(83, 82, 237, 1);
-    transition: right 0.7s ease-in-out;
+    transition: right 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     &.register {
         right: 35%;
@@ -146,7 +146,7 @@
     width: 100vw;
     height: 100vh;
     left: calc(-100vw + 100%);
-    transition: left 0.7s ease-in-out;
+    transition: left 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .auth_info_wrapper {
@@ -159,7 +159,7 @@
     position: absolute;
     top: 0;
     right: 100px;
-    transition: left 0.7s ease-out, right 0.7s ease-out;
+    transition: left 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), right 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     &.active {
         right: -30%;
