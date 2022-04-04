@@ -41,7 +41,7 @@ const BoardsSearch = ({ search, setSearch }) => {
   );
 };
 
-const UserBoardsPage = () => {
+const BoardListPage = () => {
   return (
     <div className="page_content">
       <div className="page_title">Your boards</div>
@@ -97,4 +97,4 @@ const UserBoardsPage = () => {
   );
 };
 
-export default UserBoardsPage;
+export default BoardListPage;

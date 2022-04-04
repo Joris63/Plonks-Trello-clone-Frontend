@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../../styles/navigation.scss";
 
 const navigation = [
@@ -22,7 +22,7 @@ const navigation = [
   {
     name: "Boards",
     icon: "fa-objects-column",
-    link: "/boards",
+    link: ["/boards", "/"],
   },
   {
     name: "Tasks",
@@ -35,6 +35,7 @@ const navigation = [
 ];
 
 const SidebarItem = ({ name, link = "/", icon, rightIcon, handleClick }) => {
+  const itemLink = Array.isArray(link) ? link[0] : link;
   const itemContent = (
     <>
       {icon && (
@@ -52,7 +53,10 @@ const SidebarItem = ({ name, link = "/", icon, rightIcon, handleClick }) => {
   );
 
   return (
-    <li className="sidebar_item_wrapper">
+    <li
+      className="sidebar_item_wrapper"
+      id={`sidebar-item-${name?.toLowerCase()}`}
+    >
       {handleClick ? (
         <div
           className={`sidebar_item${icon ? "" : " child"}`}
@@ -61,7 +65,7 @@ const SidebarItem = ({ name, link = "/", icon, rightIcon, handleClick }) => {
           {itemContent}
         </div>
       ) : (
-        <Link className={`sidebar_item${icon ? "" : " child"}`} to={link}>
+        <Link className={`sidebar_item${icon ? "" : " child"}`} to={itemLink}>
           {itemContent}
         </Link>
       )}
@@ -119,6 +123,32 @@ const SidebarItemWithChildren = ({
 };
 
 const Sidebar = ({ open, handleToggle }) => {
+  const location = useLocation();
+  const [indicatorPos, setIndicatorPos] = useState(
+    getIndicatorPos(location?.pathname)
+  );
+
+  function getIndicatorPos(pathname) {
+    const rect = document
+      .getElementById(
+        `sidebar-item-${navigation
+          .find((child) =>
+            Array.isArray(child?.link)
+              ? child?.link.includes(pathname)
+              : child?.link === pathname
+          )
+          ?.name.toLowerCase()}`
+      )
+      ?.getBoundingClientRect();
+
+    console.log(pathname);
+    return rect?.y - 60 || 0;
+  }
+
+  useEffect(() => {
+    setIndicatorPos(getIndicatorPos(location?.pathname));
+  }, [location]);
+
   return (
     <>
       <div className={`sidebar${open ? " active" : ""}`}>
@@ -153,6 +183,10 @@ const Sidebar = ({ open, handleToggle }) => {
               />
             );
           })}
+          <li
+            style={{ top: indicatorPos }}
+            className="sidebar_item_indicator"
+          ></li>
         </ul>
       </div>
       {open && <div className="sidebar_mobile_overlay"></div>}
