@@ -30,13 +30,13 @@ const ExternalLoginOptions = () => {
           picturePath,
           socialLogin,
           accessToken,
-          refreshToken,
           message,
         } = response?.data;
 
-        window.localStorage.setItem("refreshToken", refreshToken);
-
-        setAuth({ user: { id, username, email, picturePath, socialLogin }, accessToken });
+        setAuth({
+          user: { id, username, email, picturePath, socialLogin },
+          accessToken,
+        });
 
         FirePopup(
           message === "signedIn" ? "Welcome back!" : "Welcome!",

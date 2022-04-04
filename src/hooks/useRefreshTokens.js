@@ -6,20 +6,12 @@ const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const oldRefreshToken = window.localStorage.getItem("refreshToken");
-
     return await axios
-      .post(
-        `auth/refresh-token`,
-        { refreshToken: oldRefreshToken },
-        {
-          withCredentials: true,
-        }
-      )
+      .post(`auth/refresh-token`, {
+        withCredentials: true,
+      })
       .then((response) => {
-        const { accessToken, refreshToken } = response?.data;
-
-        window.localStorage.setItem("refreshToken", refreshToken);
+        const { accessToken } = response?.data;
 
         setAuth((prev) => {
           const { id, username, email, picturePath, socialLogin } =

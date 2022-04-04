@@ -50,19 +50,13 @@ const RegisterForm = ({ mode, toggleMode }) => {
     await axios
       .post("/auth/register", data)
       .then((response) => {
-        const {
-          id,
-          username,
-          email,
-          picturePath,
-          socialLogin,
+        const { id, username, email, picturePath, socialLogin, accessToken } =
+          response?.data;
+
+        setAuth({
+          user: { id, username, email, picturePath, socialLogin },
           accessToken,
-          refreshToken,
-        } = response?.data;
-
-        window.localStorage.setItem("refreshToken", refreshToken);
-
-        setAuth({ user: { id, username, email, picturePath, socialLogin }, accessToken });
+        });
 
         FirePopup("Welcome!", null, "success", 1000);
 
