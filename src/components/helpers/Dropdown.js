@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
 import "../../styles/common.scss";
 
@@ -9,29 +9,34 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
   const [position, setPosition] = useState(null);
   const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    return () => {
+      openedBefore = false;
+    };
+  }, []);
+
   useLayoutEffect(() => {
     function AdjustPosition() {
       const anchorRect = anchor?.current?.getBoundingClientRect();
       const dropdownRect = dropdownRef?.current?.getBoundingClientRect();
 
-      const dropdownWidth = open
+      const dropdownWidth = openedBefore
         ? dropdownRect.width * (10 / 3)
         : dropdownRect.width;
-      const dropdownHeight = open
+      const dropdownHeight = openedBefore
         ? dropdownRect.height * (10 / 3)
         : dropdownRect.height;
 
+      if (!openedBefore) {
+        openedBefore = true;
+      }
+
       const adjustment = { x: anchorRect?.x, y: anchorRect?.y + 55 };
-      /*: {
-            x: anchorRect?.x + dropdownWidth,
-            y: anchorRect?.y + 55 + dropdownHeight,
-          };*/
 
       const isOffscreen = IsElementOffscreen(
         { height: dropdownHeight, width: dropdownWidth },
         adjustment
       );
-      console.log(isOffscreen);
 
       if (isOffscreen.includes("left")) {
         adjustment.x = 8;
@@ -63,18 +68,17 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
     }
 
     function handlePositioning() {
+      if (!open) {
+        return;
+      }
       AdjustPosition();
 
-      if (open) {
-        justOpened = true;
-        setTimeout(() => (justOpened = false), 200);
-      }
+      justOpened = true;
+      setTimeout(() => (justOpened = false), 200);
     }
 
-    handlePositioning();
-
     if (open) {
-      openedBefore = true;
+      handlePositioning();
 
       document.addEventListener("click", handleClick);
       window.addEventListener("resize", handlePositioning);
