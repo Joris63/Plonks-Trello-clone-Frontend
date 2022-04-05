@@ -605,8 +605,13 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 8px;
     font-size: 0.95em;
+    transition: all 0.225s ease;
+    box-shadow: none;
 
     &:hover {
+        transform: translateY(-1px);
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
         & .board_btn_activity {
             opacity: 1;
         }
@@ -628,6 +633,10 @@
         &::after {
             content: "";
         }
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(241, 242, 246, 0.23) 0px 3px 6px;
+        }
     }
 }
 
@@ -637,8 +646,6 @@
     right: 12px;
     bottom: 12px;
     color: white;
-    transition: all .225s ease;
-    box-shadow: none;
 }
 
 .add_board_btn_text {
@@ -677,7 +684,7 @@
     &.add {
         background-color: #f1f2f6;
         font-size: 0.9em;
-        transition: all .225s ease;
+        transition: all 0.225s ease;
         box-shadow: none;
 
         &:hover {
