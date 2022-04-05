@@ -3,6 +3,7 @@ import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
 import "../../styles/common.scss";
 
 let justOpened = false;
+let openedBefore = false;
 
 const Dropdown = ({ open, anchor, handleClose, children }) => {
   const [position, setPosition] = useState(null);
@@ -10,17 +11,34 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
 
   useLayoutEffect(() => {
     function AdjustPosition() {
-      const rect = dropdownRef?.current?.getBoundingClientRect();
-      const isOffscreen = IsElementOffscreen(dropdownRef.current);
+      const anchorRect = anchor?.current?.getBoundingClientRect();
+      const dropdownRect = dropdownRef?.current?.getBoundingClientRect();
 
-      const adjustment = { ...position };
+      const dropdownWidth = open
+        ? dropdownRect.width * (10 / 3)
+        : dropdownRect.width;
+      const dropdownHeight = open
+        ? dropdownRect.height * (10 / 3)
+        : dropdownRect.height;
+
+      const adjustment = { x: anchorRect?.x, y: anchorRect?.y + 55 };
+      /*: {
+            x: anchorRect?.x + dropdownWidth,
+            y: anchorRect?.y + 55 + dropdownHeight,
+          };*/
+
+      const isOffscreen = IsElementOffscreen(
+        { height: dropdownHeight, width: dropdownWidth },
+        adjustment
+      );
+      console.log(isOffscreen);
 
       if (isOffscreen.includes("left")) {
         adjustment.x = 8;
       }
 
       if (isOffscreen.includes("right")) {
-        adjustment.x = window.innerWidth - (rect.width + 8);
+        adjustment.x = window.innerWidth - (dropdownWidth + 8);
       }
 
       if (isOffscreen.includes("up")) {
@@ -28,7 +46,7 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
       }
 
       if (isOffscreen.includes("down")) {
-        adjustment.y = window.innerHeight - (rect.height + 8);
+        adjustment.y = window.innerHeight - (dropdownHeight + 8);
       }
 
       setPosition(adjustment);
@@ -45,22 +63,24 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
     }
 
     function handlePositioning() {
-      const rect = anchor?.current?.getBoundingClientRect();
-
-      setPosition({ x: rect?.x, y: rect?.y + 55 });
+      AdjustPosition();
 
       if (open) {
         justOpened = true;
         setTimeout(() => (justOpened = false), 200);
-        AdjustPosition();
       }
     }
 
     handlePositioning();
 
     if (open) {
+      openedBefore = true;
+
       document.addEventListener("click", handleClick);
       window.addEventListener("resize", handlePositioning);
+    } else {
+      document.removeEventListener("click", handleClick);
+      window.removeEventListener("resize", handlePositioning);
     }
 
     return () => {
@@ -69,15 +89,17 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
     };
   }, [anchor, open]);
 
-  if (!open || !position) {
-    return null;
-  }
-
   return (
     <div
       ref={dropdownRef}
-      style={{ top: position.y, left: position.x }}
-      className="dropdown"
+      style={{
+        top: position?.y,
+        left: position?.x,
+        visibility: openedBefore ? "visible" : "hidden",
+      }}
+      className={`dropdown animate__animated ${
+        !open || !position ? "animate__zoomOut hidden" : "animate__zoomIn"
+      }`}
     >
       {children}
     </div>

@@ -11,6 +11,11 @@
   padding: 12px;
   background-color: var(--background1);
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  animation-duration: 0.225s !important;
+
+  &.hidden {
+    pointer-events: none;
+  }
 }
 
 .dropdown_action_wrapper {
@@ -402,7 +407,7 @@
   user-select: none;
 
   &:hover {
-    background: rgba(83, 82, 237, .1);
+    background: rgba(83, 82, 237, 0.1);
   }
 
   &:last-of-type {
