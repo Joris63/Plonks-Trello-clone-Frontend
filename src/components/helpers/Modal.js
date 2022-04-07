@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 let justOpened = false;
 
-const Modal = ({ open = true, handleClose, children }) => {
+const Modal = ({ open = false, handleClose, children }) => {
+  const [openedBefore, setOpenedBefore] = useState(false);
   const modalRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleClick(e) {
       if (
         e.target !== modalRef?.current &&
@@ -17,6 +18,8 @@ const Modal = ({ open = true, handleClose, children }) => {
     }
 
     if (open) {
+      setOpenedBefore(true);
+
       justOpened = true;
       setTimeout(() => (justOpened = false), 200);
 
@@ -30,6 +33,9 @@ const Modal = ({ open = true, handleClose, children }) => {
 
   return (
     <div
+      style={{
+        visibility: openedBefore ? "visible" : "hidden",
+      }}
       className={`modal_overlay animate__animated ${
         open ? "animate__fadeIn" : "hidden animate__fadeOut"
       }`}
