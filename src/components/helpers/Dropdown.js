@@ -1,15 +1,19 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
 import "../../styles/common.scss";
 
 let justOpened = false;
 let openedBefore = false;
 
-const Dropdown = ({ open, anchor, handleClose, children }) => {
+const Dropdown = ({ open, anchor, offset, handleClose, children }) => {
   const [position, setPosition] = useState(null);
+  const [dimensions, setDimensions] = useState(null);
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const dropdownRect = dropdownRef?.current?.getBoundingClientRect();
+    setDimensions({ height: dropdownRect.height, width: dropdownRect.width });
+
     return () => {
       openedBefore = false;
     };
@@ -18,32 +22,24 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
   useLayoutEffect(() => {
     function AdjustPosition() {
       const anchorRect = anchor?.current?.getBoundingClientRect();
-      const dropdownRect = dropdownRef?.current?.getBoundingClientRect();
-
-      const dropdownWidth = openedBefore
-        ? dropdownRect.width * (10 / 3)
-        : dropdownRect.width;
-      const dropdownHeight = openedBefore
-        ? dropdownRect.height * (10 / 3)
-        : dropdownRect.height;
 
       if (!openedBefore) {
         openedBefore = true;
       }
 
-      const adjustment = { x: anchorRect?.x, y: anchorRect?.y + 55 };
+      const adjustment = {
+        x: anchorRect?.x + (offset?.x || 0),
+        y: anchorRect?.y + (offset?.y || 0),
+      };
 
-      const isOffscreen = IsElementOffscreen(
-        { height: dropdownHeight, width: dropdownWidth },
-        adjustment
-      );
+      const isOffscreen = IsElementOffscreen(dimensions, adjustment);
 
       if (isOffscreen.includes("left")) {
         adjustment.x = 8;
       }
 
       if (isOffscreen.includes("right")) {
-        adjustment.x = window.innerWidth - (dropdownWidth + 8);
+        adjustment.x = window.innerWidth - (dimensions.width + 8);
       }
 
       if (isOffscreen.includes("up")) {
@@ -51,7 +47,7 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
       }
 
       if (isOffscreen.includes("down")) {
-        adjustment.y = window.innerHeight - (dropdownHeight + 8);
+        adjustment.y = window.innerHeight - (dimensions.height + 8);
       }
 
       setPosition(adjustment);
@@ -71,6 +67,7 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
       if (!open) {
         return;
       }
+
       AdjustPosition();
 
       justOpened = true;
@@ -101,11 +98,15 @@ const Dropdown = ({ open, anchor, handleClose, children }) => {
         left: position?.x,
         visibility: openedBefore ? "visible" : "hidden",
       }}
-      className={`dropdown animate__animated ${
-        !open || !position ? "animate__zoomOut hidden" : "animate__zoomIn"
-      }`}
+      className="dropdown_wrapper"
     >
-      {children}
+      <div
+        className={`dropdown animate__animated ${
+          !open || !position ? "animate__zoomOut hidden" : "animate__zoomIn"
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

@@ -27,7 +27,7 @@ const ProfileDropdown = ({ open, anchor, handleClose }) => {
   }
 
   return (
-    <Dropdown open={open} anchor={anchor} handleClose={handleClose}>
+    <Dropdown open={open} anchor={anchor} offset={{ y: 55}} handleClose={handleClose}>
       <ul className="dropdown_actions_list">
         <li className="dropdown_action_wrapper">
           <Link

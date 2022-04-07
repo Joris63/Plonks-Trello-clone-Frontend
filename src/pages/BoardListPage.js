@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { useState } from "react";
 import CustomSelect from "../components/helpers/CustomSelect";
+import Modal from "../components/helpers/Modal";
 import { FormatTime } from "../utils/helpers/common.helpers";
 
 const filterOptions = [
@@ -50,7 +51,7 @@ const boardsList = [
     color: "#a55eea",
     members: [],
     lastUpdated: 1649098893480,
-    favorite: true,
+    favorited: true,
   },
 ];
 
@@ -63,7 +64,7 @@ const BoardListPage = () => {
 
     updatedBoards.splice(boards.indexOf(board), 1, {
       ...board,
-      favorite: !board?.favorite,
+      favorited: !board?.favorited,
     });
 
     setBoards(updatedBoards);
@@ -85,7 +86,7 @@ const BoardListPage = () => {
           <div
             key={`board-${board?.id}`}
             style={{ backgroundColor: board?.color }}
-            className={`board_btn_wrapper ${board?.favorite ? "favorite" : ""}`}
+            className={`board_btn_wrapper ${board?.favorited ? "favorite" : ""}`}
           >
             <div>
               <div className="board_btn_title">{board?.title}</div>
@@ -98,7 +99,7 @@ const BoardListPage = () => {
               >
                 <i
                   className={`fa-${
-                    board?.favorite ? "solid" : "regular"
+                    board?.favorited ? "solid" : "regular"
                   } fa-star`}
                 ></i>
               </div>
