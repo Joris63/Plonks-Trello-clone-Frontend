@@ -6,6 +6,7 @@ import FormField from "./form/FormField";
 import Modal from "./helpers/Modal";
 import { FireToast } from "../utils/helpers/toasts.helpers";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const backgroundColors = [
   "#5352ed",
@@ -16,12 +17,14 @@ const backgroundColors = [
   "#ff4757",
 ];
 
-const AddBoardModal = ({ open, handleClose, handleAddBoard }) => {
+const AddBoardModal = ({ open, handleClose }) => {
   const [fields, setFields] = useState(setInitialState());
   const [touched, setTouched] = useState(false);
 
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
+
+  const navigate = useNavigate();
 
   const titleField = {
     label: "Title",
@@ -53,10 +56,7 @@ const AddBoardModal = ({ open, handleClose, handleAddBoard }) => {
 
         FireToast(message, "success");
 
-        handleAddBoard();
-        /*setTimeout(() => {
-          navigate(from, { replace: true });
-        }, 1000);*/
+        navigate(`/board/${data}`, { replace: true });
       })
       .catch((err) => {
         if (!err?.response) {

@@ -671,9 +671,13 @@
 }
 
 .board_btn_member_wrapper {
-    margin-right: 4px;
     float: left;
     font-size: 0.8em;
+    transform: translateX(-10px);
+
+    &:nth-of-type(1) {
+        transform: translateX(0);
+    }
 }
 
 .board_btn_member {

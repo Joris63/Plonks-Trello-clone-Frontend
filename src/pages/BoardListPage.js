@@ -14,17 +14,6 @@ const filterOptions = [
   { name: "Alphabetically Z-A", abbr: "alpha-desc" },
 ];
 
-const boardsList = [
-  {
-    id: "7a98a16a-b665-43ee-929e-e59d7060f3c1",
-    title: "Board",
-    color: "#a55eea",
-    members: [],
-    lastUpdated: 1649098893480,
-    favorited: true,
-  },
-];
-
 const BoardsFilter = () => {
   const [options, setOptions] = useState(filterOptions);
 
@@ -59,19 +48,19 @@ const BoardsSearch = ({ search, setSearch }) => {
 };
 
 const BoardListPage = () => {
-  const [boards, setBoards] = useState(boardsList);
+  const [boards, setBoards] = useState([]);
   const [open, setOpen] = useState(false);
 
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
-  function handleFavorite(boardId) {
+  function handleFavorite(boardId, favorited) {
     const updatedBoards = _.cloneDeep(boards);
     const board = boards.find((board) => board.id === boardId);
 
     updatedBoards.splice(boards.indexOf(board), 1, {
       ...board,
-      favorited: !board?.favorited,
+      favorited,
     });
 
     setBoards(updatedBoards);
@@ -81,7 +70,6 @@ const BoardListPage = () => {
     await axiosPrivate
       .get(`/board/all/${auth?.user?.id}`)
       .then((response) => {
-        console.log(response?.data);
         setBoards(response?.data);
       })
       .catch((err) => {
@@ -95,16 +83,21 @@ const BoardListPage = () => {
       });
   }
 
-  function handleOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
-
-  function handleAddBoard() {
-    getAllBoards();
+  async function FavoriteBoard(boardId, favorite) {
+    await axiosPrivate
+      .post(`/board/favorite`, { boardId, userId: auth?.user?.id, favorite })
+      .then((response) => {
+        handleFavorite(boardId, favorite);
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
   }
 
   useEffect(() => {
@@ -120,7 +113,10 @@ const BoardListPage = () => {
       </div>
       <div className="boards_list_count">Showing 1 of 1 boards</div>
       <div className="boards_list">
-        <div className="board_btn_wrapper add_board" onClick={handleOpen}>
+        <div
+          className="board_btn_wrapper add_board"
+          onClick={() => setOpen(true)}
+        >
           <div className="add_board_btn_text">Create new board</div>
         </div>
         {boards.map((board) => (
@@ -138,11 +134,11 @@ const BoardListPage = () => {
               </div>
               <div
                 className="board_btn_star"
-                onClick={() => handleFavorite(board.id)}
+                onClick={() => FavoriteBoard(board.id, !board?.favorited)}
               >
                 <i
-                  className={`fa-${
-                    board?.favorited ? "solid" : "regular"
+                  className={`animate__animated fa-${
+                    board?.favorited ? "solid animate__tada" : "regular"
                   } fa-star`}
                 ></i>
               </div>
@@ -164,20 +160,28 @@ const BoardListPage = () => {
                     ) : (
                       <div className="board_btn_member">
                         <i
-                          className={`fa-solid fa-${member.username.atChar()}`}
+                          className={`fa-solid fa-${member.username.charAt()}`}
                         ></i>
                       </div>
                     )}
                   </div>
                 ))}
-              <div className="board_btn_member add">
+              <div
+                style={{
+                  transform: `translateX(${
+                    board?.members?.filter((member, index) => index < 4)
+                      .length * -10
+                  }px)`,
+                }}
+                className="board_btn_member add"
+              >
                 <i className="fa-solid fa-plus"></i>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <AddBoardModal open={open} handleClose={handleClose} handleAddBoard={handleAddBoard}/>
+      <AddBoardModal open={open} handleClose={() => setOpen(false)} />
     </div>
   );
 };
