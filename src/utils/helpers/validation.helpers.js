@@ -46,7 +46,7 @@ function CheckField(field) {
     return "Field must not contain quotes.";
   }
 
-  if (CheckForWhiteSpaces(field?.value)) {
+  if (!field?.whitespaces && CheckForWhiteSpaces(field?.value)) {
     return "Field must not contain whitespaces.";
   }
 

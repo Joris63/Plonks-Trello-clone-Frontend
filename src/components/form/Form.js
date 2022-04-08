@@ -37,6 +37,7 @@ const Form = ({
       type: "text",
       minLength: 0,
       touched: false,
+      whitespaces: false,
       ...field,
     }));
   }

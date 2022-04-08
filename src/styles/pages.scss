@@ -590,7 +590,7 @@
 .boards_list {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 13px;
 }
 
 .board_btn_wrapper {
@@ -622,10 +622,15 @@
     }
 
     &.favorite .board_btn_star {
-        color: #f1c40f;
+        opacity: 1;
+        color: #fbc531;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
     }
 
     &.add_board {
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.7);
         background-color: #f1f2f6;
         justify-content: center;
         align-items: center;
@@ -662,7 +667,7 @@
     opacity: 0;
     line-height: 0.7;
     font-size: 0.8em;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .board_btn_member_wrapper {
@@ -680,17 +685,11 @@
     border-radius: 50%;
     background-color: #7bed9f;
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
     &.add {
         background-color: #f1f2f6;
         font-size: 0.9em;
-        transition: all 0.225s ease;
-        box-shadow: none;
-
-        &:hover {
-            transform: translateY(-1px);
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
     }
 }
 

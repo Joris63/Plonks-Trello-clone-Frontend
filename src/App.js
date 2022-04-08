@@ -10,6 +10,7 @@ import AuthPage from "./pages/AuthPage";
 import SettingsPage from "./pages/SettingsPage";
 import "./styles/index.scss";
 import BoardListPage from "./pages/BoardListPage";
+import BoardPage from "./pages/BoardPage";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<BoardListPage />} />
             <Route path="/boards" element={<BoardListPage />} />
+            <Route path="/board/:boardId" element={<BoardPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

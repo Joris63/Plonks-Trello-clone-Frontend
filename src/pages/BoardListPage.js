@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
+import AddBoardModal from "../components/AddBoardModal";
 import CustomSelect from "../components/helpers/CustomSelect";
-import Modal from "../components/helpers/Modal";
+import useAuth from "../hooks/useAuth";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { FormatTime } from "../utils/helpers/common.helpers";
-import { ReactComponent as BoardPreview } from "../assets/board-preview.svg";
-import FormField from "../components/form/FormField";
-import { CheckField } from "../utils/helpers/validation.helpers";
+import { FireToast } from "../utils/helpers/toasts.helpers";
 
 const filterOptions = [
   { name: "Most recently active", abbr: "activity-desc", active: true },
@@ -23,17 +23,6 @@ const boardsList = [
     lastUpdated: 1649098893480,
     favorited: true,
   },
-];
-
-const backgroundColors = [
-  "#eb3b5a",
-  "#fa8231",
-  "#f7b731",
-  "#20bf6b",
-  "#0fb9b1",
-  "#45aaf2",
-  "#4b7bec",
-  "#a55eea",
 ];
 
 const BoardsFilter = () => {
@@ -69,87 +58,12 @@ const BoardsSearch = ({ search, setSearch }) => {
   );
 };
 
-const AddBoardModal = ({ open, handleClose }) => {
-  const [state, setState] = useState(setInitialState());
-  const [touched, setTouched] = useState(false);
-
-  const titleField = {
-    label: "Title",
-    value: state.title,
-    touched,
-    optional: false,
-    fullWidth: true,
-  };
-
-  useEffect(() => {
-    if (!open) {
-      setState(setInitialState());
-      setTouched(false);
-    }
-  }, [open]);
-
-  function setInitialState() {
-    return { title: "", color: backgroundColors[0] };
-  }
-
-  return (
-    <Modal open={open} handleClose={handleClose}>
-      <div className="modal_header">
-        <div className="modal_header_title">Create board</div>
-        <button className="modal_close_btn">
-          <i className="fa-regular fa-xmark"></i>
-        </button>
-      </div>
-      <div className="modal_content">
-        <div className="add_board_preview_wrapper">
-          <div
-            style={{ backgroundColor: state.color }}
-            className="add_board_preview"
-          >
-            <BoardPreview />
-          </div>
-        </div>
-        <div className="add_board_fields">
-          <div className="add_board_background_field">
-            <label className="form_field_label">Background</label>
-            <ul className="board_background_option_list">
-              {backgroundColors.map((color, index) => (
-                <li
-                  key={`board-background-${index}`}
-                  className="board_background_option_wrapper"
-                >
-                  <button
-                    style={{ backgroundColor: color }}
-                    className={`board_background_option ${
-                      color === state.color ? "active" : ""
-                    }`}
-                    onClick={() => setState({ ...state, color })}
-                  ></button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <FormField
-            formName="add-board"
-            field={titleField}
-            handleChange={(e) => setState({ ...state, title: e.target.value })}
-            handleTouch={(name, touched) => setTouched(touched)}
-          />
-          <button
-            disabled={state.title === "" || CheckField()}
-            className="add_board_submit_btn"
-          >
-            Create board
-          </button>
-        </div>
-      </div>
-    </Modal>
-  );
-};
-
 const BoardListPage = () => {
   const [boards, setBoards] = useState(boardsList);
   const [open, setOpen] = useState(false);
+
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
 
   function handleFavorite(boardId) {
     const updatedBoards = _.cloneDeep(boards);
@@ -163,6 +77,24 @@ const BoardListPage = () => {
     setBoards(updatedBoards);
   }
 
+  async function getAllBoards() {
+    await axiosPrivate
+      .get(`/board/all/${auth?.user?.id}`)
+      .then((response) => {
+        console.log(response?.data);
+        setBoards(response?.data);
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
   function handleOpen() {
     setOpen(true);
   }
@@ -170,6 +102,14 @@ const BoardListPage = () => {
   function handleClose() {
     setOpen(false);
   }
+
+  function handleAddBoard() {
+    getAllBoards();
+  }
+
+  useEffect(() => {
+    getAllBoards();
+  }, []);
 
   return (
     <div className="page_content">
@@ -237,7 +177,7 @@ const BoardListPage = () => {
           </div>
         ))}
       </div>
-      <AddBoardModal open={open} handleClose={handleClose} />
+      <AddBoardModal open={open} handleClose={handleClose} handleAddBoard={handleAddBoard}/>
     </div>
   );
 };
