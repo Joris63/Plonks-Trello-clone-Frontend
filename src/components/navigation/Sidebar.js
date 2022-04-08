@@ -4,7 +4,7 @@ import "../../styles/navigation.scss";
 
 const navigation = [
   {
-    name: "Recently added",
+    name: "Recently opened",
     icon: "fa-clock",
     children: [
       {
@@ -141,7 +141,7 @@ const Sidebar = ({ open, handleToggle }) => {
       )
       ?.getBoundingClientRect();
 
-    return rect?.y - 60 || 0;
+    return rect?.y - 60 || null;
   }
 
   useEffect(() => {
@@ -182,10 +182,12 @@ const Sidebar = ({ open, handleToggle }) => {
               />
             );
           })}
-          <li
-            style={{ top: indicatorPos }}
-            className="sidebar_item_indicator"
-          ></li>
+          {indicatorPos && (
+            <li
+              style={{ top: indicatorPos }}
+              className="sidebar_item_indicator"
+            ></li>
+          )}
         </ul>
       </div>
       {open && <div className="sidebar_mobile_overlay"></div>}
