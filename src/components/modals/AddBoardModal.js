@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { CheckField } from "../utils/helpers/validation.helpers";
-import { ReactComponent as BoardPreview } from "../assets/board-preview.svg";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import FormField from "./form/FormField";
-import Modal from "./helpers/Modal";
-import { FireToast } from "../utils/helpers/toasts.helpers";
-import useAuth from "../hooks/useAuth";
+import { CheckField } from "../../utils/helpers/validation.helpers";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import FormField from "../form/FormField";
+import Modal from "../helpers/Modal";
+import { FireToast } from "../../utils/helpers/toasts.helpers";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const backgroundColors = [

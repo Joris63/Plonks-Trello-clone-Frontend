@@ -8,9 +8,9 @@ import RequireAuth from "./components/auth/RequireAuth";
 import PersistLogin from "./components/auth/PersistLogin";
 import AuthPage from "./pages/AuthPage";
 import SettingsPage from "./pages/SettingsPage";
-import "./styles/index.scss";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
+import "./styles/index.scss";
 
 const App = () => {
   return (

@@ -701,9 +701,10 @@
     border-radius: 50%;
     background-color: #7bed9f;
     object-fit: cover;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
     &.add {
+        cursor: pointer;
         background-color: #f1f2f6;
         font-size: 0.9em;
     }
@@ -796,4 +797,62 @@
     .board_btn_wrapper {
         width: 100%;
     }
+}
+
+/*
+  Board page
+*/
+.board_page_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.board_page_title_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    &.favorite .board_page_star_btn {
+        opacity: 1;
+        color: #fbc531;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
+    }
+}
+
+.board_page_title_underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    border-radius: 2.5px;
+}
+
+.board_page_last_update {
+    font-size: 0.9em;
+    color: rgb(0 0 0 / 0.5);
+    font-weight: 500;
+}
+
+.board_page_edit_btn {
+    color: #000;
+}
+
+.board_page_star_btn {
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.board_page_members {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px 8px 16px;
+    border-radius: 8px;
+}
+
+.board_page_members_text {
+    font-weight: 600;
 }

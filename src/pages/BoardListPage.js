@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AddBoardModal from "../components/AddBoardModal";
+import AddBoardModal from "../components/modals/AddBoardModal";
 import CustomSelect from "../components/helpers/CustomSelect";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -163,6 +163,7 @@ const BoardListPage = () => {
               className={`board_btn_wrapper ${
                 board?.favorited ? "favorite" : ""
               }`}
+              onClick={() => navigate(`/board/${board.id}`)}
             >
               <div>
                 <div className="board_btn_title">{board?.title}</div>
@@ -215,16 +216,10 @@ const BoardListPage = () => {
                       )}
                     </div>
                   ))}
-                <div
-                  style={{
-                    transform: `translateX(${
-                      board?.members?.filter((member, index) => index < 4)
-                        .length * -10
-                    }px)`,
-                  }}
-                  className="board_btn_member add"
-                >
-                  <i className="fa-solid fa-plus"></i>
+                <div className="board_btn_member_wrapper">
+                  <div className="board_btn_member add">
+                    <i className="fa-solid fa-plus"></i>
+                  </div>
                 </div>
               </div>
             </div>
