@@ -22,6 +22,7 @@ const App = () => {
             <Route path="/" element={<BoardListPage />} />
             <Route path="/boards" element={<BoardListPage />} />
             <Route path="/board/:boardId" element={<BoardPage />} />
+            <Route path="/board/edit/:boardId" element={<BoardPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

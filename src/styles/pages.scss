@@ -619,6 +619,10 @@
         & .board_btn_star {
             opacity: 1;
         }
+
+        & .board_btn_edit {
+            opacity: 1;
+        }
     }
 
     &.favorite .board_btn_star {
@@ -650,6 +654,14 @@
     position: absolute;
     right: 12px;
     bottom: 12px;
+    color: white;
+}
+
+.board_btn_edit {
+    opacity: 0;
+    position: absolute;
+    right: 12px;
+    top: 12px;
     color: white;
 }
 

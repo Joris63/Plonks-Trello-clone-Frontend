@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddBoardModal from "../components/AddBoardModal";
 import CustomSelect from "../components/helpers/CustomSelect";
 import useAuth from "../hooks/useAuth";
@@ -58,6 +59,8 @@ const BoardListPage = () => {
 
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
+
+  const navigate = useNavigate();
 
   function handleFavorite(boardId, favorited) {
     const updatedBoards = _.cloneDeep(boards);
@@ -167,8 +170,20 @@ const BoardListPage = () => {
                   Last updated {FormatTime(board?.lastUpdated)?.toLowerCase()}
                 </div>
                 <div
+                  className="board_btn_edit"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/board/edit/${board.id}`);
+                  }}
+                >
+                  <i className={`fa-solid fa-pen`}></i>
+                </div>
+                <div
                   className="board_btn_star"
-                  onClick={() => FavoriteBoard(board.id, !board?.favorited)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    FavoriteBoard(board.id, !board?.favorited);
+                  }}
                 >
                   <i
                     className={`animate__animated fa-${
