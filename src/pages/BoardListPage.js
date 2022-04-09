@@ -205,6 +205,7 @@ const BoardListPage = () => {
                         <img
                           className="board_btn_member"
                           src={member?.picturePath}
+                          referrerPolicy="no-referrer"
                           alt="profile"
                         />
                       ) : (

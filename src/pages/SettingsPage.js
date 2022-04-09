@@ -152,6 +152,7 @@ const SettingsPage = (props) => {
                       className="user_profile_picture"
                       src={profilePicPath}
                       alt="profile"
+                      referrerPolicy="no-referrer"
                     />
                     <div className="user_profile_picture_edit">
                       <i className="fa-solid fa-pen"></i>

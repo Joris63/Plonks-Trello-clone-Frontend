@@ -46,10 +46,17 @@ const RightNavbar = (props) => {
           ref={profileBtnRef}
         >
           {auth?.user?.picturePath ? (
-            <img className="navbar_profile_picture" src={auth?.user?.picturePath} alt="profile" />
+            <img
+              className="navbar_profile_picture"
+              src={auth?.user?.picturePath}
+              alt="profile"
+              referrerPolicy="no-referrer"
+            />
           ) : (
             <div className="navbar_profile_picture">
-              <i className={`fa-solid fa-${auth?.user?.username?.charAt()}`}></i>
+              <i
+                className={`fa-solid fa-${auth?.user?.username?.charAt()}`}
+              ></i>
             </div>
           )}
           <div className="navbar_profile_name">{auth?.user?.username}</div>
@@ -58,7 +65,11 @@ const RightNavbar = (props) => {
           </span>
         </button>
       </div>
-      <ProfileDropdown open={open} anchor={profileBtnRef} handleClose={toggleOpen} />
+      <ProfileDropdown
+        open={open}
+        anchor={profileBtnRef}
+        handleClose={toggleOpen}
+      />
     </>
   );
 };
