@@ -4,7 +4,7 @@ const BoardContext = createContext({});
 
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState({});
-  const [lists, setLists] = useState({});
+  const [lists, setLists] = useState([]);
 
   return (
     <BoardContext.Provider value={{ board, setBoard, lists, setLists }}>
