@@ -1,5 +1,13 @@
+import useBoard from "../../hooks/useBoard";
+
 const Board = () => {
-  return null;
+  const board = useBoard();
+
+  return (
+      <div>
+          
+      </div>
+  );
 };
 
 export default Board;

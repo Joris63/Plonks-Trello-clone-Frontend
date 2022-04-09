@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import "../../styles/common.scss";
 import { CheckField } from "../../utils/helpers/validation.helpers";
 import PasswordValidationBox from "./PasswordValidationBox";
 

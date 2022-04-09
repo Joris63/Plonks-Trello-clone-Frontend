@@ -11,6 +11,9 @@ import SettingsPage from "./pages/SettingsPage";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import "./styles/index.scss";
+import "./styles/common.scss";
+import "./styles/navigation.scss"
+import "./styles/pages.scss";
 
 const App = () => {
   return (

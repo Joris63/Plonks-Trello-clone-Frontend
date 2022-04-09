@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "../../styles/navigation.scss";
 
 const navigation = [
   {

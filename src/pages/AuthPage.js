@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { ReactComponent as ScrumBoard } from "../assets/scrum_board.svg";
 import LoginForm from "../components/auth/Login";
 import RegisterForm from "../components/auth/Register";
-import "../styles/pages.scss";
 
 function getLoginFormHeight() {
   const rect = document

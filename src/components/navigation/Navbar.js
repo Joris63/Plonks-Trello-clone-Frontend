@@ -1,5 +1,3 @@
-import "../../styles/navigation.scss";
-import "animate.css";
 import useAuth from "../../hooks/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
 import { useRef, useState } from "react";

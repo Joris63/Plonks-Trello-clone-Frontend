@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import BoardContext from "../context/AuthProvider"
+import BoardContext from "../context/BoardProvider"
 
 const useBoard = () => {
     return useContext(BoardContext);

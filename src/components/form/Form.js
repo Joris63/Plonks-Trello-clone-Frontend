@@ -3,7 +3,6 @@ import _ from "lodash";
 import FormField from "./FormField";
 import { CheckField } from "../../utils/helpers/validation.helpers";
 import { TurnStringToCamelCase } from "../../utils/helpers/common.helpers";
-import "../../styles/common.scss";
 
 const Form = ({
   id,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import BoardLists from "../components/BoardLists";
+import Board from "../components/board/Board";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { FormatTime } from "../utils/helpers/common.helpers";
@@ -125,7 +125,7 @@ const BoardPage = () => {
           </div>
         </div>
       </div>
-      <BoardLists />
+      <Board />
     </div>
   );
 };
