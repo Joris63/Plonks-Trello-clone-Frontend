@@ -12,8 +12,9 @@ import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import "./styles/index.scss";
 import "./styles/common.scss";
-import "./styles/navigation.scss"
+import "./styles/navigation.scss";
 import "./styles/pages.scss";
+import "animate.css";
 
 const App = () => {
   return (
