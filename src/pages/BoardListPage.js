@@ -1,56 +1,12 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AddBoardModal from "../components/modals/AddBoardModal";
-import CustomSelect from "../components/helpers/CustomSelect";
+import AddBoardModal from "../components/board-list/AddBoardModal";
+import BoardButton from "../components/board-list/BoardButton";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { FormatTime } from "../utils/helpers/common.helpers";
 import { FireToast } from "../utils/helpers/toasts.helpers";
-
-const filterOptions = [
-  { name: "Most recently active", abbr: "activity-desc", active: true },
-  { name: "Last recently active", abbr: "activity-asc" },
-  { name: "Alphabetically A-Z", abbr: "alphabet-asc" },
-  { name: "Alphabetically Z-A", abbr: "alphabet-desc" },
-];
-
-const BoardsFilter = ({ handleSort }) => {
-  const [options, setOptions] = useState(filterOptions);
-
-  useEffect(() => {
-    handleSort(options.find((option) => option.active).abbr);
-  }, [options]);
-
-  return (
-    <div className="board_filter_wrapper">
-      <label className="board_filter_wrapper_label">Sort by</label>
-      <div className="board_filter_select">
-        <CustomSelect
-          name="board-select"
-          options={options}
-          onChange={setOptions}
-        />
-      </div>
-    </div>
-  );
-};
-
-const BoardsSearch = ({ search, setSearch }) => {
-  return (
-    <div className="board_filter_wrapper">
-      <label className="board_filter_wrapper_label">Search</label>
-      <div className="board_filter_search">
-        <input
-          className="board_filter_search_input"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search boards"
-        />
-      </div>
-    </div>
-  );
-};
+import BoardsSearch from '../components/board-list/BoardsSearch'
+import BoardsFilter from '../components/board-list/BoardsFilter'
 
 const BoardListPage = () => {
   const [boards, setBoards] = useState([]);
@@ -59,20 +15,6 @@ const BoardListPage = () => {
 
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
-
-  const navigate = useNavigate();
-
-  function handleFavorite(boardId, favorited) {
-    const updatedBoards = _.cloneDeep(boards);
-    const board = boards.find((board) => board.id === boardId);
-
-    updatedBoards.splice(boards.indexOf(board), 1, {
-      ...board,
-      favorited,
-    });
-
-    setBoards(updatedBoards);
-  }
 
   function handleSort(filter) {
     let updatedBoards = _.cloneDeep(boards);
@@ -114,23 +56,6 @@ const BoardListPage = () => {
       });
   }
 
-  async function FavoriteBoard(boardId, favorite) {
-    await axiosPrivate
-      .post(`/board/favorite`, { boardId, userId: auth?.user?.id, favorite })
-      .then((response) => {
-        handleFavorite(boardId, favorite);
-      })
-      .catch((err) => {
-        if (!err?.response) {
-          FireToast("No server response.", "error");
-        } else if (err.response?.status === 401) {
-          FireToast("Unauthorized.", "error");
-        } else {
-          FireToast("Something went wrong.", "error");
-        }
-      });
-  }
-
   useEffect(() => {
     getAllBoards();
   }, []);
@@ -157,73 +82,7 @@ const BoardListPage = () => {
               search.toLowerCase().includes(board.title.toLowerCase())
           )
           .map((board) => (
-            <div
-              key={`board-${board?.id}`}
-              style={{ backgroundColor: board?.color }}
-              className={`board_btn_wrapper ${
-                board?.favorited ? "favorite" : ""
-              }`}
-              onClick={() => navigate(`/board/${board.id}`)}
-            >
-              <div>
-                <div className="board_btn_title">{board?.title}</div>
-                <div className="board_btn_activity">
-                  Last updated {FormatTime(board?.lastUpdated)?.toLowerCase()}
-                </div>
-                <div
-                  className="board_btn_edit"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/board/edit/${board.id}`);
-                  }}
-                >
-                  <i className={`fa-solid fa-pen`}></i>
-                </div>
-                <div
-                  className="board_btn_star"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    FavoriteBoard(board.id, !board?.favorited);
-                  }}
-                >
-                  <i
-                    className={`animate__animated fa-${
-                      board?.favorited ? "solid animate__tada" : "regular"
-                    } fa-star`}
-                  ></i>
-                </div>
-              </div>
-              <div className="board_btn_members_list">
-                {board?.members
-                  ?.filter((member, index) => index < 4)
-                  .map((member) => (
-                    <div
-                      key={`board-${board?.id}-member-${member?.id}`}
-                      className="board_btn_member_wrapper"
-                    >
-                      {member?.picturePath ? (
-                        <img
-                          className="board_btn_member"
-                          src={member?.picturePath}
-                          referrerPolicy="no-referrer"
-                          alt="profile"
-                        />
-                      ) : (
-                        <div className="board_btn_member">
-                          <i
-                            className={`fa-solid fa-${member.username.charAt()}`}
-                          ></i>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                <div className="board_btn_member_wrapper">
-                  <div className="board_btn_member add">
-                    <i className="fa-solid fa-plus"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BoardButton board={board} boards={boards} setBoards={setBoards} />
           ))}
       </div>
       <AddBoardModal open={open} handleClose={() => setOpen(false)} />

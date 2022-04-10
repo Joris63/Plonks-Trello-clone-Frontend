@@ -30,28 +30,7 @@ const BoardPage = () => {
         }
       });
   }
-
-  async function FavoriteBoard() {
-    await axiosPrivate
-      .post(`/board/favorite`, {
-        boardId,
-        userId: auth?.user?.id,
-        favorite: !board.favorited,
-      })
-      .then((response) => {
-        setBoard({ ...board, favorited: !board.favorited });
-      })
-      .catch((err) => {
-        if (!err?.response) {
-          FireToast("No server response.", "error");
-        } else if (err.response?.status === 401) {
-          FireToast("Unauthorized.", "error");
-        } else {
-          FireToast("Something went wrong.", "error");
-        }
-      });
-  }
-
+  
   useEffect(() => {
     GetBoard();
   }, []);
