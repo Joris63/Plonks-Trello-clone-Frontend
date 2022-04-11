@@ -5,8 +5,8 @@ import BoardButton from "../components/board-list/BoardButton";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { FireToast } from "../utils/helpers/toasts.helpers";
-import BoardsSearch from '../components/board-list/BoardsSearch'
-import BoardsFilter from '../components/board-list/BoardsFilter'
+import BoardsSearch from "../components/board-list/BoardsSearch";
+import BoardsFilter from "../components/board-list/BoardsFilter";
 
 const BoardListPage = () => {
   const [boards, setBoards] = useState([]);
@@ -67,7 +67,17 @@ const BoardListPage = () => {
         <BoardsFilter handleSort={handleSort} />
         <BoardsSearch search={search} setSearch={setSearch} />
       </div>
-      <div className="boards_list_count">Showing 1 of 1 boards</div>
+      <div className="boards_list_count">
+        Showing{" "}
+        {
+          boards?.filter(
+            (board) =>
+              board.title.toLowerCase().includes(search.toLowerCase()) ||
+              search.toLowerCase().includes(board.title.toLowerCase())
+          )?.length
+        }{" "}
+        of {boards?.length} boards
+      </div>
       <div className="boards_list">
         <div
           className="board_btn_wrapper add_board"
@@ -82,7 +92,12 @@ const BoardListPage = () => {
               search.toLowerCase().includes(board.title.toLowerCase())
           )
           .map((board) => (
-            <BoardButton board={board} boards={boards} setBoards={setBoards} />
+            <BoardButton
+              key={`board-${board?.id}`}
+              board={board}
+              boards={boards}
+              setBoards={setBoards}
+            />
           ))}
       </div>
       <AddBoardModal open={open} handleClose={() => setOpen(false)} />

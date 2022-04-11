@@ -41,7 +41,6 @@ const BoardButton = ({ board, boards, setBoards }) => {
 
   return (
     <div
-      key={`board-${board?.id}`}
       style={{ backgroundColor: board?.color }}
       className={`board_btn_wrapper ${board?.favorited ? "favorite" : ""}`}
       onClick={() => navigate(`/board/${board.id}`)}
@@ -96,11 +95,11 @@ const BoardButton = ({ board, boards, setBoards }) => {
               )}
             </div>
           ))}
-        <div className="board_btn_member_wrapper">
-          <div className="board_btn_member add">
-            <i className="fa-solid fa-plus"></i>
+        {board?.members?.length > 4 && (
+          <div className="board_btn_member_wrapper">
+            <div className="board_btn_member add">+3</div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
