@@ -96,11 +96,13 @@ const BoardButton = ({ board, boards, setBoards }) => {
               )}
             </div>
           ))}
-        <div className="board_btn_member_wrapper">
-          <div className="board_btn_member add">
-            <i className="fa-solid fa-plus"></i>
+        {board?.members?.filter((member, index) => index >= 4).length > 0 && (
+          <div className="board_btn_member_wrapper">
+            <div className="board_btn_member add">
+              +{board?.members?.filter((member, index) => index >= 4).length}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

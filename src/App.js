@@ -14,6 +14,7 @@ import "./styles/index.scss";
 import "./styles/common.scss";
 import "./styles/navigation.scss";
 import "./styles/pages.scss";
+import "./styles/board.scss";
 import "animate.css";
 
 const App = () => {
