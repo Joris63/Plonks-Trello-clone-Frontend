@@ -41,7 +41,6 @@ const BoardButton = ({ board, boards, setBoards }) => {
 
   return (
     <div
-      key={`board-${board?.id}`}
       style={{ backgroundColor: board?.color }}
       className={`board_btn_wrapper ${board?.favorited ? "favorite" : ""}`}
       onClick={() => navigate(`/board/${board.id}`)}
