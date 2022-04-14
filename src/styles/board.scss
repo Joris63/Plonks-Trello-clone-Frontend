@@ -85,8 +85,7 @@
 
 .list {
     margin-right: 10px;
-    width: 250px;
-    z-index: 1010;
+    width: 275px;
 }
 
 .list_header {
@@ -139,12 +138,12 @@
 }
 
 .card {
+    background-color: #fff;
     width: 100%;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: grab;
-    margin-bottom: 8px;
-    z-index: 1010;
+    margin-bottom: 16px;
 }
 
 .card_header {
