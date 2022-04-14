@@ -33,6 +33,23 @@ const BoardPage = () => {
       });
   }
 
+  async function FavoriteBoard(favorite) {
+    await axiosPrivate
+      .post(`/board/favorite`, { boardId, userId: auth?.user?.id, favorite })
+      .then((response) => {
+        setBoard({ ...board, favorited: favorite });
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
   useEffect(() => {
     GetBoard();
   }, []);
@@ -42,21 +59,67 @@ const BoardPage = () => {
       <div>
         <div className="board_header">
           <div className="board_title">{board?.title}</div>
-          <div className="board_actions_list">
-            <button
-              className={`board_star_btn ${board?.favorited ? "favorite" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <i
-                className={`animate__animated fa-${
-                  board?.favorited ? "solid animate__tada" : "regular"
-                } fa-star`}
-              ></i>
-            </button>
-            <button className="board_settings_btn">Settings</button>
+          <button
+            className={`board_page_icon_btn ${
+              board?.favorited ? "favorite" : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              FavoriteBoard(!board?.favorited);
+            }}
+          >
+            <i
+              className={`animate__animated fa-${
+                board?.favorited ? "solid animate__tada" : "regular"
+              } fa-star`}
+            ></i>
+          </button>
+          <div className="board_members" style={{ marginLeft: "auto" }}>
+            {board?.members
+              ?.filter((member, index) => index < 5)
+              .map((member) => (
+                <div
+                  key={`board-${board?.id}-member-${member?.id}`}
+                  className="board_btn_member_wrapper"
+                >
+                  {member?.picturePath ? (
+                    <img
+                      className="board_btn_member"
+                      src={member?.picturePath}
+                      referrerPolicy="no-referrer"
+                      alt="profile"
+                    />
+                  ) : (
+                    <div className="board_btn_member">
+                      <i
+                        className={`fa-solid fa-${member.username.charAt()}`}
+                      ></i>
+                    </div>
+                  )}
+                </div>
+              ))}
+            {board?.members?.filter((member, index) => index >= 5).length >
+              0 && (
+              <div className="board_btn_member_wrapper">
+                <div className="board_btn_member add">
+                  +
+                  {board?.members?.filter((member, index) => index >= 5).length}
+                </div>
+              </div>
+            )}
           </div>
+          <button className="board_page_btn">
+            <i className="fa-regular fa-user-plus"></i>
+            <div>Share</div>
+          </button>
+          <button className="board_page_btn">
+            <i className="fa-regular fa-filter"></i>
+            <div>Filters</div>
+          </button>
+          <button className="board_page_btn">
+            <i className="fa-regular fa-ellipsis"></i>
+            <div>Show menu</div>
+          </button>
         </div>
       </div>
       <DragDropContext>

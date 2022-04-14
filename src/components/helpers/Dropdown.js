@@ -96,12 +96,13 @@ const Dropdown = ({ open, anchor, offset, handleClose, children }) => {
         top: position?.y,
         left: position?.x,
         visibility: openedBefore ? "visible" : "hidden",
+        pointerEvents: !open || !position ? "none" : null,
       }}
       className="dropdown_wrapper"
     >
       <div
         className={`dropdown animate__animated ${
-          !open || !position ? "animate__zoomOut hidden" : "animate__zoomIn"
+          !open || !position ? "animate__zoomOut" : "animate__zoomIn"
         }`}
       >
         {children}

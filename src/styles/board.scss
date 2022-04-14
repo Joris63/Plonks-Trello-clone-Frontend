@@ -1,6 +1,5 @@
 .board_header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
 }
@@ -8,32 +7,29 @@
 .board_title {
     font-size: 1.6em;
     font-weight: 600;
+    margin-right: 16px;
 }
 
-.board_actions_list {
-    display: flex;
-    gap: 8px;
-}
-
-.board_star_btn {
+.board_page_icon_btn {
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 8px;
     background-color: transparent;
-    font-size: 1.1em;
+    font-size: 1.05em;
     height: 35px;
     width: 35px;
     border: 2px solid rgba(0, 0, 0, 0.15);
     border-radius: 8px;
+    margin-right: 8px;
 
     &.favorite {
         color: #fbc531;
     }
 }
 
-.board_settings_btn {
+.board_page_btn {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -42,25 +38,55 @@
     background-color: transparent;
     border: none;
     height: 35px;
-    font-size: 1em;
+    font-size: 0.95em;
     border: 2px solid rgba(0, 0, 0, 0.15);
     border-radius: 8px;
     font-weight: 600;
+    gap: 8px;
+    margin-left: 8px;
 
-    &::before {
-        content: "\f013";
-        font: var(--fa-font-regular);
-        margin-right: 4px;
+    & i {
+        font-size: 1.05em;
+    }
+}
+
+.board_member_wrapper {
+    float: left;
+    font-size: 0.8em;
+    transform: translateX(-10px);
+
+    &:nth-of-type(1) {
+        transform: translateX(0);
+    }
+}
+
+.board_member {
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #7bed9f;
+    object-fit: cover;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+    &.add {
+        cursor: pointer;
+        background-color: #f1f2f6;
+        font-size: 0.9em;
     }
 }
 
 .lists_container {
     display: flex;
+    z-index: 1010;
 }
 
 .list {
     margin-right: 10px;
     width: 250px;
+    z-index: 1010;
 }
 
 .list_header {
@@ -117,7 +143,8 @@
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: grab;
-    margin-bottom:  8px;
+    margin-bottom: 8px;
+    z-index: 1010;
 }
 
 .card_header {

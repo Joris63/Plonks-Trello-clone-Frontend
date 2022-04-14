@@ -3,6 +3,32 @@ import { Draggable } from "react-beautiful-dnd";
 import Card from "./Card";
 
 const List = () => {
+  const customDragStyle = (style) => {
+    if (!style?.transform) {
+      return style;
+    }
+
+    if (
+      parseInt(
+        style.transform.slice(
+          style.transform.indexOf("(") + 1,
+          style.transform.indexOf(",") - 2
+        )
+      ) < 0
+    ) {
+      return {
+        ...style,
+        transform: "transform(0px, 0px)",
+      };
+    }
+
+    const axisLockX = `${style.transform.split(",").shift()}, 0px)`;
+    return {
+      ...style,
+      transform: axisLockX,
+    };
+  };
+
   return (
     <Draggable draggableId={"list-1"} index={0}>
       {(provided, snapshot) => (
@@ -11,6 +37,7 @@ const List = () => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          style={customDragStyle(provided.draggableProps.style)}
         >
           <header className="list_header">
             <div>

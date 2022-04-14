@@ -9,10 +9,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &.hidden {
-    pointer-events: none;
-  }
 }
 
 .dropdown {
@@ -405,6 +401,7 @@
   position: relative;
   margin-top: 60px;
   padding: 25px;
+  padding-right: 16px;
 }
 
 .page_title {
