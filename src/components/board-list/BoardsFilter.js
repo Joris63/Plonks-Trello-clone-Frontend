@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CustomSelect from "../helpers/CustomSelect";
+import CustomSelect from "../form/CustomSelect";
 
 const filterOptions = [
   { name: "Most recently active", abbr: "activity-desc", active: true },
@@ -10,6 +10,18 @@ const filterOptions = [
 
 const BoardsFilter = ({ handleSort }) => {
   const [options, setOptions] = useState(filterOptions);
+
+  function handleChange(option) {
+    const updatedOptions = options.map((child) => {
+      if (option === child.abbr) {
+        return { ...child, active: true };
+      } else {
+        return { ...child, active: false };
+      }
+    });
+
+    setOptions(updatedOptions);
+  }
 
   useEffect(() => {
     handleSort(options.find((option) => option.active).abbr);
@@ -22,7 +34,7 @@ const BoardsFilter = ({ handleSort }) => {
         <CustomSelect
           name="board-select"
           options={options}
-          onChange={setOptions}
+          onChange={handleChange}
         />
       </div>
     </div>

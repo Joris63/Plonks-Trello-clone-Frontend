@@ -45,13 +45,23 @@ const Form = ({
     setAllFields(setInitialState());
   }
 
-  function handleChange(e) {
-    const name = e.target.name;
-    const newValue = e.target.value;
+  function handleChange(fieldName, fieldType, value) {
     const updatedFields = _.cloneDeep(allFields);
-    const field = updatedFields.find((field) => field.name === name);
+    const field = updatedFields.find((field) => field.name === fieldName);
 
-    field.value = newValue;
+    if (fieldType === "select") {
+      const updatedOptions = field.options.map((child) => {
+        if (value === child.abbr) {
+          return { ...child, active: true };
+        } else {
+          return { ...child, active: false };
+        }
+      });
+
+      field.options = updatedOptions;
+    }
+
+    field.value = value;
 
     setAllFields(updatedFields);
   }

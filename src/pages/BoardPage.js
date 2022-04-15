@@ -16,13 +16,6 @@ const listFields = [
   },
 ];
 
-const cardFields = [
-  {
-    label: "Title",
-    placeholder: "your card title",
-  },
-];
-
 const BoardPage = () => {
   const [listModalOpen, setListModalOpen] = useState(false);
   const [cardModalOpen, setCardModalOpen] = useState(false);
@@ -32,13 +25,30 @@ const BoardPage = () => {
   const { board, setBoard } = useBoard();
   const { boardId } = useParams();
 
+  const cardFields = [
+    {
+      label: "Title",
+      placeholder: "your card title",
+    },
+    {
+      label: "List",
+      type: "select",
+      options:
+        board?.lists?.map((list, index) => ({
+          name: list.title,
+          abbr: list.title,
+          active: index === 0 ? true : false,
+        })) || [],
+    },
+  ];
+
   async function GetBoard() {
     const data = { userId: auth?.user?.id, boardId };
 
     await axiosPrivate
       .post("/board/get", data)
       .then((response) => {
-        setBoard(response?.data);
+        setBoard({ ...response?.data, lists: [{ title: "List" }] });
       })
       .catch((err) => {
         if (!err?.response) {
@@ -96,16 +106,18 @@ const BoardPage = () => {
             className="board_page_btn"
             onClick={() => setListModalOpen(true)}
           >
-            <i class="fa-solid fa-plus"></i>
+            <i className="fa-solid fa-plus"></i>
             <div>Add List</div>
           </button>
-          <button
-            className="board_page_btn"
-            onClick={() => setCardModalOpen(true)}
-          >
-            <i class="fa-solid fa-plus"></i>
-            <div>Add Card</div>
-          </button>
+          {board?.lists?.length > 0 && (
+            <button
+              className="board_page_btn"
+              onClick={() => setCardModalOpen(true)}
+            >
+              <i className="fa-solid fa-plus"></i>
+              <div>Add Card</div>
+            </button>
+          )}
           <div className="board_members" style={{ marginLeft: "auto" }}>
             {board?.members
               ?.filter((member, index) => index < 5)
@@ -172,16 +184,20 @@ const BoardPage = () => {
         open={listModalOpen}
         handleClose={() => setListModalOpen(false)}
         fields={listFields}
-        title="Add list"
+        title="Create list"
         handleSubmit={() => {}}
       />
-      <AddBoardItemModal
-        open={cardModalOpen}
-        handleClose={() => setCardModalOpen(false)}
-        fields={cardFields}
-        title="Add card"
-        handleSubmit={() => {}}
-      />
+      {board?.lists?.length > 0 && (
+        <AddBoardItemModal
+          open={cardModalOpen}
+          handleClose={() => setCardModalOpen(false)}
+          fields={cardFields}
+          title="Create card"
+          handleSubmit={(data) => {
+            console.log(data);
+          }}
+        />
+      )}
     </div>
   );
 };

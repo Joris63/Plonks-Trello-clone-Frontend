@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CheckField } from "../../utils/helpers/validation.helpers";
+import CustomSelect from "./CustomSelect";
 import PasswordValidationBox from "./PasswordValidationBox";
 
 const FormField = ({ formName, field = {}, handleChange, handleTouch }) => {
@@ -44,41 +45,56 @@ const FormField = ({ formName, field = {}, handleChange, handleTouch }) => {
         {field?.label}
       </label>
       <div style={{ position: "relative" }}>
-        <input
-          ref={fieldRef}
-          id={`${formName}-field-input-${field?.name}`}
-          className="form_field"
-          disabled={field?.disabled}
-          placeholder={field?.placeholder}
-          type={
-            field?.type !== "password" || (field?.type === "password" && hidden)
-              ? field?.type
-              : "text"
-          }
-          required={!field?.optional}
-          value={field?.value}
-          minLength={field?.minLength}
-          maxLength={field?.maxLength}
-          name={field?.name}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={() => {
-            handleTouch(field?.name, true);
-            setHintOpen(false);
-          }}
-        />
-        {validation && (
-          <PasswordValidationBox
-            open={hintOpen}
-            field={field}
-            anchor={fieldRef}
+        {field?.type === "select" ? (
+          <CustomSelect
+            name={`${field?.name}-select`}
+            options={field?.options}
+            onChange={(option) =>
+              handleChange(field?.name, field?.type, option)
+            }
           />
-        )}
-        {field?.type === "password" && (
-          <div
-            className={`form_field_toggle_hide ${hidden ? "hidden" : ""}`}
-            onClick={toggleHide}
-          />
+        ) : (
+          <>
+            <input
+              ref={fieldRef}
+              id={`${formName}-field-input-${field?.name}`}
+              className="form_field"
+              disabled={field?.disabled}
+              placeholder={field?.placeholder}
+              type={
+                field?.type !== "password" ||
+                (field?.type === "password" && hidden)
+                  ? field?.type
+                  : "text"
+              }
+              required={!field?.optional}
+              value={field?.value}
+              minLength={field?.minLength}
+              maxLength={field?.maxLength}
+              name={field?.name}
+              onChange={(e) =>
+                handleChange(field?.name, field?.type, e.target.value)
+              }
+              onFocus={handleFocus}
+              onBlur={() => {
+                handleTouch(field?.name, true);
+                setHintOpen(false);
+              }}
+            />
+            {validation && (
+              <PasswordValidationBox
+                open={hintOpen}
+                field={field}
+                anchor={fieldRef}
+              />
+            )}
+            {field?.type === "password" && (
+              <div
+                className={`form_field_toggle_hide ${hidden ? "hidden" : ""}`}
+                onClick={toggleHide}
+              />
+            )}
+          </>
         )}
       </div>
       {((warning && field?.touched && !hintOpen) || field?.hint) && (

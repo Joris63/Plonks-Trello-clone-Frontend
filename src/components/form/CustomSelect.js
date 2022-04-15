@@ -7,18 +7,6 @@ const CustomSelect = ({ name, options, onChange }) => {
 
   const optionsRef = useRef(null);
 
-  function handleChange(option) {
-    const updatedOptions = options.map((child) => {
-      if (option.abbr === child.abbr) {
-        return { ...child, active: true };
-      } else {
-        return { ...child, active: false };
-      }
-    });
-
-    onChange(updatedOptions);
-  }
-
   useEffect(() => {
     function handleClick(e) {
       if (
@@ -52,7 +40,7 @@ const CustomSelect = ({ name, options, onChange }) => {
           <li
             key={`${name}-option-${option?.abbr}`}
             className="select_option"
-            onClick={() => handleChange(option)}
+            onClick={() => onChange(option.abbr)}
           >
             {option?.name}
           </li>
