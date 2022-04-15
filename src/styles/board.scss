@@ -49,6 +49,10 @@
     }
 }
 
+.add_board_item_fields {
+    max-width: 400px;
+}
+
 .board_member_wrapper {
     float: left;
     font-size: 0.8em;
@@ -95,7 +99,7 @@
     border-bottom: 3px solid rgba(83, 82, 237, 1);
     margin-bottom: 16px;
     background-color: #fff;
-    transition: background .225s ease;
+    transition: background 0.225s ease;
 }
 
 .list_title {

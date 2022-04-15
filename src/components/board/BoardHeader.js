@@ -1,4 +1,5 @@
-import { useState } from "react";
+import _ from "lodash";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useBoard from "../../hooks/useBoard";
@@ -13,7 +14,21 @@ const listFields = [
   },
 ];
 
-const BoardHeader = () => {
+const initialCardFields = [
+  {
+    label: "Title",
+    placeholder: "your card title",
+    whitespaces: true,
+  },
+  {
+    label: "List",
+    type: "select",
+    options: [],
+  },
+];
+
+const BoardHeader = ({ boardId }) => {
+  const [cardFields, setCardFields] = useState(initialCardFields);
   const [listModalOpen, setListModalOpen] = useState(false);
   const [cardModalOpen, setCardModalOpen] = useState(false);
 
@@ -22,28 +37,10 @@ const BoardHeader = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const cardFields = [
-    {
-      label: "Title",
-      placeholder: "your card title",
-      whitespaces: true,
-    },
-    {
-      label: "List",
-      type: "select",
-      options:
-        board?.lists?.map((list, index) => ({
-          name: list.title,
-          abbr: list.id,
-          active: index === 0 ? true : false,
-        })) || [],
-    },
-  ];
-
   async function FavoriteBoard(favorite) {
     await axiosPrivate
       .post(`/board/favorite`, {
-        boardId: board.Id,
+        boardId,
         userId: auth?.user?.id,
         favorite,
       })
@@ -63,22 +60,21 @@ const BoardHeader = () => {
 
   async function AddList(data) {
     await axiosPrivate
-      .post(`/list/add`, { ...data, boardId: board.Id })
+      .post(`/list/add`, { ...data, boardId })
       .then((response) => {
         setListModalOpen(false);
 
-        setBoard({
-          ...board,
-          lists: [
-            ...board?.lists,
-            {
-              id: response.data,
-              ...data,
-              order: board?.lists?.length,
-              boardId: board.Id,
-            },
-          ],
-        });
+        const lists = [
+          ...board?.lists,
+          {
+            id: response.data,
+            ...data,
+            order: board?.lists?.length,
+            boardId,
+          },
+        ];
+
+        setBoard({ ...board, lists });
 
         FireToast("List added.", "success");
       })
@@ -92,6 +88,19 @@ const BoardHeader = () => {
         }
       });
   }
+
+  useEffect(() => {
+    const updatedCardFields = _.cloneDeep(cardFields);
+    const listField = updatedCardFields.find((field) => field.label === "List");
+    listField.options =
+      board?.lists?.map((list, index) => ({
+        name: list.title,
+        abbr: list.id,
+        active: index === 0 ? true : false,
+      })) || [];
+
+    setCardFields(updatedCardFields);
+  }, [board]);
 
   return (
     <div className="board_header">

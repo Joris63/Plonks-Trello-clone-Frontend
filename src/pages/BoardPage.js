@@ -90,7 +90,7 @@ const BoardPage = () => {
 
   return (
     <div className="page_content">
-      <BoardHeader />
+      <BoardHeader boardId={boardId} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="board" type="list" direction="horizontal">
           {(provided) => (

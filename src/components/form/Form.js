@@ -28,7 +28,7 @@ const Form = ({
       name: TurnStringToCamelCase(field.label),
       value:
         field?.type === "select"
-          ? field?.options.find((option) => option.active).abbr || ""
+          ? field?.options.find((option) => option.active)?.abbr || ""
           : field.value || "",
       fullWidth: true,
       placeholder: "",

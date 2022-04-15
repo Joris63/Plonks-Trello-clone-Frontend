@@ -44,17 +44,21 @@ const Card = ({ card, index }) => {
           {...provided.dragHandleProps}
           style={customDragStyle(provided.draggableProps.style)}
         >
-          <header className="card_header">UX Adjustments</header>
+          <header className="card_header">{card?.title}</header>
           <div className="card_content">
             <div className="card_labels_container">
-              <div className="card_label">Research</div>
+              {card?.labels?.map((label) => (
+                <div className="card_label">{label.name}</div>
+              ))}
             </div>
             <div className="card_members_container">
-              <div className="card_member_wrapper">
-                <div className="card_member">
-                  <i className="fa-regular fa-j"></i>
+              {card?.members?.map((member) => (
+                <div className="card_member_wrapper">
+                  <div className="card_member">
+                    <i className="fa-regular fa-j"></i>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
           <footer className="card_footer">
