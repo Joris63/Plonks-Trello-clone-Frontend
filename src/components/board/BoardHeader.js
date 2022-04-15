@@ -67,7 +67,7 @@ const BoardHeader = ({ boardId }) => {
         const lists = [
           ...board?.lists,
           {
-            id: response.data,
+            id: response.data.toString(),
             ...data,
             order: board?.lists?.length,
             boardId,

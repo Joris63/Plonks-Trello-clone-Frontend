@@ -9,6 +9,7 @@ import { Droppable } from "react-beautiful-dnd";
 import List from "../components/board/List";
 import BoardHeader from "../components/board/BoardHeader";
 import { SortCards, SortLists } from "../utils/helpers/board.helpers";
+import _ from "lodash";
 
 const BoardPage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -58,6 +59,23 @@ const BoardPage = () => {
       });
   }
 
+  async function ReorderLists(board) {
+    await axiosPrivate
+      .post(`/list/reorder`, { lists: board.lists, boardId: boardId })
+      .then((response) => {
+        FireToast(response.data, "success");
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
   function onDragEnd(result) {
     const { draggableId, destination, type } = result;
 
@@ -65,23 +83,27 @@ const BoardPage = () => {
       return;
     }
 
+    let updatedBoard = _.cloneDeep(board);
+
     switch (type) {
       case "card":
-        setBoard(
-          SortCards(
-            board,
-            draggableId,
-            destination.droppableId,
-            destination.index
-          )
+        updatedBoard = SortCards(
+          board,
+          draggableId,
+          destination.droppableId,
+          destination.index
         );
         break;
       case "list":
-        setBoard(SortLists(board, draggableId, destination.index));
+        updatedBoard = SortLists(board, draggableId, destination.index);
         break;
       default:
         break;
     }
+
+    setBoard(updatedBoard);
+
+    ReorderLists(updatedBoard);
   }
 
   useEffect(() => {
