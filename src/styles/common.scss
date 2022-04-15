@@ -184,7 +184,6 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 24px;
 }
 
 .form_title {
@@ -198,6 +197,14 @@
   font-size: 1em;
   font-weight: 500;
   margin-bottom: 12px;
+}
+
+.form_error {
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: rgba(231, 76, 60, 1);
+  font-size: 0.9em;
 }
 
 .form_field_wrapper {
@@ -384,6 +391,25 @@
   background: rgba(83, 82, 237, 1);
   color: white;
   cursor: pointer;
+}
+
+.custom_form_submit_btn {
+  margin: 32px auto 12px auto;
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-style: none;
+  background-color: rgba(83, 82, 237, 1);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.225s ease;
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    background: rgba(83, 82, 237, 0.5);
+  }
 }
 
 @media (max-width: 500px) {

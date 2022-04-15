@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useBoard from "../hooks/useBoard";
@@ -7,8 +7,26 @@ import { FireToast } from "../utils/helpers/toasts.helpers";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import List from "../components/board/List";
+import AddBoardItemModal from "../components/board/AddBoardItemModal";
+
+const listFields = [
+  {
+    label: "Title",
+    placeholder: "your list title",
+  },
+];
+
+const cardFields = [
+  {
+    label: "Title",
+    placeholder: "your card title",
+  },
+];
 
 const BoardPage = () => {
+  const [listModalOpen, setListModalOpen] = useState(false);
+  const [cardModalOpen, setCardModalOpen] = useState(false);
+
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const { board, setBoard } = useBoard();
@@ -74,6 +92,20 @@ const BoardPage = () => {
               } fa-star`}
             ></i>
           </button>
+          <button
+            className="board_page_btn"
+            onClick={() => setListModalOpen(true)}
+          >
+            <i class="fa-solid fa-plus"></i>
+            <div>Add List</div>
+          </button>
+          <button
+            className="board_page_btn"
+            onClick={() => setCardModalOpen(true)}
+          >
+            <i class="fa-solid fa-plus"></i>
+            <div>Add Card</div>
+          </button>
           <div className="board_members" style={{ marginLeft: "auto" }}>
             {board?.members
               ?.filter((member, index) => index < 5)
@@ -136,6 +168,20 @@ const BoardPage = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <AddBoardItemModal
+        open={listModalOpen}
+        handleClose={() => setListModalOpen(false)}
+        fields={listFields}
+        title="Add list"
+        handleSubmit={() => {}}
+      />
+      <AddBoardItemModal
+        open={cardModalOpen}
+        handleClose={() => setCardModalOpen(false)}
+        fields={cardFields}
+        title="Add card"
+        handleSubmit={() => {}}
+      />
     </div>
   );
 };

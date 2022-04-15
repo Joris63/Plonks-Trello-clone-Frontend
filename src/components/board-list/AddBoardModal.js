@@ -107,7 +107,7 @@ const AddBoardModal = ({ open, handleClose }) => {
           />
           <button
             disabled={fields.title === "" || CheckField()}
-            className="add_board_submit_btn"
+            className="custom_form_submit_btn"
             onClick={() => handleSubmit(fields)}
           >
             Create board
