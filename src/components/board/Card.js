@@ -45,34 +45,47 @@ const Card = ({ card, index }) => {
           style={customDragStyle(provided.draggableProps.style)}
         >
           <header className="card_header">{card?.title}</header>
-          <div className="card_content">
-            <div className="card_labels_container">
-              {card?.labels?.map((label) => (
-                <div className="card_label">{label.name}</div>
-              ))}
-            </div>
-            <div className="card_members_container">
-              {card?.members?.map((member) => (
-                <div className="card_member_wrapper">
-                  <div className="card_member">
-                    <i className="fa-regular fa-j"></i>
+          {(card?.labels?.length > 0 || card?.members?.length > 0) && (
+            <div className="card_content">
+              <div className="card_labels_container">
+                {card?.labels?.map((label) => (
+                  <div className="card_label">{label.name}</div>
+                ))}
+              </div>
+              <div className="card_members_container">
+                {card?.members?.map((member) => (
+                  <div className="card_member_wrapper">
+                    <div className="card_member">
+                      <i className="fa-regular fa-j"></i>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {(card?.hasDescription ||
+            card?.commentAmount > 0 ||
+            card?.checklistItems > 0) && (
+            <footer className="card_footer">
+              {card?.hasDescription && (
+                <div className="card_footer_info">
+                  <i className="fa-regular fa-align-left"></i>
                 </div>
-              ))}
-            </div>
-          </div>
-          <footer className="card_footer">
-            <div className="card_footer_info">
-              <i className="fa-regular fa-align-left"></i>
-            </div>
-            <div className="card_footer_info">
-              <i className="fa-regular fa-comment"></i>2
-            </div>
-            <div className="card_footer_info">
-              <i className="fa-regular fa-square-check"></i>
-              0/2
-            </div>
-          </footer>
+              )}
+              {card?.commentAmount > 0 && (
+                <div className="card_footer_info">
+                  <i className="fa-regular fa-comment"></i>
+                  {card?.commentAmount}
+                </div>
+              )}
+              {card?.checklistItems > 0 && (
+                <div className="card_footer_info">
+                  <i className="fa-regular fa-square-check"></i>
+                  {card?.completedChecklistItems}/{card?.checklistItems}
+                </div>
+              )}
+            </footer>
+          )}
         </div>
       )}
     </Draggable>

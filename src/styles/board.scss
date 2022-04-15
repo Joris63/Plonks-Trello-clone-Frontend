@@ -154,15 +154,14 @@
 .card_header {
     font-size: 1.05em;
     font-weight: 600;
-    padding: 12px 12px 0;
+    padding: 12px;
 }
 
 .card_content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    padding: 0 12px 12px;
 }
 
 .card_labels_container {
@@ -207,6 +206,7 @@
 }
 
 .card_footer {
+    border-top: 2px solid rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     padding: 12px;
