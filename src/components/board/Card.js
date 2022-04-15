@@ -1,6 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
 
-const Card = () => {
+const Card = ({ card, index }) => {
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -35,7 +35,7 @@ const Card = () => {
   };
 
   return (
-    <Draggable draggableId={"card-1"} index={0}>
+    <Draggable draggableId={card?.id} index={index}>
       {(provided, snapshot) => (
         <div
           className="card"

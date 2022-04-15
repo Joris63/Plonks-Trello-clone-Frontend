@@ -14,7 +14,8 @@ const List = ({ list, index }) => {
           style.transform.indexOf("(") + 1,
           style.transform.indexOf(",") - 2
         )
-      ) < 0
+      ) <
+      index * -291
     ) {
       return {
         ...style,
@@ -30,16 +31,15 @@ const List = ({ list, index }) => {
   };
 
   return (
-    <Draggable draggableId={`list-${list?.id}`} index={index}>
+    <Draggable draggableId={list.id} index={index}>
       {(provided, snapshot) => (
         <div
           className="list"
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           style={customDragStyle(provided.draggableProps.style)}
         >
-          <header className="list_header">
+          <header className="list_header" {...provided.dragHandleProps}>
             <div>
               <div className="list_title">{list.title}</div>
               {list?.cards?.length > 0 && (
@@ -50,14 +50,16 @@ const List = ({ list, index }) => {
               <i className="fa-regular fa-ellipsis-vertical"></i>
             </button>
           </header>
-          <Droppable droppableId={"list-1"} type={"card"}>
+          <Droppable droppableId={`list-${list?.id}`} type="card">
             {(provided, snapshot) => (
               <div
                 className="list_cards_container"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                <Card />
+                {List?.cards?.map((card, index) => (
+                  <Card card={card} index={index} />
+                ))}
                 {provided.placeholder}
               </div>
             )}
