@@ -100,8 +100,8 @@ const AddBoardModal = ({ open, handleClose }) => {
           <FormField
             formName="add-board"
             field={titleField}
-            handleChange={(e) =>
-              setFields({ ...fields, title: e.target.value })
+            handleChange={(name, type, value) =>
+              setFields({ ...fields, title: value })
             }
             handleTouch={(name, touched) => setTouched(touched)}
           />

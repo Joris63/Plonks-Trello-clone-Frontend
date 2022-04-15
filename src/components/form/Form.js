@@ -26,7 +26,10 @@ const Form = ({
   function setInitialState() {
     return fields.map((field) => ({
       name: TurnStringToCamelCase(field.label),
-      value: field.value || "",
+      value:
+        field?.type === "select"
+          ? field?.options.find((option) => option.active).abbr || ""
+          : field.value || "",
       fullWidth: true,
       placeholder: "",
       optional: false,

@@ -2,7 +2,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import Card from "./Card";
 
-const List = () => {
+const List = ({ list, index }) => {
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -30,7 +30,7 @@ const List = () => {
   };
 
   return (
-    <Draggable draggableId={"list-1"} index={0}>
+    <Draggable draggableId={`list-${list?.id}`} index={index}>
       {(provided, snapshot) => (
         <div
           className="list"
@@ -41,8 +41,10 @@ const List = () => {
         >
           <header className="list_header">
             <div>
-              <div className="list_title">Todo</div>
-              <div className="list_card_count">1</div>
+              <div className="list_title">{list.title}</div>
+              {list?.cards?.length > 0 && (
+                <div className="list_card_count">{list.cards?.length}</div>
+              )}
             </div>
             <button className="list_option_btn">
               <i className="fa-regular fa-ellipsis-vertical"></i>

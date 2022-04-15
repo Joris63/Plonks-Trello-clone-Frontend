@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useBoard from "../hooks/useBoard";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -12,7 +12,8 @@ import AddBoardItemModal from "../components/board/AddBoardItemModal";
 const listFields = [
   {
     label: "Title",
-    placeholder: "your list title",
+    placeholder: "Your list title",
+    whitespaces: true,
   },
 ];
 
@@ -25,10 +26,13 @@ const BoardPage = () => {
   const { board, setBoard } = useBoard();
   const { boardId } = useParams();
 
+  const navigate = useNavigate();
+
   const cardFields = [
     {
       label: "Title",
       placeholder: "your card title",
+      whitespaces: true,
     },
     {
       label: "List",
@@ -36,7 +40,7 @@ const BoardPage = () => {
       options:
         board?.lists?.map((list, index) => ({
           name: list.title,
-          abbr: list.title,
+          abbr: list.id,
           active: index === 0 ? true : false,
         })) || [],
     },
@@ -48,7 +52,28 @@ const BoardPage = () => {
     await axiosPrivate
       .post("/board/get", data)
       .then((response) => {
-        setBoard({ ...response?.data, lists: [{ title: "List" }] });
+        setBoard(response?.data);
+
+        GetBoardLists(response?.data);
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+
+        navigate("/");
+      });
+  }
+
+  async function GetBoardLists(board) {
+    await axiosPrivate
+      .get(`/list/all/${boardId}`)
+      .then((response) => {
+        setBoard({ ...board, lists: response.data });
       })
       .catch((err) => {
         if (!err?.response) {
@@ -78,6 +103,38 @@ const BoardPage = () => {
       });
   }
 
+  async function AddList(data) {
+    await axiosPrivate
+      .post(`/list/add`, { ...data, boardId })
+      .then((response) => {
+        setListModalOpen(false);
+
+        setBoard({
+          ...board,
+          lists: [
+            ...board?.lists,
+            {
+              id: response.data,
+              ...data,
+              order: board?.lists?.length,
+              boardId,
+            },
+          ],
+        });
+
+        FireToast("List added.", "success");
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
   useEffect(() => {
     GetBoard();
   }, []);
@@ -92,7 +149,6 @@ const BoardPage = () => {
               board?.favorited ? "favorite" : ""
             }`}
             onClick={(e) => {
-              e.stopPropagation();
               FavoriteBoard(!board?.favorited);
             }}
           >
@@ -174,7 +230,9 @@ const BoardPage = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <List />
+              {board?.lists?.map((list, index) => (
+                <List key={`list-${list.id}`} list={list} index={index} />
+              ))}
               {provided.placeholder}
             </div>
           )}
@@ -185,7 +243,7 @@ const BoardPage = () => {
         handleClose={() => setListModalOpen(false)}
         fields={listFields}
         title="Create list"
-        handleSubmit={() => {}}
+        handleSubmit={(data) => AddList(data)}
       />
       {board?.lists?.length > 0 && (
         <AddBoardItemModal
