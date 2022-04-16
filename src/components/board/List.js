@@ -1,8 +1,14 @@
+import { useRef, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
+import ListOptionsDropdown from "./ListOptionsDropdown";
 import Card from "./Card";
 
 const List = ({ list, index }) => {
+  const [open, setOpen] = useState(false);
+
+  const optionBtnRef = useRef(null);
+
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -46,7 +52,11 @@ const List = ({ list, index }) => {
                 <div className="list_card_count">{list.cards?.length}</div>
               )}
             </div>
-            <button className="list_option_btn">
+            <button
+              ref={optionBtnRef}
+              className="list_option_btn"
+              onClick={() => setOpen(true)}
+            >
               <i className="fa-regular fa-ellipsis-vertical"></i>
             </button>
           </header>
@@ -64,6 +74,12 @@ const List = ({ list, index }) => {
               </div>
             )}
           </Droppable>
+          <ListOptionsDropdown
+            list={list}
+            open={open}
+            handleClose={() => setOpen(false)}
+            anchor={optionBtnRef}
+          />
         </div>
       )}
     </Draggable>

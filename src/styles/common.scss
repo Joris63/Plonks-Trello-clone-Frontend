@@ -12,12 +12,86 @@
 }
 
 .dropdown {
-  width: 225px;
+  min-width: 225px;
+  max-width: 300px;
   border-radius: 8px;
-  padding: 12px;
+  padding: 12px 0;
   background-color: var(--background1);
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   animation-duration: 0.225s !important;
+}
+
+.dropdown_header {
+  position: relative;
+  padding: 0 16px 8px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+  margin-bottom: 12px;
+}
+
+.dropdown_header_btn {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border-style: none;
+  top: -2px;
+  background: transparent;
+  transition: background 0.225s ease;
+  font-size: 1.1em;
+  cursor: pointer;
+
+  &.left {
+    left: 8px;
+  }
+}
+
+.dropdown_title {
+  text-align: center;
+  width: 100%;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.dropdown_text {
+  font-size: 0.9em;
+  width: 100%;
+  padding: 0 8px;
+  margin-bottom: 8px;
+  line-height: 1.3em;
+}
+
+.dropdown_confirm_btn {
+  margin: 8px 8px 0;
+  width: calc(100% - 16px);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-style: none;
+  background-color: rgba(83, 82, 237, 1);
+  color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.225s ease;
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    background: rgba(83, 82, 237, 0.5);
+  }
+
+  &.warning {
+    background-color: #ff6b81;
+
+    &:hover {
+      background-color: #ff4757;
+    }
+  }
+}
+
+.dropdown_action_separator {
+  margin: 8px auto;
+  width: 90%;
+  height: 1px;
+  border-top: thin solid rgba(0, 0, 0, 0.15);
 }
 
 .dropdown_action_wrapper {
@@ -33,8 +107,7 @@
   cursor: pointer;
   width: 100%;
   font-size: 0.9em;
-  border-radius: 8px;
-  padding: 8px;
+  padding: 8px 16px;
   text-align: left;
   background-color: transparent;
   border-style: none;
@@ -44,6 +117,16 @@
 
   &_icon {
     margin-right: 12px;
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    color: rgba(0, 0, 0, 0.55);
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   &:hover,
