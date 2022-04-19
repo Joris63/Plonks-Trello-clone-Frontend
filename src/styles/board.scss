@@ -81,6 +81,28 @@
     }
 }
 
+.no_lists {
+    font-size: 1.2em;
+    font-weight: 600;
+    width: 100%;
+    height: calc(100vh - 135px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+
+    & img {
+        border-radius: 8px;
+        width: 50%;
+    }
+
+    & small {
+        font-size: .5em;
+        font-weight: 500;
+    }
+}
+
 .lists_container {
     display: flex;
     z-index: 1010;

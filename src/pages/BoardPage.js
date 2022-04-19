@@ -11,6 +11,8 @@ import BoardHeader from "../components/board/BoardHeader";
 import { SortCards, SortLists } from "../utils/helpers/board.helpers";
 import _ from "lodash";
 
+import waitingGif from "../assets/mr-bean-waiting.gif";
+
 const BoardPage = () => {
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
@@ -95,15 +97,23 @@ const BoardPage = () => {
         );
         break;
       case "list":
+        const draggedListOrder = updatedBoard?.lists?.find(
+          (list) => list.id === draggableId
+        )?.order;
+
+        if (draggedListOrder === destination.index) {
+          return;
+        }
+
         updatedBoard = SortLists(board, draggableId, destination.index);
+
+        ReorderLists(updatedBoard);
         break;
       default:
         break;
     }
 
     setBoard(updatedBoard);
-
-    ReorderLists(updatedBoard);
   }
 
   useEffect(() => {
@@ -124,6 +134,13 @@ const BoardPage = () => {
               {board?.lists?.map((list, index) => (
                 <List key={`list-${list.id}`} list={list} index={index} />
               ))}
+              {board?.lists?.length < 1 && (
+                <div className="no_lists">
+                  It seems like no lists have been added yet...
+                  <img src={waitingGif} alt="loading..." />
+                  <small>What are you waiting for?</small>
+                </div>
+              )}
               {provided.placeholder}
             </div>
           )}

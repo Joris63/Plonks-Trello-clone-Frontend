@@ -62,21 +62,57 @@ const BoardHeader = ({ boardId }) => {
     await axiosPrivate
       .post(`/list/add`, { ...data, boardId })
       .then((response) => {
+        const { data: list, message } = response?.data;
+
         setListModalOpen(false);
 
-        const lists = [
-          ...board?.lists,
-          {
-            id: response.data.toString(),
-            ...data,
-            order: board?.lists?.length,
-            boardId,
-          },
-        ];
+        const lists = [...board?.lists, list];
 
         setBoard({ ...board, lists });
 
-        FireToast("List added.", "success");
+        FireToast(message, "success");
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
+  async function AddCard(data) {
+    await axiosPrivate
+      .post(`/card/add`, { title: data?.title, listId: data?.list })
+      .then((response) => {
+        const { data: card, message } = response?.data;
+
+        setCardModalOpen(false);
+
+        const updatedBoard = _.cloneDeep(board);
+        const list = updatedBoard?.lists?.find(
+          (list) => list.id === data?.list
+        );
+
+        const newCard = {
+          id: card?.id,
+          title: card?.title,
+          order: card?.order,
+          listId: card?.listId,
+          hasDescription: card?.description === null ? false : true,
+          commentAmount: 0,
+          checkListItems: 0,
+          completedChecklistItems: 0,
+          createdAt: card?.createdAt,
+        };
+
+        list.cards.splice(list?.cards?.length, 0, newCard);
+
+        setBoard(updatedBoard);
+
+        FireToast(message, "success");
       })
       .catch((err) => {
         if (!err?.response) {
@@ -185,9 +221,7 @@ const BoardHeader = ({ boardId }) => {
           handleClose={() => setCardModalOpen(false)}
           fields={cardFields}
           title="Create card"
-          handleSubmit={(data) => {
-            console.log(data);
-          }}
+          handleSubmit={(data) => AddCard(data)}
         />
       )}
     </div>

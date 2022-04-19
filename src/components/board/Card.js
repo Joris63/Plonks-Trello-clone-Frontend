@@ -1,6 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
 
-const Card = ({ card, index }) => {
+const Card = ({ card, index, listIndex, cardContainerRef }) => {
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -20,12 +20,13 @@ const Card = ({ card, index }) => {
       )
     );
 
-    if (xAdjustment < 0) {
-      xAdjustment = 0;
+    if (xAdjustment < listIndex * -282) {
+      xAdjustment = listIndex * -282;
     }
 
-    if (yAdjustment < 0) {
-      yAdjustment = 0;
+    const top = cardContainerRef?.current?.getBoundingClientRect()?.top;
+    if (yAdjustment < -style.top + top) {
+      yAdjustment = index * (-style.top + top);
     }
 
     return {

@@ -8,6 +8,7 @@ const List = ({ list, index }) => {
   const [open, setOpen] = useState(false);
 
   const optionBtnRef = useRef(null);
+  const cardContainerRef = useRef(null);
 
   const customDragStyle = (style) => {
     if (!style?.transform) {
@@ -67,10 +68,18 @@ const List = ({ list, index }) => {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {List?.cards?.map((card, index) => (
-                  <Card card={card} index={index} />
-                ))}
-                {provided.placeholder}
+                <div ref={cardContainerRef}>
+                  {list?.cards?.map((card, cardIndex) => (
+                    <Card
+                      key={`${list.id}-card-${card.id}`}
+                      card={card}
+                      index={cardIndex}
+                      listIndex={index}
+                      cardContainerRef={cardContainerRef}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </div>
               </div>
             )}
           </Droppable>
