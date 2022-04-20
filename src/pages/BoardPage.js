@@ -12,6 +12,7 @@ import { SortCards, SortLists } from "../utils/helpers/board.helpers";
 import _ from "lodash";
 
 import waitingGif from "../assets/mr-bean-waiting.gif";
+import CardModal from "../components/board/CardModal";
 
 const BoardPage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -23,7 +24,6 @@ const BoardPage = () => {
 
   async function GetBoard() {
     const data = { userId: auth?.user?.id, boardId };
-
     await axiosPrivate
       .post("/board/get", data)
       .then((response) => {
@@ -146,6 +146,7 @@ const BoardPage = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <CardModal />
     </div>
   );
 };

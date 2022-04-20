@@ -30,12 +30,13 @@ function SortCards(
   destinationIndex
 ) {
   const newLists = _.cloneDeep(board?.lists);
+  
   const draggedCard = FindById(draggedCardId, newLists);
   const destinationParent = newLists.find(
     (list) => list.id === destinationParentId
   );
   const departureParent = newLists.find(
-    (list) => list.id === draggedCard.list_id
+    (list) => list.id === draggedCard.listId
   );
 
   // Remove card from old list
@@ -44,8 +45,7 @@ function SortCards(
   UpdateItemOrders(departureParent.cards);
 
   // Add card to new list in proper location
-  draggedCard.list_id = destinationParent.id;
-  draggedCard.list_name = destinationParent.name;
+  draggedCard.listId = destinationParent.id;
 
   destinationParent.cards.splice(destinationIndex, 0, draggedCard);
 
@@ -64,8 +64,7 @@ function SortLists(board, draggedListId, destinationIndex) {
   UpdateItemOrders(newLists);
 
   // Add card to new list in proper location
-  draggedList.list_id = draggedList.id;
-  draggedList.list_name = draggedList.name;
+  draggedList.listId = draggedList.id;
 
   newLists.splice(destinationIndex, 0, draggedList);
 

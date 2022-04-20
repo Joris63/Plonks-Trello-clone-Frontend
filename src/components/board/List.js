@@ -61,7 +61,7 @@ const List = ({ list, index }) => {
               <i className="fa-regular fa-ellipsis-vertical"></i>
             </button>
           </header>
-          <Droppable droppableId={`list-${list?.id}`} type="card">
+          <Droppable droppableId={list?.id} type="card">
             {(provided, snapshot) => (
               <div
                 className="list_cards_container"

@@ -20,13 +20,13 @@ const Card = ({ card, index, listIndex, cardContainerRef }) => {
       )
     );
 
-    if (xAdjustment < listIndex * -282) {
-      xAdjustment = listIndex * -282;
+    if (xAdjustment < listIndex * -292) {
+      xAdjustment = listIndex * -292;
     }
 
     const top = cardContainerRef?.current?.getBoundingClientRect()?.top;
     if (yAdjustment < -style.top + top) {
-      yAdjustment = index * (-style.top + top);
+      yAdjustment = -style.top + top;
     }
 
     return {
