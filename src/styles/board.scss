@@ -301,6 +301,7 @@
 .card_detail_content {
     display: flex;
     flex-wrap: wrap;
+    gap: 24px;
 }
 
 .card_details {
@@ -330,10 +331,6 @@
     margin-bottom: 8px;
 }
 
-.card_details_actions {
-    min-width: 200px;
-}
-
 .card_details_item {
     margin-bottom: 24px;
 
@@ -344,10 +341,302 @@
 
 .card_details_item_header {
     padding-left: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .card_detail_name {
     font-size: 1.1em;
     font-weight: 500;
     line-height: 30px;
+}
+
+.card_detail_action_btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: none;
+    height: 35px;
+    font-size: 0.9em;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    font-weight: 600;
+    gap: 8px;
+}
+
+.card_no_description {
+    font-size: 0.9em;
+}
+
+.card_no_description_btn {
+    width: 100%;
+    padding: 8px;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.card_detail_checklist_progress_wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card_detail_checklist_progress {
+    transform: translateX(-10px);
+    font-size: 0.9em;
+    min-width: 40px;
+    text-align: center;
+}
+
+.card_detail_checklist_progress_bar {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &::after {
+        display: block;
+        content: "";
+        height: 8px;
+        background-color: #2ed573;
+        width: 10%;
+        border-radius: 8px;
+        width: var(--progress);
+    }
+}
+
+.card_detail_checklist_item_container {
+    margin-bottom: 8px;
+}
+
+.card_detail_checklist_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateX(-10px);
+    width: calc(100% + 10px);
+    position: relative;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: transparent;
+    transition: background 0.225s ease;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+
+        & .card_detail_checklist_item_btn {
+            opacity: 1;
+        }
+    }
+}
+
+.card_detail_checklist_item_checkbox {
+    display: none;
+
+    &:checked + .card_detail_checklist_item_name:before {
+        border-color: #2ed573;
+        background-color: #2ed573;
+    }
+
+    &:checked + .card_detail_checklist_item_name:after {
+        content: "\f00c";
+        font: var(--fa-font-solid);
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 9px;
+        transform: translateY(-50%);
+        color: #fff;
+    }
+}
+
+.card_detail_checklist_item_name {
+    position: relative;
+    cursor: pointer;
+    padding-left: 45px;
+    font-size: 0.9em;
+    flex-grow: 1;
+
+    &:before {
+        content: "";
+        background-color: #fff;
+        border: 2px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        padding: 8px;
+        position: absolute;
+        vertical-align: middle;
+        cursor: pointer;
+        margin-right: 5px;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: border 0.225s ease, background 0.225s ease;
+    }
+}
+
+.card_detail_checklist_item_btn {
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.225s ease, background 0.225s ease;
+    border-radius: 50%;
+    border-style: none;
+    width: 30px;
+    height: 30px;
+    font-size: 1.1em;
+    background-color: transparent;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+}
+
+.card_detail_checklist_add_item_btn {
+    margin-left: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: none;
+    height: 35px;
+    font-size: 0.9em;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    font-weight: 600;
+    gap: 8px;
+}
+
+.card_detail_comment_field {
+    display: flex;
+    align-items: center;
+    transform: translateX(-5px);
+    width: calc(100% + 5px);
+}
+
+.card_comment_user_image {
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #7bed9f;
+    object-fit: cover;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.card_comment_input {
+    margin-left: 10px;
+    position: relative;
+    border: 2px solid rgba(83, 82, 237, 0.3);
+    background-color: rgba(83, 82, 237, 0.05);
+    padding: 8px;
+    display: block;
+    border-radius: 8px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    width: 100%;
+    box-shadow: none;
+    transition: background 0.225s ease, border 0.225s ease;
+
+    &:focus-within {
+        outline: none;
+    }
+
+    &:disabled,
+    &[disabled] {
+        cursor: default;
+        opacity: 0.7;
+    }
+}
+
+.card_detail_comments_list {
+    transform: translateX(-5px);
+    width: calc(100% + 5px);
+    margin-top: 24px;
+}
+
+.card_detail_comment {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 12px;
+}
+
+.card_comment_content {
+    flex-grow: 1;
+    margin-left: 12px;
+}
+
+.card_comment_info {
+    display: flex;
+    align-items: center;
+}
+
+.card_comment_username {
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.card_comment_time {
+    font-size: 0.8em;
+    margin-left: 8px;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 500;
+}
+
+.card_comment_msg {
+    padding: 8px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    border-radius: 8px;
+    font-size: 0.9em;
+}
+
+.card_comment_actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+    margin-left: 8px;
+}
+
+.card_comment_btn {
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.card_details_actions {
+    min-width: 150px;
+}
+
+.card_detail_actions_module {
+    margin-bottom: 12px;
+
+    & .card_detail_action_btn {
+        width: 100%;
+        justify-content: flex-start;
+        margin-bottom: 8px;
+    }
+}
+
+.card_detail_actions_module_title {
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
