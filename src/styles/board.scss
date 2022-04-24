@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 12px;
+    overflow: visible;
 }
 
 .board_title {
@@ -100,12 +101,15 @@
 
 .lists_container {
     display: flex;
-    z-index: 1010;
+    overflow-x: auto;
+    flex-grow: 1;
 }
 
 .list {
     margin-right: 16px;
-    width: 275px;
+    min-width: 275px;
+    display: flex;
+    flex-direction: column;
 }
 
 .list_header {
@@ -157,7 +161,7 @@
 
 .list_cards_container {
     width: 100%;
-    padding-bottom: 40px;
+    flex-grow: 1;
 }
 
 .card {
@@ -248,7 +252,6 @@
 }
 
 .card_detail_modal {
-    width: 750px;
     padding: 8px;
 }
 
@@ -307,6 +310,7 @@
 .card_details {
     flex-grow: 1;
     position: relative;
+    min-width: 300px;
 }
 
 .card_details_header {

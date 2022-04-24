@@ -157,6 +157,8 @@
 }
 
 .modal {
+  width: 100%;
+  max-width: 750px;
   position: relative;
   min-width: 300px;
   height: fit-content;
@@ -509,8 +511,11 @@
 .page_content {
   position: relative;
   margin-top: 60px;
-  padding: 25px;
+  padding: 25px 25px 0;
   padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
 }
 
 .page_title {

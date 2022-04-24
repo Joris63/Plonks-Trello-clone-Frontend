@@ -4,7 +4,7 @@ import moment from "moment";
 
 const CardModal = () => {
   return (
-    <Modal open={true} handleClose={() => {}}>
+    <Modal open={false} handleClose={() => {}}>
       <div className="card_detail_modal">
         <header className="card_detail_modal_header">
           <div className="card_detail_title_icon">
@@ -53,7 +53,7 @@ const CardModal = () => {
             <div className="card_details_item">
               <div className="card_details_item_header">
                 <div className="card_detail_title_icon">
-                  <i class="fa-regular fa-list-check"></i>
+                  <i className="fa-regular fa-list-check"></i>
                 </div>
                 <div className="card_detail_name">Checklist</div>
                 <button className="card_detail_action_btn">Delete</button>
@@ -145,26 +145,26 @@ const CardModal = () => {
                 Add to card
               </div>
               <button className="card_detail_action_btn">
-                <i class="fa-regular fa-user"></i>
+                <i className="fa-regular fa-user"></i>
                 Members
               </button>
               <button className="card_detail_action_btn">
-                <i class="fa-regular fa-tag"></i>
+                <i className="fa-regular fa-tag"></i>
                 Labels
               </button>
               <button className="card_detail_action_btn">
-                <i class="fa-regular fa-list-check"></i>
+                <i className="fa-regular fa-list-check"></i>
                 Checklist
               </button>
             </div>
             <div className="card_detail_actions_module">
               <div className="card_detail_actions_module_title">Actions</div>
               <button className="card_detail_action_btn">
-                <i class="fa-regular fa-arrow-right"></i>
+                <i className="fa-regular fa-arrow-right"></i>
                 Move
               </button>
               <button className="card_detail_action_btn">
-                <i class="fa-regular fa-box-archive"></i>
+                <i className="fa-regular fa-box-archive"></i>
                 Archive
               </button>
             </div>

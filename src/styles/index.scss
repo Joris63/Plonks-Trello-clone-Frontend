@@ -47,6 +47,7 @@ body {
   background: var(--background2);
   min-height: 100vh;
   transition: width 0.225s, left 0.225s;
+  overflow-x: hidden;
 
   &.active {
     width: calc(100% - 250px);

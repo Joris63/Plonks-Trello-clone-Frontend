@@ -134,11 +134,10 @@ const BoardPage = () => {
               {board?.lists?.map((list, index) => (
                 <List key={`list-${list.id}`} list={list} index={index} />
               ))}
-              {board?.lists?.length < 1 && (
+              {(board?.lists?.length < 1 || !board?.lists) && (
                 <div className="no_lists">
                   It seems like no lists have been added yet...
                   <img src={waitingGif} alt="loading..." />
-                  <small>What are you waiting for?</small>
                 </div>
               )}
               {provided.placeholder}
