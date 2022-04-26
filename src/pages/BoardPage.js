@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useBoard from "../hooks/useBoard";
@@ -9,12 +9,15 @@ import { Droppable } from "react-beautiful-dnd";
 import List from "../components/board/List";
 import BoardHeader from "../components/board/BoardHeader";
 import { SortCards, SortLists } from "../utils/helpers/board.helpers";
+import LoadingPage from "../components/helpers/LoadingPage";
 import _ from "lodash";
 
 import waitingGif from "../assets/mr-bean-waiting.gif";
 import CardModal from "../components/board/CardModal";
 
 const BoardPage = () => {
+  const [loading, setLoading] = useState(true);
+
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
   const { board, setBoard } = useBoard();
@@ -49,6 +52,8 @@ const BoardPage = () => {
       .get(`/list/all/${boardId}`)
       .then((response) => {
         setBoard({ ...board, lists: response.data });
+
+        setLoading(false);
       })
       .catch((err) => {
         if (!err?.response) {
@@ -122,30 +127,36 @@ const BoardPage = () => {
 
   return (
     <div className="page_content">
-      <BoardHeader boardId={boardId} />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="board" type="list" direction="horizontal">
-          {(provided) => (
-            <div
-              className="lists_container"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {board?.lists?.map((list, index) => (
-                <List key={`list-${list.id}`} list={list} index={index} />
-              ))}
-              {(board?.lists?.length < 1 || !board?.lists) && (
-                <div className="no_lists">
-                  It seems like no lists have been added yet...
-                  <img src={waitingGif} alt="loading..." />
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <BoardHeader boardId={boardId} />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="board" type="list" direction="horizontal">
+              {(provided) => (
+                <div
+                  className="lists_container"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {board?.lists?.map((list, index) => (
+                    <List key={`list-${list.id}`} list={list} index={index} />
+                  ))}
+                  {(board?.lists?.length < 1 || !board?.lists) && (
+                    <div className="no_lists">
+                      It seems like no lists have been added yet...
+                      <img src={waitingGif} alt="loading..." />
+                    </div>
+                  )}
+                  {provided.placeholder}
                 </div>
               )}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      <CardModal />
+            </Droppable>
+          </DragDropContext>
+          <CardModal />
+        </>
+      )}
     </div>
   );
 };

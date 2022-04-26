@@ -7,11 +7,13 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { FireToast } from "../utils/helpers/toasts.helpers";
 import BoardsSearch from "../components/board-list/BoardsSearch";
 import BoardsFilter from "../components/board-list/BoardsFilter";
+import LoadingPage from "../components/helpers/LoadingPage";
 
 const BoardListPage = () => {
   const [boards, setBoards] = useState([]);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -44,6 +46,8 @@ const BoardListPage = () => {
       .get(`/board/all/${auth?.user?.id}`)
       .then((response) => {
         setBoards(response?.data);
+
+        setLoading(false);
       })
       .catch((err) => {
         if (!err?.response) {
@@ -62,45 +66,51 @@ const BoardListPage = () => {
 
   return (
     <div className="page_content">
-      <div className="page_title">Your boards</div>
-      <div className="boards_page_header">
-        <BoardsFilter handleSort={handleSort} />
-        <BoardsSearch search={search} setSearch={setSearch} />
-      </div>
-      <div className="boards_list_count">
-        Showing{" "}
-        {
-          boards?.filter(
-            (board) =>
-              board.title.toLowerCase().includes(search.toLowerCase()) ||
-              search.toLowerCase().includes(board.title.toLowerCase())
-          )?.length
-        }{" "}
-        of {boards?.length} boards
-      </div>
-      <div className="boards_list">
-        <div
-          className="board_btn_wrapper add_board"
-          onClick={() => setOpen(true)}
-        >
-          <div className="add_board_btn_text">Create new board</div>
-        </div>
-        {boards
-          .filter(
-            (board) =>
-              board.title.toLowerCase().includes(search.toLowerCase()) ||
-              search.toLowerCase().includes(board.title.toLowerCase())
-          )
-          .map((board) => (
-            <BoardButton
-              key={`board-${board?.id}`}
-              board={board}
-              boards={boards}
-              setBoards={setBoards}
-            />
-          ))}
-      </div>
-      <AddBoardModal open={open} handleClose={() => setOpen(false)} />
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <div className="page_title">Your boards</div>
+          <div className="boards_page_header">
+            <BoardsFilter handleSort={handleSort} />
+            <BoardsSearch search={search} setSearch={setSearch} />
+          </div>
+          <div className="boards_list_count">
+            Showing{" "}
+            {
+              boards?.filter(
+                (board) =>
+                  board.title.toLowerCase().includes(search.toLowerCase()) ||
+                  search.toLowerCase().includes(board.title.toLowerCase())
+              )?.length
+            }{" "}
+            of {boards?.length} boards
+          </div>
+          <div className="boards_list">
+            <div
+              className="board_btn_wrapper add_board"
+              onClick={() => setOpen(true)}
+            >
+              <div className="add_board_btn_text">Create new board</div>
+            </div>
+            {boards
+              .filter(
+                (board) =>
+                  board.title.toLowerCase().includes(search.toLowerCase()) ||
+                  search.toLowerCase().includes(board.title.toLowerCase())
+              )
+              .map((board) => (
+                <BoardButton
+                  key={`board-${board?.id}`}
+                  board={board}
+                  boards={boards}
+                  setBoards={setBoards}
+                />
+              ))}
+          </div>
+          <AddBoardModal open={open} handleClose={() => setOpen(false)} />
+        </>
+      )}
     </div>
   );
 };
