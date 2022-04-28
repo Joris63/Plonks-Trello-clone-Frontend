@@ -158,9 +158,7 @@
 
 .modal {
   width: 100%;
-  max-width: 750px;
   position: relative;
-  min-width: 300px;
   height: fit-content;
   border-radius: 8px;
   background: #fff;
@@ -479,7 +477,7 @@
 }
 
 .custom_form_submit_btn {
-  margin: 32px auto 12px auto;
+  margin: 32px auto auto;
   width: 100%;
   padding: 12px 24px;
   border-radius: 8px;

@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 let justOpened = false;
 
-const Modal = ({ open = false, handleClose, children }) => {
+const Modal = ({ open = false, handleClose, size = "s", children }) => {
   const [openedBefore, setOpenedBefore] = useState(false);
   const modalRef = useRef(null);
 
@@ -43,6 +43,7 @@ const Modal = ({ open = false, handleClose, children }) => {
       <div
         ref={modalRef}
         className={`modal ${open ? "animate__zoomIn" : "animate__zoomOut"}`}
+        style={{ maxWidth: size === "s" ? 300 : 750 }}
       >
         {children}
       </div>

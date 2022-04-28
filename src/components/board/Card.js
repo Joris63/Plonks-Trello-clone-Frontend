@@ -1,6 +1,9 @@
 import { Draggable } from "react-beautiful-dnd";
+import useGlobalStore from "../../hooks/useGlobalStore";
 
 const Card = ({ card, index, listIndex, cardContainerRef }) => {
+  const { setCardId } = useGlobalStore();
+
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -44,6 +47,7 @@ const Card = ({ card, index, listIndex, cardContainerRef }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={customDragStyle(provided.draggableProps.style)}
+          onClick={() => setCardId(card?.id)}
         >
           <header className="card_header">{card?.title}</header>
           {(card?.labels?.length > 0 || card?.members?.length > 0) && (

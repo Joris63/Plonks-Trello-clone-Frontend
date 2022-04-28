@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import useBoard from "../../hooks/useBoard";
+import useGlobalStore from "../../hooks/useGlobalStore";
 import { FireToast } from "../../utils/helpers/toasts.helpers";
 import AddBoardItemModal from "./AddBoardItemModal";
 
@@ -33,7 +33,7 @@ const BoardHeader = ({ boardId }) => {
   const [cardModalOpen, setCardModalOpen] = useState(false);
 
   const { auth } = useAuth();
-  const { board, setBoard } = useBoard();
+  const { board, setBoard } = useGlobalStore();
 
   const axiosPrivate = useAxiosPrivate();
 

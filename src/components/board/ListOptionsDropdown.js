@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Dropdown from "../helpers/Dropdown";
-import useBoard from "../../hooks/useBoard";
+import useGlobalStore from "../../hooks/useGlobalStore";
 
 const ListOptionsDropdown = ({ list, open, anchor, handleClose }) => {
   const [mode, setMode] = useState("default");
 
-  const { board } = useBoard();
+  const { board } = useGlobalStore();
 
   function getTitle() {
     switch (mode) {

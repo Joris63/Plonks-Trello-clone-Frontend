@@ -23,6 +23,10 @@ const Form = ({
     setReady(allFields?.some((field) => typeof CheckField(field) === "string"));
   }, [allFields]);
 
+  useEffect(() => {
+    setAllFields(setInitialState())
+  }, [fields])
+
   function setInitialState() {
     return fields.map((field) => ({
       name: TurnStringToCamelCase(field.label),

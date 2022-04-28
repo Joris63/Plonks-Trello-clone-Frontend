@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthProvider";
-import { BoardProvider } from "./context/BoardProvider";
+import { StoreProvider } from "./context/StoreProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <BoardProvider>
+      <StoreProvider>
         <App />
-      </BoardProvider>
+      </StoreProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import useBoard from "../hooks/useBoard";
+import useGlobalStore from "../hooks/useGlobalStore";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { FireToast } from "../utils/helpers/toasts.helpers";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -20,7 +20,7 @@ const BoardPage = () => {
 
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
-  const { board, setBoard } = useBoard();
+  const { board, setBoard, cardId, setCardId } = useGlobalStore();
   const { boardId } = useParams();
 
   const navigate = useNavigate();
@@ -154,7 +154,7 @@ const BoardPage = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <CardModal />
+          <CardModal cardId={cardId} handleClose={() => setCardId(null)} />
         </>
       )}
     </div>
