@@ -154,7 +154,7 @@ const BoardPage = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <CardModal cardId={cardId} handleClose={() => setCardId(null)} />
+          <CardModal cardId={cardId} onClose={() => setCardId(null)} />
         </>
       )}
     </div>

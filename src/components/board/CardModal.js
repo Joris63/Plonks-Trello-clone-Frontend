@@ -1,12 +1,15 @@
 import { FormatTime } from "../../utils/helpers/common.helpers";
 import Modal from "../helpers/Modal";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { FireToast } from "../../utils/helpers/toasts.helpers";
+import ChecklistDropdown from "./ChecklistDropdown";
 
-const CardDescription = ({ card }) => {
+const CardDescription = ({ card, setCard }) => {
   return (
     <div className="card_details_item">
       <div className="card_details_item_header">
@@ -25,7 +28,7 @@ const CardDescription = ({ card }) => {
   );
 };
 
-const CardChecklistItem = ({ item, index }) => {
+const CardChecklistItem = ({ item, index, card, setCard }) => {
   return (
     <Draggable draggableId={item?.id} index={index}>
       {(provided, snapshot) => (
@@ -56,60 +59,52 @@ const CardChecklistItem = ({ item, index }) => {
   );
 };
 
-const CardChecklist = ({ checklist, index }) => {
+const CardChecklist = ({ checklist, index, card, setCard }) => {
   const progress =
     (checklist?.items?.filter((item) => item.complete)?.length /
       checklist?.items?.length) *
-    100;
+      100 || 0;
 
   return (
-    <Draggable draggableId={checklist?.id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          className="card_details_item"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
-          <div className="card_details_item_header">
-            <div className="card_detail_title_icon">
-              <i className="fa-regular fa-list-check"></i>
-            </div>
-            <div className="card_detail_name">{checklist?.title}</div>
-            <button className="card_detail_action_btn">Delete</button>
-          </div>
-          <div>
-            <div className="card_detail_checklist_progress_wrapper">
-              <div className="card_detail_checklist_progress">{progress}%</div>
-              <div
-                className="card_detail_checklist_progress_bar"
-                style={{ "--progress": "10%" }}
-              />
-            </div>
-            <Droppable droppableId="board" type="list" direction="horizontal">
-              {(provided) => (
-                <ul
-                  className="card_detail_checklist_item_container"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {checklist?.items.map((item, index) => (
-                    <CardChecklistItem item={item} index={index} />
-                  ))}
-                  {provided.placeholder}
-                </ul>
-              )}
-            </Droppable>
-            <button className="card_detail_checklist_add_item_btn">
-              Add an item
-            </button>
-          </div>
+    <div className="card_details_item">
+      <div className="card_details_item_header">
+        <div className="card_detail_title_icon">
+          <i className="fa-regular fa-list-check"></i>
         </div>
-      )}
-    </Draggable>
+        <div className="card_detail_name">{checklist?.title}</div>
+        <button className="card_detail_action_btn">Delete</button>
+      </div>
+      <div>
+        <div className="card_detail_checklist_progress_wrapper">
+          <div className="card_detail_checklist_progress">{progress}%</div>
+          <div
+            className="card_detail_checklist_progress_bar"
+            style={{ "--progress": `${progress}%` }}
+          />
+        </div>
+        <Droppable droppableId="board" type="list" direction="horizontal">
+          {(provided) => (
+            <ul
+              className="card_detail_checklist_item_container"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {checklist?.items.map((item, index) => (
+                <CardChecklistItem item={item} index={index} />
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+        <button className="card_detail_checklist_add_item_btn">
+          Add an item
+        </button>
+      </div>
+    </div>
   );
 };
 
-const CardComments = ({ card }) => {
+const CardComments = ({ card, setCard }) => {
   const { auth } = useAuth();
 
   return (
@@ -167,7 +162,10 @@ const CardComments = ({ card }) => {
   );
 };
 
-const CardActions = () => {
+const CardActions = ({ card, setCard }) => {
+  const [checklistOpen, setChecklistOpen] = useState(false);
+  const checklistRef = useRef(null);
+
   return (
     <div className="card_details_actions">
       <div className="card_detail_actions_module">
@@ -180,10 +178,16 @@ const CardActions = () => {
           <i className="fa-regular fa-tag"></i>
           Labels
         </button>
-        <button className="card_detail_action_btn">
-          <i className="fa-regular fa-list-check"></i>
-          Checklist
-        </button>
+        {!card?.checklists.length < 1 && (
+          <button
+            className="card_detail_action_btn"
+            onClick={() => setChecklistOpen(true)}
+            ref={checklistRef}
+          >
+            <i className="fa-regular fa-list-check"></i>
+            Checklist
+          </button>
+        )}
       </div>
       <div className="card_detail_actions_module">
         <div className="card_detail_actions_module_title">Actions</div>
@@ -196,21 +200,56 @@ const CardActions = () => {
           Archive
         </button>
       </div>
+      <ChecklistDropdown
+        open={checklistOpen}
+        anchor={checklistRef}
+        onClose={() => setChecklistOpen(false)}
+      />
     </div>
   );
 };
 
-const CardModal = ({ cardId, handleClose }) => {
+const CardModal = ({ cardId, onClose }) => {
   const [card, setCard] = useState(null);
 
+  const axiosPrivate = useAxiosPrivate();
+
+  function handleClose() {
+    setCard(null);
+    onClose();
+  }
+
+  async function GetCard() {
+    await axiosPrivate
+      .get(`/card/${cardId}`)
+      .then((response) => {
+        setCard(response.data);
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
+  useEffect(() => {
+    if (cardId != null) {
+      GetCard();
+    }
+  }, [cardId]);
+
   return (
-    <Modal open={cardId !== null} handleClose={handleClose} size="m">
+    <Modal open={card !== null} handleClose={handleClose} size="m">
       <div className="card_detail_modal">
         <header className="card_detail_modal_header">
           <div className="card_detail_title_icon">
             <i className="fa-regular fa-credit-card-front"></i>
           </div>
-          <div className="card_detail_title">Kaarten afmaken</div>
+          <div className="card_detail_title">{card?.title}</div>
           <div className="card_detail_subtitle">in list ToDo</div>
           <button className="card_detail_close_btn" onClick={handleClose}>
             <i className="fa-regular fa-xmark"></i>
@@ -218,25 +257,56 @@ const CardModal = ({ cardId, handleClose }) => {
         </header>
         <div className="card_detail_content">
           <div className="card_details">
-            <div className="card_details_header">
-              <div className="card_details_header_item">
-                <div className="card_details_header_item_name">Members</div>
-                <div className="card_members_container">
-                  <div className="card_member_wrapper add">
-                    <div className="card_member">
-                      <i className="fa-solid fa-plus"></i>
+            {card?.users?.length > 0 ||
+              (card?.labels?.length > 0 && (
+                <div className="card_details_header">
+                  {card?.users?.length > 0 && (
+                    <div className="card_details_header_item">
+                      <div className="card_details_header_item_name">
+                        Members
+                      </div>
+                      <div className="card_members_container">
+                        {card?.users?.map((user) => (
+                          <div className="card_member_wrapper">
+                            {user?.picturePath ? (
+                              <img
+                                className="card_member"
+                                src={user?.picturePath}
+                                referrerPolicy="no-referrer"
+                                alt="profile"
+                              />
+                            ) : (
+                              <div className="card_member">
+                                <i
+                                  className={`fa-solid fa-${user.username.charAt()}`}
+                                ></i>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                        <div className="card_member_wrapper add">
+                          <div className="card_member">
+                            <i className="fa-solid fa-plus"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
+                  {card?.labels?.length > 0 && (
+                    <div className="card_details_header_item">
+                      <div className="card_details_header_item_name">
+                        Labels
+                      </div>
+                      <div className="card_labels_container">
+                        {card?.labels?.map((label) => (
+                          <div className="card_label">{label?.name}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="card_details_header_item">
-                <div className="card_details_header_item_name">Labels</div>
-                <div className="card_labels_container">
-                  <div className="card_label">Label</div>
-                </div>
-              </div>
-            </div>
-            <CardDescription />
+              ))}
+            <CardDescription card={card} setCard={setCard} />
             <DragDropContext onDragEnd={() => {}}>
               <Droppable
                 droppableId="board"
@@ -250,16 +320,21 @@ const CardModal = ({ cardId, handleClose }) => {
                     {...provided.droppableProps}
                   >
                     {card?.checklists?.map((checklist, index) => (
-                      <CardChecklist checklist={checklist} index={index} />
+                      <CardChecklist
+                        checklist={checklist}
+                        index={index}
+                        card={card}
+                        setCard={setCard}
+                      />
                     ))}
                     {provided.placeholder}
                   </div>
                 )}
               </Droppable>
             </DragDropContext>
-            <CardComments />
+            <CardComments card={card} setCard={setCard} />
           </div>
-          <CardActions />
+          <CardActions setCard={setCard} />
         </div>
       </div>
     </Modal>

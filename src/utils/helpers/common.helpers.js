@@ -1,9 +1,9 @@
 import moment from "moment";
 
 function IsElementOffscreen(size = null, pos = null) {
-  const res = `${pos.x < 0 ? "left" : ""} ${pos.y < 0 ? "up" : ""} ${
-    pos.x + size.width > window.innerWidth ? "right" : ""
-  } ${pos.y + size.height > window.innerHeight ? "down" : ""}`;
+  const res = `${pos?.x < 0 ? "left" : ""} ${pos?.y < 0 ? "up" : ""} ${
+    pos?.x + size?.width > window.innerWidth ? "right" : ""
+  } ${pos?.y + size?.height > window.innerHeight ? "down" : ""}`;
 
   return res;
 }

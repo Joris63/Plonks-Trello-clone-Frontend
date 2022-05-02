@@ -4,6 +4,11 @@ import useGlobalStore from "../../hooks/useGlobalStore";
 const Card = ({ card, index, listIndex, cardContainerRef }) => {
   const { setCardId } = useGlobalStore();
 
+  const hasFooter =
+    card?.hasDescription ||
+    card?.commentAmount ||
+    card?.checklistItems !== null;
+
   const customDragStyle = (style) => {
     if (!style?.transform) {
       return style;
@@ -68,9 +73,7 @@ const Card = ({ card, index, listIndex, cardContainerRef }) => {
               </div>
             </div>
           )}
-          {(card?.hasDescription ||
-            card?.commentAmount > 0 ||
-            card?.checklistItems > 0) && (
+          {hasFooter && (
             <footer className="card_footer">
               {card?.hasDescription && (
                 <div className="card_footer_info">
@@ -83,7 +86,7 @@ const Card = ({ card, index, listIndex, cardContainerRef }) => {
                   {card?.commentAmount}
                 </div>
               )}
-              {card?.checklistItems > 0 && (
+              {card?.checklistItems !== null && (
                 <div className="card_footer_info">
                   <i className="fa-regular fa-square-check"></i>
                   {card?.completedChecklistItems}/{card?.checklistItems}

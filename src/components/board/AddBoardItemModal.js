@@ -33,11 +33,11 @@ const AddBoardItemModal = ({
         <div className="add_board_item_fields">
           <Form
             id={id}
-            formName="login"
+            formName={title.toLowerCase()}
             fields={fields}
             buttonProps={{ text: title, class: "custom_form_submit_btn" }}
             onSubmit={handleSubmit}
-          ></Form>
+          />
         </div>
       </div>
     </Modal>
