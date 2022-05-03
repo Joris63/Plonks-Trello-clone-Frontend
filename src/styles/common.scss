@@ -638,3 +638,33 @@
     border-bottom: none;
   }
 }
+
+/*
+  Textarea
+*/
+.textarea {
+  position: relative;
+  border: 2px solid rgba(83, 82, 237, 0.3);
+  background-color: rgba(83, 82, 237, 0.05);
+  padding: 8px;
+  display: block;
+  border-radius: 8px;
+  font-size: 0.95em;
+  line-height: 1.5;
+  width: 100%;
+  box-shadow: none;
+  transition: background 0.225s ease, border 0.225s ease;
+  resize: none;
+  overflow: hidden;
+  min-height: 69px;
+
+  &:focus-within {
+    outline: none;
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    opacity: 0.7;
+  }
+}

@@ -15,7 +15,7 @@ const checklistFields = [
   },
 ];
 
-const ChecklistDropdown = ({ open, anchor, onClose }) => {
+const ChecklistDropdown = ({ open, anchor, onClose, card, setCard }) => {
   const [id, setId] = useState(`checklist-form-${uuidv4()}`);
 
   const { cardId } = useGlobalStore();
@@ -26,7 +26,7 @@ const ChecklistDropdown = ({ open, anchor, onClose }) => {
     await axiosPrivate
       .post(`/checklist/add`, { cardId, ...data })
       .then((response) => {
-        console.log(response.data);
+        setCard({ ...card, checklists: [response.data.data] });
       })
       .catch((err) => {
         if (!err?.response) {

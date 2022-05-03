@@ -8,8 +8,14 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { FireToast } from "../../utils/helpers/toasts.helpers";
 import ChecklistDropdown from "./ChecklistDropdown";
+import Textarea from "../form/Textarea";
 
 const CardDescription = ({ card, setCard }) => {
+  const [description, setDescription] = useState({
+    open: false,
+    value: card?.description,
+  });
+
   return (
     <div className="card_details_item">
       <div className="card_details_item_header">
@@ -17,11 +23,48 @@ const CardDescription = ({ card, setCard }) => {
           <i className="fa-regular fa-align-left"></i>
         </div>
         <div className="card_detail_name">Description</div>
-        <button className="card_detail_action_btn">Edit</button>
+        <button
+          className="card_detail_action_btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setDescription({ open: true, value: card?.description });
+          }}
+        >
+          Edit
+        </button>
       </div>
       <div style={{ marginLeft: 40 }}>
-        {(card?.description === "" || !card?.description) && (
-          <div className="card_no_description">No description added yet...</div>
+        {!description.open && (
+          <div className="card_detail_description">
+            {card?.description === "" || !card?.description
+              ? "No description added yet..."
+              : card?.description}
+          </div>
+        )}
+        {description.open && (
+          <div style={{ width: "100%" }}>
+            <Textarea
+              value={description.value}
+              onChange={(e) =>
+                setDescription({
+                  ...description,
+                  value: e.target.value,
+                })
+              }
+            />
+            <div className="card_detail_form_actions">
+              <button className="card_detail_form_save">Save</button>
+              <button
+                className="card_detail_form_close"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDescription({ open: false, value: card?.description });
+                }}
+              >
+                <i className="fa-regular fa-xmark"></i>
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
@@ -59,20 +102,89 @@ const CardChecklistItem = ({ item, index, card, setCard }) => {
   );
 };
 
-const CardChecklist = ({ checklist, index, card, setCard }) => {
+const CardChecklist = ({ checklist, card, setCard }) => {
+  const [editedChecklist, setEditedChecklist] = useState({
+    open: false,
+    value: checklist?.title,
+  });
+  const [item, setItem] = useState({ open: false, value: "" });
+  const axiosPrivate = useAxiosPrivate();
+
   const progress =
     (checklist?.items?.filter((item) => item.complete)?.length /
       checklist?.items?.length) *
       100 || 0;
 
+  async function DeleteChecklist() {
+    await axiosPrivate
+      .post(`/checklist/remove`, { id: checklist?.id })
+      .then((response) => {
+        setCard({ ...card, checklists: [] });
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          FireToast("No server response.", "error");
+        } else if (err.response?.status === 401) {
+          FireToast("Unauthorized.", "error");
+        } else {
+          FireToast("Something went wrong.", "error");
+        }
+      });
+  }
+
   return (
     <div className="card_details_item">
-      <div className="card_details_item_header">
+      <div
+        className="card_details_item_header"
+        style={{ alignItems: editedChecklist.open ? "flex-start" : "center" }}
+      >
         <div className="card_detail_title_icon">
           <i className="fa-regular fa-list-check"></i>
         </div>
-        <div className="card_detail_name">{checklist?.title}</div>
-        <button className="card_detail_action_btn">Delete</button>
+        {editedChecklist.open && (
+          <div style={{ width: "100%" }}>
+            <Textarea
+              value={editedChecklist.value}
+              onChange={(e) =>
+                setEditedChecklist({
+                  ...editedChecklist,
+                  value: e.target.value,
+                })
+              }
+            />
+            <div className="card_detail_form_actions">
+              <button className="card_detail_form_save">Save</button>
+              <button
+                className="card_detail_form_close"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditedChecklist({ open: false, value: checklist?.title });
+                }}
+              >
+                <i className="fa-regular fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        )}
+        {!editedChecklist.open && (
+          <>
+            <div
+              className="card_detail_name"
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditedChecklist({ open: true, value: checklist?.title });
+              }}
+            >
+              {checklist?.title}
+            </div>
+            <button
+              className="card_detail_action_btn"
+              onClick={DeleteChecklist}
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
       <div>
         <div className="card_detail_checklist_progress_wrapper">
@@ -90,15 +202,48 @@ const CardChecklist = ({ checklist, index, card, setCard }) => {
               {...provided.droppableProps}
             >
               {checklist?.items.map((item, index) => (
-                <CardChecklistItem item={item} index={index} />
+                <CardChecklistItem
+                  key={`checklist-item-${item.id}`}
+                  item={item}
+                  index={index}
+                />
               ))}
               {provided.placeholder}
             </ul>
           )}
         </Droppable>
-        <button className="card_detail_checklist_add_item_btn">
-          Add an item
-        </button>
+        {!item.open && (
+          <button
+            className="card_detail_checklist_add_item_btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              setItem({ open: true, value: "" });
+            }}
+          >
+            Add an item
+          </button>
+        )}
+        {item.open && (
+          <div className="card_detail_form">
+            <Textarea
+              placeholder="Add an item"
+              value={item.value}
+              onChange={(e) => setItem({ ...item, value: e.target.value })}
+            />
+            <div className="card_detail_form_actions">
+              <button className="card_detail_form_save">Add</button>
+              <button
+                className="card_detail_form_close"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setItem({ open: false, value: "" });
+                }}
+              >
+                <i className="fa-regular fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -178,7 +323,7 @@ const CardActions = ({ card, setCard }) => {
           <i className="fa-regular fa-tag"></i>
           Labels
         </button>
-        {!card?.checklists.length < 1 && (
+        {card?.checklists?.length < 1 && (
           <button
             className="card_detail_action_btn"
             onClick={() => setChecklistOpen(true)}
@@ -204,6 +349,8 @@ const CardActions = ({ card, setCard }) => {
         open={checklistOpen}
         anchor={checklistRef}
         onClose={() => setChecklistOpen(false)}
+        card={card}
+        setCard={setCard}
       />
     </div>
   );
@@ -321,8 +468,8 @@ const CardModal = ({ cardId, onClose }) => {
                   >
                     {card?.checklists?.map((checklist, index) => (
                       <CardChecklist
+                        key={`checklist-${checklist.id}`}
                         checklist={checklist}
-                        index={index}
                         card={card}
                         setCard={setCard}
                       />
@@ -334,7 +481,7 @@ const CardModal = ({ cardId, onClose }) => {
             </DragDropContext>
             <CardComments card={card} setCard={setCard} />
           </div>
-          <CardActions setCard={setCard} />
+          <CardActions card={card} setCard={setCard} />
         </div>
       </div>
     </Modal>

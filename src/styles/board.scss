@@ -355,6 +355,7 @@
     font-size: 1.1em;
     font-weight: 500;
     line-height: 30px;
+    flex-grow: 1;
 }
 
 .card_detail_action_btn {
@@ -373,7 +374,7 @@
     gap: 8px;
 }
 
-.card_no_description {
+.card_detail_description {
     font-size: 0.9em;
 }
 
@@ -526,6 +527,48 @@
     border-radius: 8px;
     font-weight: 600;
     gap: 8px;
+}
+
+.card_detail_form {
+    margin-left: 40px;
+    width: calc(100% - 40px);
+}
+
+.card_detail_form_actions {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    gap: 8px;
+}
+
+.card_detail_form_save {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border-style: none;
+    background: rgba(83, 82, 237, 1);
+    color: white;
+    cursor: pointer;
+}
+
+.card_detail_form_close {
+    border-style: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background 0.225s ease;
+
+    &:hover,
+    &:focus-within {
+        outline: none;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }
 
 .card_detail_comment_field {
