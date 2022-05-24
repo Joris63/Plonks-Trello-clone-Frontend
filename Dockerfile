@@ -1,22 +1,19 @@
-# get the base node image
-FROM node:alpine as builder
+# base image
+FROM node:9.4
 
-# set the working dir for container
-WORKDIR /frontend
+# set working directory
+WORKDIR /usr/src/app
 
-# copy the json file first
-COPY ./package.json /frontend
-
-# install npm dependencies
+# install and cache app dependencies
+COPY package*.json ./
+ADD package.json /usr/src/app/package.json
 RUN npm install
 
-# copy other project files
+# Bundle app source
 COPY . .
 
-# build the folder
-RUN npm run build
+# Specify port
+EXPOSE 3000
 
-# Handle Nginx
-FROM nginx
-COPY --from=builder /frontend/build /usr/share/nginx/html
-COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+# start app
+CMD ["npm", "start"]
