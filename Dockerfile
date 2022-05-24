@@ -1,19 +1,12 @@
-# base image
-FROM node:latest
+FROM node:latest as build
 
-# set working directory
-WORKDIR /usr/src/app
-
-# install and cache app dependencies
+WORKDIR /app
 COPY package*.json ./
-ADD package.json /usr/src/app/package.json
 RUN npm install
-
-# Bundle app source
 COPY . .
+RUN npm build
 
-# Specify port
+FROM nginx:latest
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 3000
-
-# start app
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
