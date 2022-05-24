@@ -28,4 +28,4 @@ stages:
         command: 'buildAndPush'
         dockerfile: '**/Dockerfile'
         tags: |
-          Plonks-$(tag)
+          Plonks
