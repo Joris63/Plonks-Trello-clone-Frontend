@@ -3,7 +3,7 @@ import LanguageSettings from "../components/settings/LanguageSettings";
 import NotificationSettings from "../components/settings/NotificationSettings";
 import ThemeSettings from "../components/settings/ThemeSettings";
 import useAuth from "../hooks/useAuth";
-import { FireToast } from "../utils/helpers/toasts.helpers";
+import { FireToast } from "../helpers/toasts.helpers";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useState } from "react";
 import axios from "axios";

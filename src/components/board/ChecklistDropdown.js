@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useGlobalStore from "../../hooks/useGlobalStore";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 import Form from "../form/Form";
 import Dropdown from "../helpers/Dropdown";
 

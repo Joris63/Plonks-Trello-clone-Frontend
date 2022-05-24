@@ -2,8 +2,8 @@ import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { FormatTime } from "../../utils/helpers/common.helpers";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FormatTime } from "../../helpers/common.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 
 const BoardButton = ({ board, boards, setBoards }) => {
   const { auth } = useAuth();

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 import Dropdown from "../helpers/Dropdown";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";

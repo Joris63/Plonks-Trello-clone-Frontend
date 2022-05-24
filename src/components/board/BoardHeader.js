@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useGlobalStore from "../../hooks/useGlobalStore";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 import AddBoardItemModal from "./AddBoardItemModal";
 
 const listFields = [

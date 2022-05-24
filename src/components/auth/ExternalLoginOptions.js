@@ -2,7 +2,7 @@ import GoogleLogin from "react-google-login";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-import { FirePopup, FireToast } from "../../utils/helpers/toasts.helpers";
+import { FirePopup, FireToast } from "../../helpers/toasts.helpers";
 
 const ExternalLoginOptions = () => {
   const { setAuth } = useAuth();

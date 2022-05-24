@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useGlobalStore from "../hooks/useGlobalStore";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { FireToast } from "../utils/helpers/toasts.helpers";
+import { FireToast } from "../helpers/toasts.helpers";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import List from "../components/board/List";
 import BoardHeader from "../components/board/BoardHeader";
-import { SortCards, SortLists } from "../utils/helpers/board.helpers";
+import { SortCards, SortLists } from "../helpers/board.helpers";
 import LoadingPage from "../components/helpers/LoadingPage";
 import _ from "lodash";
 

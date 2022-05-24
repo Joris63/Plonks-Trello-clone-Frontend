@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-import { FirePopup, FireToast } from "../../utils/helpers/toasts.helpers";
+import { FirePopup, FireToast } from "../../helpers/toasts.helpers";
 import Form from "../form/Form";
 import ExternalLoginOptions from "./ExternalLoginOptions";
 

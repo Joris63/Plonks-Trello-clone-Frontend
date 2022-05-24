@@ -1,4 +1,4 @@
-import { FormatTime } from "../../utils/helpers/common.helpers";
+import { FormatTime } from "../../helpers/common.helpers";
 import Modal from "../helpers/Modal";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -6,7 +6,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 import ChecklistDropdown from "./ChecklistDropdown";
 import Textarea from "../form/Textarea";
 

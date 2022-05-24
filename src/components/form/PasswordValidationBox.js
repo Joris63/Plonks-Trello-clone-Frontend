@@ -5,7 +5,7 @@ import {
   CheckForUppercase,
   CheckMaxLength,
   CheckMinLength,
-} from "../../utils/helpers/validation.helpers";
+} from "../../helpers/validation.helpers";
 
 const PasswordValidationBox = ({ open, field }) => {
   return (

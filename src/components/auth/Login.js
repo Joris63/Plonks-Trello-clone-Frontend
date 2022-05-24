@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { FirePopup, FireToast } from "../../utils/helpers/toasts.helpers";
+import { FirePopup, FireToast } from "../../helpers/toasts.helpers";
 import ExternalLoginOptions from "./ExternalLoginOptions";
 import Form from "../form/Form";
 import useAuth from "../../hooks/useAuth";

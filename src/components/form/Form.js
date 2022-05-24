@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import FormField from "./FormField";
-import { CheckField } from "../../utils/helpers/validation.helpers";
-import { TurnStringToCamelCase } from "../../utils/helpers/common.helpers";
+import { CheckField } from "../../helpers/validation.helpers";
+import { TurnStringToCamelCase } from "../../helpers/common.helpers";
 
 const Form = ({
   id,

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { CheckField } from "../../utils/helpers/validation.helpers";
+import { CheckField } from "../../helpers/validation.helpers";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import FormField from "../form/FormField";
 import Modal from "../helpers/Modal";
-import { FireToast } from "../../utils/helpers/toasts.helpers";
+import { FireToast } from "../../helpers/toasts.helpers";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 

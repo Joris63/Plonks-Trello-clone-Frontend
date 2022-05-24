@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { IsElementOffscreen } from "../../utils/helpers/common.helpers";
+import { IsElementOffscreen } from "../../helpers/common.helpers";
 
 let justOpened = false;
 let openedBefore = false;

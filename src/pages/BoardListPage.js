@@ -4,7 +4,7 @@ import AddBoardModal from "../components/board-list/AddBoardModal";
 import BoardButton from "../components/board-list/BoardButton";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { FireToast } from "../utils/helpers/toasts.helpers";
+import { FireToast } from "../helpers/toasts.helpers";
 import BoardsSearch from "../components/board-list/BoardsSearch";
 import BoardsFilter from "../components/board-list/BoardsFilter";
 import LoadingPage from "../components/helpers/LoadingPage";

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CheckField } from "../../utils/helpers/validation.helpers";
+import { CheckField } from "../../helpers/validation.helpers";
 import CustomSelect from "./CustomSelect";
 import PasswordValidationBox from "./PasswordValidationBox";
 
