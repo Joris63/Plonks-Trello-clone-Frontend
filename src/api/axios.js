@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://api.plonks.nl/";
+export const BASE_URL = "https://api.plonks.nl/api";
 
 export default axios.create({
   baseURL: BASE_URL,
