@@ -18,3 +18,5 @@ This is a clone I made as a school project. This repository serves as the Fronte
 - Lodash (https://lodash.com)
 - Moment.js (https://momentjs.com)
 - Sweetalert2 (https://sweetalert2.github.io)
+- React-beautiful-dnd (https://www.npmjs.com/package/react-beautiful-dnd)
+- React-google-login (https://www.npmjs.com/package/react-google-login)
